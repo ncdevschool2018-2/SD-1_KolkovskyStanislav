@@ -1,0 +1,67 @@
+<div >
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputNameGroup">Название группы</label>
+      <input type="email" class="form-control" id="inputNameGroup" placeholder="Name group">
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="col-8">
+      <div class="form-group ">
+        <span class="form-control-feedback"></span>
+        <input type="text" class="form-control" placeholder="Search">
+      </div>
+
+    </div>
+    <div class="col-4">
+      <button type="submit" class="btn btn-primary" id="search">Найти</button>
+    </div>
+  </div>
+
+
+  <!--Table of student-->
+  <div class="row pt-3">
+    <table class="table table-hover" style="width: 45rem;">
+      <thead class="thead">
+      <tr>
+        <th scope="col" class="fns">Имя</th>
+        <th scope="col" class="lns">Фамилия</th>
+        <th scope="col" class="act"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td scope="col">Петя</td>
+        <td scope="col">Пупкин</td>
+        <td scope="col" class="text-right">
+          <button class="btn btn-primary add-btn ml-4" type="button" >Добавить</button>
+          <!--if student in this group-->
+          <button class="btn btn-primary remove-btn ml-4" type="button">Убрать</button>
+        </td>
+      </tr>
+      <tr>
+        <td scope="col">Иван</td>
+        <td scope="col">Грозный</td>
+        <td scope="col" class="text-right">
+          <button class="btn btn-primary add-btn ml-4" type="button" >Добавить</button>
+          <!--if student in this group-->
+          <button class="btn btn-primary remove-btn ml-4" type="button">Убрать</button>
+        </td>
+      </tr>
+      <tr>
+        <td scope="col">Стас</td>
+        <td scope="col">Колковский</td>
+        <td scope="col" class="text-right">
+          <button class="btn btn-primary add-btn ml-4" type="button" >Добавить</button>
+          <!--if student in this group-->
+          <button class="btn btn-primary remove-btn ml-4" type="button">Убрать</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!---->
+</div>

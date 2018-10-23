@@ -1,0 +1,48 @@
+<div >
+  <form>
+    <!--Fnam and lNAME-->
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputTeacherFname">Имя</label>
+        <input type="text" class="form-control" id="inputTeacherFname" placeholder="Fname">
+
+      </div>
+      <div class="form-group col-md-6">
+        <label for="inputTeacherLname">Фамилия</label>
+        <input type="text" class="form-control" id="inputTeacherLname" placeholder="Lname">
+      </div>
+    </div>
+    <!--Email and Password-->
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputEmailTeacher">Почта</label>
+        <input type="email" class="form-control" id="inputEmailTeacher" placeholder="Email">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="inputPasswordTeacher">Пароль</label>
+        <input type="password" class="form-control" id="inputPasswordTeacher" placeholder="Password">
+      </div>
+    </div>
+    <!--Faculty and course-->
+    <div class="form-row">
+      <div class="form-group col-md-12">
+        <label for="inputLevel">Научная степень</label>
+        <select id="inputLevel" class="form-control">
+          <option selected>Выберите степень </option>
+          <option *ngFor="let level of level_teacher" [value]="level">{{level}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-12">
+        <label for="inputSubjects">Дисциплина</label>
+        <select id="inputSubjects" class="form-control">
+          <option selected>Выберите дисциплину</option>
+          <option *ngFor="let sub of subjects" [value]="sub">{{sub}}</option>
+        </select>
+      </div>
+    </div>
+    <!--Button create-->
+    <button type="submit" class="btn btn-primary ">Cоздать преподавателя</button>
+  </form>
+</div>

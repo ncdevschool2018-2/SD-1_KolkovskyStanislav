@@ -1,0 +1,17 @@
+.loginpage1{
+  background: url("https://img3.goodfon.ru/original/3200x1200/e/94/tekstura-oboi-kut-abstraktno-7062.jpg") no-repeat center center fixed;
+  display: table;
+  height: 100%;
+  position: relative;
+  width: 100%;
+  background-size: cover;
+}
+
+.login-area{
+  padding-top: 150px;
+}
+
+.welcome-page{
+  height: 100%;
+  width: 100%;
+}

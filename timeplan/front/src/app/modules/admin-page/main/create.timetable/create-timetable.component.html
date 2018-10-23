@@ -1,0 +1,124 @@
+<div >
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="inputType">Тип</label>
+      <select id="inputType" class="form-control" (change)="chooseType($event.target.value)" >
+        <option selected>Выбирите тип</option>
+        <option class="teacher">Преподаватель</option>
+        <option class="group">Группа</option>
+      </select>
+    </div>
+
+    <!--if you are choose group then it show this select for choosing number group-->
+    <div class="form-group col-md-4" *ngIf="type != 'teacher' && type != null">
+      <label for="inputNumberGroup">Группа</label>
+      <select id="inputNumberGroup" class="form-control" (change)="chooseGroup($event.target.value)">
+        <option>Выбирете группу </option>
+        <option class="level1">Группа 3</option>
+        <option class="level2">Группа 10</option>
+        <option class="level3">Группа 4</option>
+        <option class="level4">Группа 5</option>
+      </select>
+    </div>
+
+    <!--if you choose teahcer-->
+    <div class="form-group col-md-4" *ngIf="type == 'teacher' && type != null">
+      <label for="inputTeacher">Преподаватель</label>
+      <select id="inputTeacher" class="form-control" (change)="chooseTeacher($event.target.value)">
+        <option>Выбирете преподавателя</option>
+        <option class="level1">Данейко Василий Петрович</option>
+        <option class="level2">Стекло Марина Марина</option>
+        <option class="level3">Агапон Пушка Патронович</option>
+        <option class="level4">Арни Сталоне Вылез</option>
+      </select>
+    </div>
+  </div>
+
+
+  <!--IF YOU CHOUSE TYPE SHOW INPUT FIELD FOR CREATE TIMETABLE-->
+  <form *ngIf="choose_teacher != null || choose_group != null">
+    <div class="form-row">
+      <div class="form-group col-md-3">
+        <label for="chooseDay">День</label>
+        <select id="chooseDay" class="form-control">
+          <option>Выбирете день</option>
+          <option class="md">Понедельник</option>
+          <option class="td">Вторник</option>
+          <option class="wd">Среда</option>
+          <option class="thd">Четверг</option>
+          <option class="fd">Пятница</option>
+          <option class="sd">Суббота</option>
+        </select>
+      </div>
+      <div class="form-group col-md-3" *ngIf="choose_teacher == null">
+        <label for="chooseSubject">Предмет</label>
+        <select id="chooseSubject" class="form-control" >
+          <option>Выбирете предмет</option>
+          <option *ngFor="let subject of list_subjects" [value]="subject">subject</option>
+        </select>
+      </div>
+      <div class="form-group col-md-3">
+        <label for="chooseTime">Время</label>
+        <select id="chooseTime" class="form-control">
+          <option>Выбирете время</option>
+          <option class="level1">9:00-10:00</option>
+          <option class="level2">10:00-11:00</option>
+          <option class="level3">11:00-12:00</option>
+          <option class="level4">12:00-13:00</option>
+          <option class="level5">13:00-14:00</option>
+        </select>
+      </div>
+
+      <div class="form-group col-md-3">
+        <label for="chooseRoom">Аудитория</label>
+        <input type="email" class="form-control" id="chooseRoom" placeholder="Enter room">
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-6 text-center">
+        <button class="btn btn-primary" style="width: 20rem;"  type="submit">Добавить</button>
+      </div>
+      <div class="col-6 text-center">
+        <button class="btn btn-primary" style="width: 20rem;"  type="submit">Создать расписание</button>
+      </div>
+    </div>
+  </form>
+
+  <div class="row mt-2">
+    <!--Timetable teacher-->
+    <table class="table table-hover" >
+      <thead class="thead-dark">
+      <tr>
+        <th scope="col">Время</th>
+        <th scope="col">Предмет</th>
+        <th scope="col">Аудитория</th>
+        <th scope="col">Группа</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr class="monday_name">
+        <th scope="row" colspan="5" class="text-center">ПОНЕДЕЛЬНИК</th>
+      </tr>
+      <tr>
+        <th scope="row" colspan="5" class="text-center">ВТОРНИК</th>
+      </tr>
+      <tr>
+        <th scope="row" colspan="5" class="text-center">СРЕДА</th>
+      </tr>
+      <tr>
+        <th scope="row" colspan="5" class="text-center">ЧЕТВЕРГ</th>
+      </tr>
+      <tr>
+        <th scope="row" colspan="5" class="text-center">ПЯТНИЦА</th>
+      </tr>
+      <tr>
+        <th scope="row" colspan="5" class="text-center">СУББОТА</th>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+</div>

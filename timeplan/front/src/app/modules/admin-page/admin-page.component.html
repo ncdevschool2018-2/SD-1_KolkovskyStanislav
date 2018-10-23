@@ -1,0 +1,108 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+  <!--<meta charset="UTF-8">-->
+  <!--<title>Admin page</title>-->
+  <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">-->
+  <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
+  <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>-->
+  <!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>-->
+  <!--<link rel="stylesheet" href="user_page_style.css">-->
+
+  <!--&lt;!&ndash; Latest compiled and minified CSS &ndash;&gt;-->
+  <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">-->
+
+  <!--&lt;!&ndash; Latest compiled and minified JavaScript &ndash;&gt;-->
+  <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>-->
+
+  <!--&lt;!&ndash; (Optional) Latest compiled and minified JavaScript translation files &ndash;&gt;-->
+  <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/i18n/defaults-*.min.js"></script>-->
+<!--</head>-->
+<!--<body>-->
+
+
+<!--</body>-->
+<!--</html>-->
+
+
+<!--NavBar-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top" >
+  <a class="navbar-brand" href="#">TimePlan</a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav  ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="#">Support</a>
+      </li>
+    </ul>
+
+    <form class="form-inline ml-2 my-lg-0">
+      <!--<button class="btn btn-outline-success my-2 my-sm-0 btn-outline-danger" type="submit" >Register</button>-->
+      <button type="button" class="btn btn-primary  my-2 my-sm-0"  data-target="#singupModal" data-toggle="modal">Logout</button>
+    </form>
+  </div>
+</nav>
+
+
+<div class="container-fluid pt-2">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+
+        <!--Закладки-->
+        <div class="card-header">
+          <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home-tab" aria-selected="true">Главная</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="users-tab" data-toggle="tab" href="#users" role="tab" aria-controls="users-tab" aria-selected="false">Пользователи</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="timetable-tab" data-toggle="tab" href="#timetable" role="tab" aria-controls="timetable" aria-selected="false">Расписание Групп</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="group-tab" data-toggle="tab" href="#group" role="tab" aria-controls="group" aria-selected="false">Студентческие Группы</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="teacher-tab" data-toggle="tab" href="#teacher" role="tab" aria-controls="teacher" aria-selected="false">Преподаватели</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="card-body">
+          <div class="tab-content" id="myTabContent">
+
+            <!--Главная-->
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+              <main></main>
+            </div>
+            <!--Пользователи-->
+            <div class="tab-pane fade" id="users" role="tabpanel" aria-labelledby="users-tab">
+              <users></users>
+            </div>
+
+            <!--Расписание Групп-->
+            <div class="tab-pane fade" id="timetable" role="tabpanel" aria-labelledby="timetable-tab">
+             <timetable-group></timetable-group>
+            </div>
+
+            <!--Cтуденческие группы -->
+            <div class="tab-pane fade" id="group" role="tabpanel" aria-labelledby="group-tab">
+              <groups></groups>
+            </div>
+
+            <!--Преподователи -->
+            <div class="tab-pane fade" id="teacher" role="tabpanel" aria-labelledby="teacher-tab">
+              <teachers></teachers>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
