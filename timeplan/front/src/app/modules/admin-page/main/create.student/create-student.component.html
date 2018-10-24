@@ -1,16 +1,19 @@
 <div >
-  <form >
+  <form (ngSubmit)="createStudent(); studentForm.reset()" #studentForm="ngForm">
     <!--Fnam and lNAME-->
     <div class="form-row">
       <div class="form-group col-md-6">
         <label for="inputStudentFname">Имя</label>
         <input type="text" class="form-control" id="inputStudentFname" placeholder="Fname"
-        [(ngModel)] = "student._fname" name="fname" required>
+        [(ngModel)] = "fname" name="fname" required>
+        <!--<alert type="danger" *ngIf="status">-->
+          <!--Проверьте введенные данные-->
+        <!--</alert>-->
       </div>
       <div class="form-group col-md-6">
         <label for="inputStudentLname">Фамилия</label>
         <input type="text" class="form-control" id="inputStudentLname" placeholder="Lname"
-        [(ngModel)] = "student._lname" name="lname" required>
+        [(ngModel)] = "lname" name="lname" required>
       </div>
 
     </div>
@@ -19,15 +22,15 @@
       <div class="form-group col-md-6">
         <label for="inputEmailStudent">Почта</label>
         <input type="email" class="form-control" id="inputEmailStudent" placeholder="Email"
-               [(ngModel)] = "student._mail" name="mail" required>
+               [(ngModel)] = "mail" name="mail" required>
       </div>
       <div class="form-group col-md-6">
         <label for="inputPasswordStudent">Пароль</label>
         <input type="password" class="form-control" id="inputPasswordStudent" placeholder="Password"
-               [(ngModel)] = "student._password" name="password" required>
+               [(ngModel)] = "password" name="password" required>
       </div>
     </div>
     <!--Button create-->
-    <button type="submit" class="btn btn-primary" (click) ="display()">Cоздать студента</button>
+    <button type="submit" class="btn btn-primary" [disabled]="studentForm.form.invalid" >Cоздать студента</button>
   </form>
 </div>

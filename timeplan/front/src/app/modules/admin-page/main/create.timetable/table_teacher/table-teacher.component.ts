@@ -1,35 +1,45 @@
 import {Component} from "@angular/core";
-import {Teacher} from "../models/teacher";
-import {Group} from "../models/group";
+import {Group} from "../../models/group";
+import {Student_task} from "../../models/student_task";
+import {Teacher} from "../../models/teacher";
+import {Subject} from "../../models/subject";
 
 @Component({
-  selector: 'create-timetable',
-  templateUrl:'./create-timetable.component.html',
-  styleUrls:['./create-timetable.component.css']
+  selector: 'table-teacher',
+  templateUrl:'./table-teacher.component.html',
+  styleUrls:['./table-teacher.component.css']
 })
 
-export class CreateTimetableComponent{
+
+export class TableTeacherComponent {
+
+  //CПИСОК ГРУПП
+  list_group: Group[];
+  //Запись
+  task:Student_task;
+  timetable_student: Student_task[];
+
 
 
   //Список преподавателей, получаем из БД
   list_teachers: Teacher[] = [
-   new Teacher("Ивани","Василенко", "ivan@mail.com", "1234ivan","Математика")
+    new Teacher("Ивани","Василенко", "ivan@mail.com", "1234ivan","Доцент","Математика")
   ];
-  //Список предметов для ГРУПП , получаем из БД
-  list_subjects: string[] = [
-    "Математика",
-    "Английский",
-    "Физика",
-    "Экономика"
-  ];
-  //CПИСОК ГРУПП
-  list_group: Group[] = [];
 
-  choose_group:string;
-  choose_teacher:string;
+
+  //Список предметов для ГРУПП , получаем из БД
+  list_subjects: Subject[] = [
+    new Subject("Математика"),
+    new Subject("Философия"),
+    new Subject("Английский"),
+    new Subject("Физика"),
+  ];
 
 
   type:string = null;
+  choose_group:boolean;
+  choose_teacher:boolean;
+
 
   //Choose Type method()
   chooseType(choosetype){

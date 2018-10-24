@@ -1,131 +1,127 @@
 <div class="container-fluid timetable">
 
   <div class="row">
-    <div class="dropdown">
-      <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Выберите пользователей
-      </button>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" href="#">Студенты</a>
-        <a class="dropdown-item" href="#">Преподаватели</a>
-        <a class="dropdown-item" href="#">Все</a>
-      </div>
+
+      <button class="btn btn-primary mr-2" type="button" [disabled]="!showAll" (click)="display(all.textContent)" #all>Все пользователи</button>
+      <button class="btn btn-primary mr-2" type="button" [disabled]="!showStundets" (click)="display(student.textContent)" #student>Студенты</button>
+      <button class="btn btn-primary" type="button" [disabled]="!showTeacher" (click)="display(teacher.textContent)" #teacher>Преподаватели</button>
+
+  </div>
+
+    <!--Table of teacher-->
+    <div class="row pt-3" *ngIf="!showTeacher || !showAll">
+      <table class="table table-hover ">
+        <thead class="thead-dark">
+        <tr>
+          <th scope="col" class="fnt">Имя</th>
+          <th scope="col" class="lnt">Фамилия</th>
+          <th scope="col" class="emailt">Почта</th>
+          <th scope="col" class="pssw">Пароль</th>
+          <th scope="col" class="level">Степень</th>
+          <th scope="col" class="subs">Предметы</th>
+          <th scope="col" class="act"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td scope="col">Иван</td>
+          <td scope="col">Грозный</td>
+          <td scope="col">ivan@gmail.com</td>
+          <td scope="col">ivanpass</td>
+          <td scope="col">Доцент</td>
+          <td scope="col">Предметы</td>
+          <td scope="col" class="text-right">
+            <button class="btn btn-primary change-btn ml-4" type="button" >Изменить</button>
+            <button class="btn btn-primary delete-btn ml-4" type="button">Удалить</button>
+          </td>
+        </tr>
+        <tr>
+          <td scope="col">Николай</td>
+          <td scope="col">Велика</td>
+          <td scope="col">koly@gmail.com</td>
+          <td scope="col">kolypass</td>
+          <td scope="col">Доцент</td>
+          <td scope="col">Предметы</td>
+          <td scope="col" class="text-right">
+            <button class="btn btn-primary change-btn ml-4" type="button" >Изменить</button>
+            <button class="btn btn-primary delete-btn ml-4" type="button">Удалить</button>
+          </td>
+        </tr>
+        <tr>
+          <td scope="col">Евгений</td>
+          <td scope="col">Король</td>
+          <td scope="col">king@gmail.com</td>
+          <td scope="col">kingpass</td>
+          <td scope="col">Доцент</td>
+          <td scope="col">Предметы</td>
+          <td scope="col" class="text-right">
+            <button class="btn btn-primary change-btn ml-4" type="button" >Изменить</button>
+            <button class="btn btn-primary delete-btn ml-4" type="button">Удалить</button>
+          </td>
+        </tr>
+        <tr>
+          <td scope="col">Иван</td>
+          <td scope="col">Грозный</td>
+          <td scope="col">ivan@gmail.com</td>
+          <td scope="col">ivanpass</td>
+          <td scope="col">Доцент</td>
+          <td scope="col">Предметы</td>
+          <td scope="col" class="text-right">
+            <button class="btn btn-primary change-btn ml-4" type="button" >Изменить</button>
+            <button class="btn btn-primary delete-btn ml-4" type="button">Удалить</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
     </div>
 
-  </div>
+    <!--Table of student-->
+    <div class="row pt-3" *ngIf="!showStundets || !showAll">
+      <table class="table table-hover">
+        <thead class="thead-dark">
+        <tr>
+          <th scope="col" class="fns">Имя</th>
+          <th scope="col" class="lns">Фамилия</th>
+          <th scope="col" class="email">Почта</th>
+          <th scope="col" class="pssw">Пароль</th>
+          <th scope="col" class="act"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td scope="col">Петя</td>
+          <td scope="col">Пупкин</td>
+          <td scope="col">petya@gmail.com</td>
+          <td scope="col">petyapass</td>
+          <td scope="col" class="text-right">
+            <button class="btn btn-primary change-btn ml-4" type="button" >Изменить</button>
+            <button class="btn btn-primary delete-btn ml-4" type="button">Удалить</button>
+          </td>
+        </tr>
+        <tr>
+          <td scope="col">Иван</td>
+          <td scope="col">Грозный</td>
+          <td scope="col">ivan@gmail.com</td>
+          <td scope="col">ivanpass</td>
+          <td scope="col" class="text-right">
+            <button class="btn btn-primary change-btn ml-4" type="button" >Изменить</button>
+            <button class="btn btn-primary delete-btn ml-4" type="button">Удалить</button>
+          </td>
+        </tr>
+        <tr>
+          <td scope="col">Стас</td>
+          <td scope="col">Колковский</td>
+          <td scope="col">stas@gmail.com</td>
+          <td scope="col">staspass</td>
+          <td scope="col" class="text-right">
+            <button class="btn btn-primary change-btn ml-4" type="button" >Изменить</button>
+            <button class="btn btn-primary delete-btn ml-4" type="button">Удалить</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
 
-  <!--Table of teacher-->
-  <div class="row pt-3">
-    <table class="table table-hover ">
-      <thead class="thead-dark">
-      <tr>
-        <th scope="col" class="fnt">Имя</th>
-        <th scope="col" class="lnt">Фамилия</th>
-        <th scope="col" class="emailt">Почта</th>
-        <th scope="col" class="pssw">Пароль</th>
-        <th scope="col" class="level">Степень</th>
-        <th scope="col" class="subs">Предметы</th>
-        <th scope="col" class="act"></th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td scope="col">Иван</td>
-        <td scope="col">Грозный</td>
-        <td scope="col">ivan@gmail.com</td>
-        <td scope="col">ivanpass</td>
-        <td scope="col">Доцент</td>
-        <td scope="col">Предметы</td>
-        <td scope="col" class="text-right">
-          <button class="btn btn-primary change-btn ml-4" type="button" >Изменить</button>
-          <button class="btn btn-primary delete-btn ml-4" type="button">Удалить</button>
-        </td>
-      </tr>
-      <tr>
-        <td scope="col">Николай</td>
-        <td scope="col">Велика</td>
-        <td scope="col">koly@gmail.com</td>
-        <td scope="col">kolypass</td>
-        <td scope="col">Доцент</td>
-        <td scope="col">Предметы</td>
-        <td scope="col" class="text-right">
-          <button class="btn btn-primary change-btn ml-4" type="button" >Изменить</button>
-          <button class="btn btn-primary delete-btn ml-4" type="button">Удалить</button>
-        </td>
-      </tr>
-      <tr>
-        <td scope="col">Евгений</td>
-        <td scope="col">Король</td>
-        <td scope="col">king@gmail.com</td>
-        <td scope="col">kingpass</td>
-        <td scope="col">Доцент</td>
-        <td scope="col">Предметы</td>
-        <td scope="col" class="text-right">
-          <button class="btn btn-primary change-btn ml-4" type="button" >Изменить</button>
-          <button class="btn btn-primary delete-btn ml-4" type="button">Удалить</button>
-        </td>
-      </tr>
-      <tr>
-        <td scope="col">Иван</td>
-        <td scope="col">Грозный</td>
-        <td scope="col">ivan@gmail.com</td>
-        <td scope="col">ivanpass</td>
-        <td scope="col">Доцент</td>
-        <td scope="col">Предметы</td>
-        <td scope="col" class="text-right">
-          <button class="btn btn-primary change-btn ml-4" type="button" >Изменить</button>
-          <button class="btn btn-primary delete-btn ml-4" type="button">Удалить</button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
 
-  <!--Table of student-->
-  <div class="row pt-3">
-    <table class="table table-hover">
-      <thead class="thead-dark">
-      <tr>
-        <th scope="col" class="fns">Имя</th>
-        <th scope="col" class="lns">Фамилия</th>
-        <th scope="col" class="email">Почта</th>
-        <th scope="col" class="pssw">Пароль</th>
-        <th scope="col" class="act"></th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td scope="col">Петя</td>
-        <td scope="col">Пупкин</td>
-        <td scope="col">petya@gmail.com</td>
-        <td scope="col">petyapass</td>
-        <td scope="col" class="text-right">
-          <button class="btn btn-primary change-btn ml-4" type="button" >Изменить</button>
-          <button class="btn btn-primary delete-btn ml-4" type="button">Удалить</button>
-        </td>
-      </tr>
-      <tr>
-        <td scope="col">Иван</td>
-        <td scope="col">Грозный</td>
-        <td scope="col">ivan@gmail.com</td>
-        <td scope="col">ivanpass</td>
-        <td scope="col" class="text-right">
-          <button class="btn btn-primary change-btn ml-4" type="button" >Изменить</button>
-          <button class="btn btn-primary delete-btn ml-4" type="button">Удалить</button>
-        </td>
-      </tr>
-      <tr>
-        <td scope="col">Стас</td>
-        <td scope="col">Колковский</td>
-        <td scope="col">stas@gmail.com</td>
-        <td scope="col">staspass</td>
-        <td scope="col" class="text-right">
-          <button class="btn btn-primary change-btn ml-4" type="button" >Изменить</button>
-          <button class="btn btn-primary delete-btn ml-4" type="button">Удалить</button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
 
 </div>

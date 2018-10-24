@@ -3,7 +3,7 @@ import {CommonModule} from "@angular/common";
 import {CreateStudentComponent} from "./main/create.student/create-student.component";
 import {AdminPageComponent} from "./admin-page.component";
 import {MainComponent} from "./main/main.component";
-import {CreateTimetableComponent} from "./main/create.timetable/create-timetable.component";
+
 import {CreateTeacherComponent} from "./main/create.teacher/create-teacher.component";
 import {CreateSubjectComponent} from "./main/create.subject/create-subject.component";
 import {CreateGroupComponent} from "./main/create.group/create-group.component";
@@ -13,6 +13,10 @@ import {BrowserModule} from "@angular/platform-browser";
 import {UsersComponent} from "./users/users.component";
 import {TimetableGroupComponent} from "./timetable-group/timetable-group.component";
 import {TeachersComponent} from "./teachers/teachers.component";
+import {AlertModule} from "ngx-bootstrap/alert";
+import {TableTeacherComponent} from "./main/create.timetable/table_teacher/table-teacher.component";
+import {TableStudentComponent} from "./main/create.timetable/table_student/table-student.component";
+
 
 @NgModule({
   declarations:[
@@ -20,17 +24,19 @@ import {TeachersComponent} from "./teachers/teachers.component";
     AdminPageComponent,
     MainComponent,
     CreateStudentComponent,
-    CreateTimetableComponent,
     CreateTeacherComponent,
     CreateSubjectComponent,
     CreateGroupComponent,
     GroupsComponent,
     UsersComponent,
     TimetableGroupComponent,
-    TeachersComponent],
+    TeachersComponent,
+    TableTeacherComponent,
+    TableStudentComponent],
   imports:[CommonModule,
           FormsModule,
-          BrowserModule],
+          BrowserModule,
+          AlertModule.forRoot()],
   exports:[AdminPageComponent]
 })
 

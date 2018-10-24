@@ -3,8 +3,17 @@ export class Teacher{
               public _lname:string,
               public _mail:string,
               public _password:string,
+              public _level:string,
               public _subject:string){}
 
+
+  get level(): string {
+    return this._level;
+  }
+
+  set level(value: string) {
+    this._level = value;
+  }
 
   get fname(): string {
     return this._fname;

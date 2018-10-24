@@ -1,10 +1,27 @@
-<div >
+<form (ngSubmit) ="createSubject(); subjectForm.reset()" #subjectForm="ngForm">
   <div class="form-row">
     <div class="form-group col-md-6">
-      <input type="email" class="form-control" id="inputNameSubject" placeholder="Name subject">
+      <input type="text" class="form-control" id="inputNameSubject" placeholder="Введите название предмета" required
+      [(ngModel)] ="inputString" name="inputSubject">
     </div>
     <div class="form-group col-md-4">
-      <button type="button" class="btn btn-primary " style="width: 18rem;">Создать предмет</button>
+      <button type="submit" class="btn btn-primary" style="width: 18rem;" [disabled]="subjectForm.form.invalid" >Создать предмет</button>
     </div>
   </div>
-</div>
+</form>
+
+
+
+
+<table class="table table-hover"  *ngIf="list_subjects.length != 0">
+    <thead>
+    <tr>
+      <th scope="col">Название предмета</th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let subject of list_subjects">
+        <td>{{subject.name}}</td>
+      </tr>
+    </tbody>
+</table>

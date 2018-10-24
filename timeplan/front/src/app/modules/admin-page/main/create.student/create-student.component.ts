@@ -2,6 +2,7 @@ import {Component} from "@angular/core";
 import {Student} from "../models/student";
 import {FormsModule} from "@angular/forms";
 
+
 @Component({
   selector: 'create-student',
   templateUrl:'./create-student.component.html',
@@ -16,24 +17,11 @@ export class CreateStudentComponent{
   group:string;
 
 
-  message_fname:string;
-  message_lname:string;
-  message_email:string;
-  message_password:string;
-
-
-
   //get student from form and write in database
-  student = new Student(this.fname,this.lname,this.mail,this.password);
+  student:Student;
 
-  checkInputData():string[]{
-    this.fname == undefined ? this.message_fname = "Требуется ввести имя":
-      this.message_fname = "Введенное поле верно";
-    return
-  }
-
-  //test function
-  display(){
-    console.log(this.student);
+  createStudent(){
+    this.student = new Student(this.fname,this.lname,this.mail,this.password);
+    console.log(this.student)
   }
 }
