@@ -3,6 +3,7 @@ import {Group} from "../../models/group";
 import {Student_task} from "../../models/student_task";
 import {Teacher} from "../../models/teacher";
 import {Subject} from "../../models/subject";
+import {group} from "@angular/animations";
 
 @Component({
   selector: "table-student",
@@ -31,16 +32,27 @@ export class TableStudentComponent{
   ];
 
 
+  group:string;
+  subject:string;
+
   type:string = null;
   choose_group:boolean = false;
   choose_teacher:boolean;
 
+  ngOnInit(){
+
+  }
+
+
+  createTimetable(){
+
+  }
 
   //Choose Type method()
   chooseGroup(group){
     if(group){
       this.choose_group = true;
-      console.log(group.name);
+      console.log(group.name_group);
     }
 
   }

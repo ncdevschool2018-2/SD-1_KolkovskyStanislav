@@ -1,21 +1,68 @@
-<div class="container-fluid timetable">
+<div class="container pt-2 timetable">
   <div class="row">
-    <div class="dropdown">
-      <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuGroup1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Выберите группу
-      </button>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuGroup1">
-        <a class="dropdown-item" href="#">Группа 1</a>
-        <a class="dropdown-item" href="#">Группа 2</a>
-        <a class="dropdown-item" href="#">Группа 3</a>
-      </div>
+
+    <div class="col-3">
+      <select class="form-control">
+        <option>Выберите группу</option>
+        <option *ngFor="let group of list_group" [value]="group">{{group.name_group}}</option>
+      </select>
     </div>
 
-    <button class="btn btn-primary change-btn ml-3" type="button" >Добавить</button>
+    <div class="col-6">
+      <button class="btn btn-primary change-btn ml-3" type="button" (click)="openModal(template)" >Добавить Cтудента</button>
+    </div>
 
+    <ng-template #template class="modal-window">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Modal</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-hover">
+          <thead class="thead-dark">
+          <tr>
+            <th scope="col" class="fns">Имя</th>
+            <th scope="col" class="lns">Фамилия</th>
+            <th scope="col" class="act"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td scope="col">Петя</td>
+            <td scope="col">Пупкин</td>
+            <td scope="col" class="text-right">
+              <button class="btn btn-primary delete-btn ml-4" type="button">Добавить</button>
+            </td>
+          </tr>
+          <!--<tr>-->
+          <!--<td scope="col">Иван</td>-->
+          <!--<td scope="col">Грозный</td>-->
+          <!--<td scope="col">ivan@gmail.com</td>-->
+          <!--<td scope="col">ivanpass</td>-->
+          <!--<td scope="col" class="text-right">-->
+          <!--<button class="btn btn-primary change-btn ml-4" type="button" >Изменить</button>-->
+          <!--<button class="btn btn-primary delete-btn ml-4" type="button">Удалить</button>-->
+          <!--</td>-->
+          <!--</tr>-->
+          <!--<tr>-->
+          <!--<td scope="col">Стас</td>-->
+          <!--<td scope="col">Колковский</td>-->
+          <!--<td scope="col">stas@gmail.com</td>-->
+          <!--<td scope="col">staspass</td>-->
+          <!--<td scope="col" class="text-right">-->
+          <!--<button class="btn btn-primary change-btn ml-4" type="button" >Изменить</button>-->
+          <!--<button class="btn btn-primary delete-btn ml-4" type="button">Удалить</button>-->
+          <!--</td>-->
+          <!--</tr>-->
+          </tbody>
+        </table>
+      </div>
+    </ng-template>
   </div>
 
-  <div class="row mt-2">
+  <div class="row mt-2" *ngIf="choose_group">
     <!--Table of the group-->
     <table class="table table-hover">
       <thead class="thead-dark">
@@ -28,7 +75,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr>
+      <tr *ngFor="">
         <td scope="col">Петя</td>
         <td scope="col">Пупкин</td>
         <td scope="col">petya@gmail.com</td>
@@ -38,28 +85,27 @@
           <button class="btn btn-primary delete-btn ml-4" type="button">Удалить</button>
         </td>
       </tr>
-      <tr>
-        <td scope="col">Иван</td>
-        <td scope="col">Грозный</td>
-        <td scope="col">ivan@gmail.com</td>
-        <td scope="col">ivanpass</td>
-        <td scope="col" class="text-right">
-          <button class="btn btn-primary change-btn ml-4" type="button" >Изменить</button>
-          <button class="btn btn-primary delete-btn ml-4" type="button">Удалить</button>
-        </td>
-      </tr>
-      <tr>
-        <td scope="col">Стас</td>
-        <td scope="col">Колковский</td>
-        <td scope="col">stas@gmail.com</td>
-        <td scope="col">staspass</td>
-        <td scope="col" class="text-right">
-          <button class="btn btn-primary change-btn ml-4" type="button" >Изменить</button>
-          <button class="btn btn-primary delete-btn ml-4" type="button">Удалить</button>
-        </td>
-      </tr>
+      <!--<tr>-->
+        <!--<td scope="col">Иван</td>-->
+        <!--<td scope="col">Грозный</td>-->
+        <!--<td scope="col">ivan@gmail.com</td>-->
+        <!--<td scope="col">ivanpass</td>-->
+        <!--<td scope="col" class="text-right">-->
+          <!--<button class="btn btn-primary change-btn ml-4" type="button" >Изменить</button>-->
+          <!--<button class="btn btn-primary delete-btn ml-4" type="button">Удалить</button>-->
+        <!--</td>-->
+      <!--</tr>-->
+      <!--<tr>-->
+        <!--<td scope="col">Стас</td>-->
+        <!--<td scope="col">Колковский</td>-->
+        <!--<td scope="col">stas@gmail.com</td>-->
+        <!--<td scope="col">staspass</td>-->
+        <!--<td scope="col" class="text-right">-->
+          <!--<button class="btn btn-primary change-btn ml-4" type="button" >Изменить</button>-->
+          <!--<button class="btn btn-primary delete-btn ml-4" type="button">Удалить</button>-->
+        <!--</td>-->
+      <!--</tr>-->
       </tbody>
     </table>
   </div>
-
 </div>

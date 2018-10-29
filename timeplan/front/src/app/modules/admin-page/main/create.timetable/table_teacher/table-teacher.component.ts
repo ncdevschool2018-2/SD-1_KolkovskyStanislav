@@ -23,7 +23,10 @@ export class TableTeacherComponent {
 
   //Список преподавателей, получаем из БД
   list_teachers: Teacher[] = [
-    new Teacher("Ивани","Василенко", "ivan@mail.com", "1234ivan","Доцент","Математика")
+    new Teacher("Ивани","Василенко", "ivan@mail.com", "1234ivan","Доцент","Математика"),
+    new Teacher("Петр","Арнольд", "ivan@mail.com", "1234ivan","Доцент","Математика"),
+    new Teacher("Кузьма","Палыч", "ivan@mail.com", "1234ivan","Доцент","Математика"),
+    new Teacher("Алексей","Черный", "ivan@mail.com", "1234ivan","Доцент","Математика")
   ];
 
 

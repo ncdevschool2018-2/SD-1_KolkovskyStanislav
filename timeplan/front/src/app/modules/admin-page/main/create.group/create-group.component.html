@@ -1,4 +1,4 @@
-<form >
+<form  #createGroup="ngForm">
   <div class="form-row">
     <div class="form-group col-md-6">
       <input type="text" class="form-control" id="inputNameGroup" placeholder="Введите название группы">
@@ -23,7 +23,7 @@
 
 <!--Table of student-->
 <div class="row pt-3">
-    <table class="table table-hover" style="width: 45rem;">
+    <table class="table table-hover" style="width: 40rem;">
       <thead class="thead">
       <tr>
         <th scope="col" class="fns">Имя</th>
@@ -32,35 +32,47 @@
       </tr>
       </thead>
       <tbody>
-      <tr>
-        <td scope="col">Петя</td>
-        <td scope="col">Пупкин</td>
+      <tr *ngFor="let student of students">
+        <td scope="col">{{student._fname}}</td>
+        <td scope="col">{{student._lname}}</td>
         <td scope="col" class="text-right">
-          <button class="btn btn-primary add-btn ml-4" type="button" >Добавить</button>
-          <!--if student in this group-->
-          <button class="btn btn-primary remove-btn ml-4" type="button">Убрать</button>
+
+          <!--<button class="btn btn-primary add-btn ml-4" type="radio" (click)="addStudent()"-->
+                  <!--[disabled]="">Добавить</button>-->
+          <!--&lt;!&ndash;if student in this group&ndash;&gt;-->
+          <!--<button class="btn btn-primary remove-btn ml-4" type="button" (click)="removeStudent()"-->
+                  <!--*ngIf="show_remove_btn">Убрать</button>-->
+
+
+
+          <div class="btn-group">
+            <label class="btn btn-primary"
+                   btnRadio="Left" tabindex="0" role="button">+Добавить</label>
+            <label class="btn btn-primary"
+                   btnRadio="Middle" tabindex="0" role="button">-Убрать</label>
+          </div>
         </td>
       </tr>
-      <tr>
-        <td scope="col">Иван</td>
-        <td scope="col">Грозный</td>
-        <td scope="col" class="text-right">
-          <button class="btn btn-primary add-btn ml-4" type="button" >Добавить</button>
-          <!--if student in this group-->
-          <button class="btn btn-primary remove-btn ml-4" type="button">Убрать</button>
-        </td>
-      </tr>
-      <tr>
-        <td scope="col">Стас</td>
-        <td scope="col">Колковский</td>
-        <td scope="col" class="text-right">
-          <button class="btn btn-primary add-btn ml-4" type="button" >Добавить</button>
-          <!--if student in this group-->
-          <button class="btn btn-primary remove-btn ml-4" type="button">Убрать</button>
-        </td>
-      </tr>
+      <!--<tr>-->
+        <!--<td scope="col">Иван</td>-->
+        <!--<td scope="col">Грозный</td>-->
+        <!--<td scope="col" class="text-right">-->
+          <!--<button class="btn btn-primary add-btn ml-4" type="button" >Добавить</button>-->
+          <!--&lt;!&ndash;if student in this group&ndash;&gt;-->
+          <!--<button class="btn btn-primary remove-btn ml-4" type="button">Убрать</button>-->
+        <!--</td>-->
+      <!--</tr>-->
+      <!--<tr>-->
+        <!--<td scope="col">Стас</td>-->
+        <!--<td scope="col">Колковский</td>-->
+        <!--<td scope="col" class="text-right">-->
+          <!--<button class="btn btn-primary add-btn ml-4" type="button" >Добавить</button>-->
+          <!--&lt;!&ndash;if student in this group&ndash;&gt;-->
+          <!--<button class="btn btn-primary remove-btn ml-4" type="button">Убрать</button>-->
+        <!--</td>-->
+      <!--</tr>-->
       </tbody>
     </table>
-  </div>
+</div>
 
 

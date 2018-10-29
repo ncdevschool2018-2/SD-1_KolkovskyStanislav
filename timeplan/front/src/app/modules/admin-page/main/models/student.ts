@@ -3,7 +3,7 @@ export class Student{
               public _lname:string,
               public _mail:string,
               public _password: string,
-              public _num_group?:string){
+              ){
 
   }
 
@@ -39,11 +39,4 @@ export class Student{
     this._password = value;
   }
 
-  get num_group(): string {
-    return this._num_group;
-  }
-
-  set num_group(value: string) {
-    this._num_group = value;
-  }
 }

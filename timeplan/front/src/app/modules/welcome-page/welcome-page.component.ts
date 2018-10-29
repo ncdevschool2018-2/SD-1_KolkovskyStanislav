@@ -7,6 +7,6 @@ import {Component, HostBinding} from "@angular/core";
 })
 
 export class WelcomePageComponent {
-  //HostBindig
+  //HostBinding
   @HostBinding('class.welcome-page') private readonly hostClass = true;
 }

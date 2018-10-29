@@ -10,7 +10,11 @@ import {Subject} from "../models/subject";
 export class CreateSubjectComponent{
 
   //Get list subject from backend
-  list_subjects: Subject[] = [new Subject("eNGLISH")];
+  list_subjects: Subject[] = [new Subject("Английский"),
+    new Subject("Теория вероятностей"),
+    new Subject("Математический анализ"),
+    new Subject("Физика"),
+    new Subject("Физкультура")];
 
   //new Subject
   newSubject:Subject;

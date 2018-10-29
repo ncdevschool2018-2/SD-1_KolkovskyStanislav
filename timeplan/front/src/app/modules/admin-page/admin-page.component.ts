@@ -1,4 +1,5 @@
 import {Component} from "@angular/core";
+import {TabsetComponent} from "ngx-bootstrap";
 
 @Component({
   selector:'admin-page',
@@ -6,6 +7,6 @@ import {Component} from "@angular/core";
   styleUrls:['./admin-page.component.css']
 })
 
-export class AdminPageComponent{
+export class AdminPageComponent {
 
 }

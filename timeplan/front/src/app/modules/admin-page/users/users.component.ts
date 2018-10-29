@@ -13,11 +13,8 @@ export class UsersComponent{
   showTeacher:boolean = true;
 
 
-
-
-
   display(value){
-    console.log(value);
+    //console.log(value);
     if(value == "Все пользователи"){
       this.showAll = false;
       this.showStundets = true;

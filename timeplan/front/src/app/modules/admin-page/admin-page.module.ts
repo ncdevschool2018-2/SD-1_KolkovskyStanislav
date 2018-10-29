@@ -16,7 +16,9 @@ import {TeachersComponent} from "./teachers/teachers.component";
 import {AlertModule} from "ngx-bootstrap/alert";
 import {TableTeacherComponent} from "./main/create.timetable/table_teacher/table-teacher.component";
 import {TableStudentComponent} from "./main/create.timetable/table_student/table-student.component";
-
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import {ButtonsModule} from 'ngx-bootstrap';
+import {ModalModule} from "ngx-bootstrap";
 
 @NgModule({
   declarations:[
@@ -32,11 +34,15 @@ import {TableStudentComponent} from "./main/create.timetable/table_student/table
     TimetableGroupComponent,
     TeachersComponent,
     TableTeacherComponent,
-    TableStudentComponent],
+    TableStudentComponent,
+    ],
   imports:[CommonModule,
           FormsModule,
           BrowserModule,
-          AlertModule.forRoot()],
+          AlertModule.forRoot(),
+          TabsModule.forRoot(),
+          ButtonsModule.forRoot(),
+          ModalModule.forRoot()],
   exports:[AdminPageComponent]
 })
 
