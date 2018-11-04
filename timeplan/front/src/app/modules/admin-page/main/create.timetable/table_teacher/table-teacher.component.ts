@@ -1,8 +1,8 @@
 import {Component} from "@angular/core";
-import {Group} from "../../models/group";
-import {Student_task} from "../../models/student_task";
-import {Teacher} from "../../models/teacher";
-import {Subject} from "../../models/subject";
+import {Group} from "../../../../../models/group";
+import {Student_task} from "../../../../../models/student_task";
+import {Teacher} from "../../../../../models/teacher";
+import {Subject} from "../../../../../models/subject";
 
 @Component({
   selector: 'table-teacher',
@@ -22,21 +22,13 @@ export class TableTeacherComponent {
 
 
   //Список преподавателей, получаем из БД
-  list_teachers: Teacher[] = [
-    new Teacher("Ивани","Василенко", "ivan@mail.com", "1234ivan","Доцент","Математика"),
-    new Teacher("Петр","Арнольд", "ivan@mail.com", "1234ivan","Доцент","Математика"),
-    new Teacher("Кузьма","Палыч", "ivan@mail.com", "1234ivan","Доцент","Математика"),
-    new Teacher("Алексей","Черный", "ivan@mail.com", "1234ivan","Доцент","Математика")
-  ];
+  list_teachers: Teacher[];
 
 
   //Список предметов для ГРУПП , получаем из БД
-  list_subjects: Subject[] = [
-    new Subject("Математика"),
-    new Subject("Философия"),
-    new Subject("Английский"),
-    new Subject("Физика"),
-  ];
+  list_subjects: Subject[];
+
+  ;
 
 
   type:string = null;

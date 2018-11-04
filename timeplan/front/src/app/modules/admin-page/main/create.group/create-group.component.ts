@@ -1,5 +1,6 @@
 import {Component} from "@angular/core";
-import {Student} from "../models/student";
+import {Student} from "../../../../models/student";
+import {GroupService} from "../../../../services/group.service";
 
 @Component({
   selector: 'create-group',
@@ -11,29 +12,41 @@ export class CreateGroupComponent{
 
 
 
+  constructor(private create_group_service:GroupService){}
+
   students: Student[] = [
-    new Student("Stas","Kolkovsky", "stas@gmail.com","12345"),
-    new Student("Kostya","Agapotov", "kostya@gmail.com","3545fg"),
-    new Student("Ivan","Dolnikov", "ivan@gmail.com","fgfgr3"),
-    new Student("Dmitry","Lavrick", "dmitry@gmail.com","1tyt1"),
+
   ];
 
-  create_students: Student[] =[
+  create_new_group: Student[] =[
 
   ]
 
-  show_remove_btn:boolean= false;
-  show_add_btn:boolean=true;
+  visible_alert:boolean = false;
+  count_choose_student: number = 0;
+  student:Student;
 
   addStudent(student){
-    this.create_students.push(student);
-    this.show_add_btn = false;
-    this.show_remove_btn = true;
+    let indexStudent = this.students.indexOf(student);
+    console.log(indexStudent);
+    this.students[indexStudent].setStatus(true);
+
+    this.count_choose_student++;
   }
 
 
-  removeStudent(){
-    this.show_add_btn = true;
-    this.show_remove_btn = false;
+  removeStudent(student){
+    this.count_choose_student--;
+    let indexStudent = this.students.indexOf(student);
+    this.students[indexStudent].setStatus(false);
+
+  }
+
+  create_group() {
+    for (let i = 0; i < this.students.length; i++) {
+      if (this.students[i].getStatus() == true) {
+        this.create_new_group.push(this.students[i]);
+      }
+    }
   }
 }

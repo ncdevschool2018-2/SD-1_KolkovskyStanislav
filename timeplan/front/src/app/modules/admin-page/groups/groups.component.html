@@ -2,7 +2,7 @@
   <div class="row">
 
     <div class="col-3">
-      <select class="form-control">
+      <select class="form-control" [(ngModel)]="selectedGroup" (ngModelChange)="onChange($event,group.value)" #group name="selgroup">
         <option>Выберите группу</option>
         <option *ngFor="let group of list_group" [value]="group">{{group.name_group}}</option>
       </select>
@@ -12,7 +12,7 @@
       <button class="btn btn-primary change-btn ml-3" type="button" (click)="openModal(template)" >Добавить Cтудента</button>
     </div>
 
-    <ng-template #template class="modal-window">
+    <ng-template #template class="modal-window bd-example-modal-lg">
       <div class="modal-header">
         <h4 class="modal-title pull-left">Modal</h4>
         <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
@@ -33,7 +33,7 @@
             <td scope="col">Петя</td>
             <td scope="col">Пупкин</td>
             <td scope="col" class="text-right">
-              <button class="btn btn-primary delete-btn ml-4" type="button">Добавить</button>
+              <button class="btn btn-secondary  ml-4" type="button">Добавить</button>
             </td>
           </tr>
           <!--<tr>-->

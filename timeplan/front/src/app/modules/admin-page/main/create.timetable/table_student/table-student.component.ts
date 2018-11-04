@@ -1,8 +1,8 @@
 import {Component} from "@angular/core";
-import {Group} from "../../models/group";
-import {Student_task} from "../../models/student_task";
-import {Teacher} from "../../models/teacher";
-import {Subject} from "../../models/subject";
+import {Group} from "../../../../../models/group";
+import {Student_task} from "../../../../../models/student_task";
+import {Teacher} from "../../../../../models/teacher";
+import {Subject} from "../../../../../models/subject";
 import {group} from "@angular/animations";
 
 @Component({
@@ -25,10 +25,7 @@ export class TableStudentComponent{
 
   //Список предметов для ГРУПП , получаем из БД
   list_subjects: Subject[] = [
-    new Subject("Математика"),
-    new Subject("Философия"),
-    new Subject("Английский"),
-    new Subject("Физика"),
+
   ];
 
 

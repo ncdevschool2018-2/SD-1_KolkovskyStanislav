@@ -1,22 +1,11 @@
-<form  #createGroup="ngForm">
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <input type="text" class="form-control" id="inputNameGroup" placeholder="Введите название группы">
-    </div>
-    <div class="col-6">
-      <button type="button" class="btn btn-primary custom_btn">Создать группу</button>
-    </div>
-  </div>
+<form (ngSubmit)="create_group(); createGroup.reset()" #createGroup="ngForm">
 
   <div class="form-row">
-    <div class=" form-group col-6">
-      <div class="form-group ">
-        <span class="form-control-feedback"></span>
-        <input type="text" class="form-control" placeholder="Введите имя студента">
-      </div>
+    <div class="form-group col-md-6">
+      <input type="text" class="form-control" id="inputNameGroup" placeholder="Введите название группы" required>
     </div>
     <div class="form-group col-6">
-      <button type="button" class="btn btn-primary custom_btn" id="search">Найти студента</button>
+      <button type="submit" class="btn btn-primary custom_btn" [disabled]="count_choose_student == 0" >Создать группу</button>
     </div>
   </div>
 </form>
@@ -35,23 +24,14 @@
       <tr *ngFor="let student of students">
         <td scope="col">{{student._fname}}</td>
         <td scope="col">{{student._lname}}</td>
-        <td scope="col" class="text-right">
-
+        <td ><button class="btn btn-danger"(click)="removeStudent(student)" [disabled]="!student.getStatus()">Убрать</button></td>
+        <td ><button class="btn btn-secondary" (click)="addStudent(student)" [disabled]="student.getStatus()">Добавить</button></td>
           <!--<button class="btn btn-primary add-btn ml-4" type="radio" (click)="addStudent()"-->
                   <!--[disabled]="">Добавить</button>-->
           <!--&lt;!&ndash;if student in this group&ndash;&gt;-->
           <!--<button class="btn btn-primary remove-btn ml-4" type="button" (click)="removeStudent()"-->
                   <!--*ngIf="show_remove_btn">Убрать</button>-->
 
-
-
-          <div class="btn-group">
-            <label class="btn btn-primary"
-                   btnRadio="Left" tabindex="0" role="button">+Добавить</label>
-            <label class="btn btn-primary"
-                   btnRadio="Middle" tabindex="0" role="button">-Убрать</label>
-          </div>
-        </td>
       </tr>
       <!--<tr>-->
         <!--<td scope="col">Иван</td>-->

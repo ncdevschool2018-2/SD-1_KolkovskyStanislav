@@ -1,127 +1,176 @@
-<div class="container pt-2 timetable">
+<div class="container pt-3">
 
   <div class="row">
-
       <button class="btn btn-primary mr-2" type="button" [disabled]="!showAll" (click)="display(all.textContent)" #all>Все пользователи</button>
       <button class="btn btn-primary mr-2" type="button" [disabled]="!showStundets" (click)="display(student.textContent)" #student>Студенты</button>
-      <button class="btn btn-primary" type="button" [disabled]="!showTeacher" (click)="display(teacher.textContent)" #teacher>Преподаватели</button>
-
+      <button class="btn btn-primary mr-2" type="button" [disabled]="!showTeacher" (click)="display(teacher.textContent)" #teacher>Преподаватели</button>
+      <button class="btn btn-dark mr-2" type="button" (click)="openModal(createStudent)">Создать студента</button>
+      <button class="btn btn-dark" type="button" (click)="openModal(createTeacher)">Создать преподавателя</button>
   </div>
 
+  <div class="row">
     <!--Table of teacher-->
     <div class="row pt-3" *ngIf="!showTeacher || !showAll">
       <table class="table table-hover ">
         <thead class="thead-dark">
         <tr>
+          <th>Id</th>
           <th scope="col" class="fnt">Имя</th>
           <th scope="col" class="lnt">Фамилия</th>
           <th scope="col" class="emailt">Почта</th>
           <th scope="col" class="pssw">Пароль</th>
           <th scope="col" class="level">Степень</th>
-          <th scope="col" class="subs">Предметы</th>
-          <th scope="col" class="act"></th>
+          <th></th>
+          <th></th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-          <td scope="col">Иван</td>
-          <td scope="col">Грозный</td>
-          <td scope="col">ivan@gmail.com</td>
-          <td scope="col">ivanpass</td>
-          <td scope="col">Доцент</td>
-          <td scope="col">Предметы</td>
-          <td scope="col" class="text-right">
-            <button class="btn btn-primary change-btn ml-4" type="button" >Изменить</button>
-            <button class="btn btn-primary delete-btn ml-4" type="button">Удалить</button>
-          </td>
-        </tr>
-        <tr>
-          <td scope="col">Николай</td>
-          <td scope="col">Велика</td>
-          <td scope="col">koly@gmail.com</td>
-          <td scope="col">kolypass</td>
-          <td scope="col">Доцент</td>
-          <td scope="col">Предметы</td>
-          <td scope="col" class="text-right">
-            <button class="btn btn-primary change-btn ml-4" type="button" >Изменить</button>
-            <button class="btn btn-primary delete-btn ml-4" type="button">Удалить</button>
-          </td>
-        </tr>
-        <tr>
-          <td scope="col">Евгений</td>
-          <td scope="col">Король</td>
-          <td scope="col">king@gmail.com</td>
-          <td scope="col">kingpass</td>
-          <td scope="col">Доцент</td>
-          <td scope="col">Предметы</td>
-          <td scope="col" class="text-right">
-            <button class="btn btn-primary change-btn ml-4" type="button" >Изменить</button>
-            <button class="btn btn-primary delete-btn ml-4" type="button">Удалить</button>
-          </td>
-        </tr>
-        <tr>
-          <td scope="col">Иван</td>
-          <td scope="col">Грозный</td>
-          <td scope="col">ivan@gmail.com</td>
-          <td scope="col">ivanpass</td>
-          <td scope="col">Доцент</td>
-          <td scope="col">Предметы</td>
-          <td scope="col" class="text-right">
-            <button class="btn btn-primary change-btn ml-4" type="button" >Изменить</button>
-            <button class="btn btn-primary delete-btn ml-4" type="button">Удалить</button>
-          </td>
+        <tr *ngFor="let teacher of teachers">
+          <td scope="col">{{teacher.id}}</td>
+          <td scope="col">{{teacher.fname}}</td>
+          <td scope="col">{{teacher.lname}}</td>
+          <td scope="col">{{teacher.email}}</td>
+          <td scope="col">{{teacher.password}}</td>
+          <td scope="col">{{teacher.level}}</td>
+          <td><button class="btn btn-secondary" type="button">Изменить</button></td>
+          <td><button class="btn btn-danger" type="button" (click)="deleteTeacher(teacher.id)">Удалить</button></td>
         </tr>
         </tbody>
       </table>
     </div>
+  </div>
 
+  <div class="row">
     <!--Table of student-->
     <div class="row pt-3" *ngIf="!showStundets || !showAll">
       <table class="table table-hover">
         <thead class="thead-dark">
         <tr>
+          <th>Id</th>
           <th scope="col" class="fns">Имя</th>
           <th scope="col" class="lns">Фамилия</th>
           <th scope="col" class="email">Почта</th>
           <th scope="col" class="pssw">Пароль</th>
-          <th scope="col" class="act"></th>
+          <th scope="col" class="group">Группа</th>
+          <th></th>
+          <th></th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-          <td scope="col">Петя</td>
-          <td scope="col">Пупкин</td>
-          <td scope="col">petya@gmail.com</td>
-          <td scope="col">petyapass</td>
-          <td scope="col" class="text-right">
-            <button class="btn btn-primary change-btn ml-4" type="button" >Изменить</button>
-            <button class="btn btn-primary delete-btn ml-4" type="button">Удалить</button>
-          </td>
-        </tr>
-        <tr>
-          <td scope="col">Иван</td>
-          <td scope="col">Грозный</td>
-          <td scope="col">ivan@gmail.com</td>
-          <td scope="col">ivanpass</td>
-          <td scope="col" class="text-right">
-            <button class="btn btn-primary change-btn ml-4" type="button" >Изменить</button>
-            <button class="btn btn-primary delete-btn ml-4" type="button">Удалить</button>
-          </td>
-        </tr>
-        <tr>
-          <td scope="col">Стас</td>
-          <td scope="col">Колковский</td>
-          <td scope="col">stas@gmail.com</td>
-          <td scope="col">staspass</td>
-          <td scope="col" class="text-right">
-            <button class="btn btn-primary change-btn ml-4" type="button" >Изменить</button>
-            <button class="btn btn-primary delete-btn ml-4" type="button">Удалить</button>
-          </td>
+        <tr *ngFor="let student of students">
+          <td>{{student.idstudents}}</td>
+          <td scope="col">{{student.fname}}</td>
+          <td scope="col">{{student.lname}}</td>
+          <td scope="col">{{student.email}}</td>
+          <td scope="col">{{student.password}}</td>
+          <td>{{student.ng == null ? "Неопределена" : student.ng}}</td>
+          <td> <button class="btn btn-secondary" type="button" >Изменить</button></td>
+          <td><button class="btn btn-danger" type="button" (click)="deleteStudent(student.idstudents)">Удалить</button></td>
         </tr>
         </tbody>
       </table>
     </div>
-
-
+  </div>
 
 </div>
+
+
+<!--Create new Student-->
+<ng-template #createStudent>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Создать студента</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label>Имя</label>
+      <input class="form-control" name="fname" [(ngModel)]="fname_student" #fname="ngModel" required/>
+      <!--<div [hidden]="username.valid || username.untouched" class="alert alert-danger">-->
+        <!--Пожалуйста введите имя &lt;!&ndash;Easy way to create client validation&ndash;&gt;-->
+      <!--</div>-->
+    </div>
+    <div class="form-group">
+      <label>Фамилия</label>
+      <input class="form-control" name="lname" [(ngModel)]="lname_student" #lname="ngModel" required/>
+      <!--<div [hidden]="lname.valid || lname.untouched" class="alert alert-danger">-->
+        <!--Пожалуйста введите фамилию-->
+      <!--</div>-->
+    </div>
+
+    <div class="form-group">
+      <label>E-mail</label>
+      <input class="form-control" name="email" [(ngModel)]="mail_student" #email="ngModel"
+             required pattern="[a-zA-Z0-9_]+@[a-zA-Z_]+?\.[a-zA-Z]{2,4}"/>
+      <!--<div [hidden]="email.valid || email.untouched" class="alert alert-danger">-->
+        <!--Email введен некоректно-->
+      <!--</div>-->
+    </div>
+    <div class="form-group">
+      <label>Пароль</label>
+      <input class="form-control" name="password" [(ngModel)]="password_student" #password="ngModel" type="password" required/>
+      <!--<div [hidden]="password.valid || password.untouched" class="alert alert-danger">-->
+        <!--Password введен некоректно-->
+      <!--</div>-->
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" (click)="addStudent() " (click)="closeModal()">Create
+    </button>
+  </div>
+</ng-template>
+
+<!--Create new Teacher-->
+<ng-template #createTeacher>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Создать преподавателя</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label>Имя</label>
+      <input class="form-control" name="fnamet" [(ngModel)]="fname_teacher" #fnamet="ngModel" required/>
+      <!--<div [hidden]="username.valid || username.untouched" class="alert alert-danger">-->
+      <!--Пожалуйста введите имя &lt;!&ndash;Easy way to create client validation&ndash;&gt;-->
+      <!--</div>-->
+    </div>
+    <div class="form-group">
+      <label>Фамилия</label>
+      <input class="form-control" name="lnamet" [(ngModel)]="lname_teacher" #lnamet="ngModel" required/>
+      <!--<div [hidden]="lname.valid || lname.untouched" class="alert alert-danger">-->
+      <!--Пожалуйста введите фамилию-->
+      <!--</div>-->
+    </div>
+
+    <div class="form-group">
+      <label>Степень</label>
+      <select id="inputLevel" class="form-control" [(ngModel)] = "level_teacher" name="level_teacher" required>
+        <option *ngFor="let level of level_list" [value]="level">{{level}}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>E-mail</label>
+      <input class="form-control" name="emailt" [(ngModel)]="mail_teacher" #emailt="ngModel"
+             required pattern="[a-zA-Z0-9_]+@[a-zA-Z_]+?\.[a-zA-Z]{2,4}"/>
+      <!--<div [hidden]="email.valid || email.untouched" class="alert alert-danger">-->
+      <!--Email введен некоректно-->
+      <!--</div>-->
+    </div>
+    <div class="form-group">
+      <label>Пароль</label>
+      <input class="form-control" name="passwordt" [(ngModel)]="password_teacher" #passwordt="ngModel" type="password" required/>
+      <!--<div [hidden]="password.valid || password.untouched" class="alert alert-danger">-->
+      <!--Password введен некоректно-->
+      <!--</div>-->
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" (click)="addTeacher() " (click)="closeModal()">Create</button>
+  </div>
+</ng-template>
