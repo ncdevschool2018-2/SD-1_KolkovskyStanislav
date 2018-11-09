@@ -15,6 +15,7 @@ public class TeacherModel {
     private String email;
     private String password;
     private String level;
+    private String subject;
 
 
     public Long getId() {
@@ -63,5 +64,13 @@ public class TeacherModel {
 
     public void setLevel(String level) {
         this.level = level;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 }

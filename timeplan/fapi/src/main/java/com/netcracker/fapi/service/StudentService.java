@@ -35,4 +35,9 @@ public class StudentService {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.delete(backendServerUrl + "/api/student/"+id);
     }
+
+    public StudentModel updateStudentAccount(StudentModel studentModel){
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.postForEntity(backendServerUrl+"/api/student/update", studentModel, StudentModel.class).getBody();
+    }
 }

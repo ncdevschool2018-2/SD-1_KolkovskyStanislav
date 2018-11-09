@@ -10,17 +10,19 @@ public class TeacherModel {
     private String email;
     private String password;
     private String level;
+    private String subject;
 
     public TeacherModel() {
     }
 
-    public TeacherModel(Long id, String fname, String lname, String email, String password, String level) {
+    public TeacherModel(Long id, String fname, String lname, String email, String password, String level,String subject) {
         this.id = id;
         this.fname = fname;
         this.lname = lname;
         this.email = email;
         this.password = password;
         this.level = level;
+        this.subject = subject;
     }
 
     public Long getId() {
@@ -69,5 +71,13 @@ public class TeacherModel {
 
     public void setLevel(String level) {
         this.level = level;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 }

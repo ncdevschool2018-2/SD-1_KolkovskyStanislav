@@ -25,4 +25,10 @@ public class SubjectService {
         return  restTemplate.postForEntity(backendServerUrl + "/api/subject", subjectModel, SubjectModel.class).getBody();
     }
 
+
+    public void deleteSubject(Long id){
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.delete(backendServerUrl + "/api/subject/"+ id);
+    }
+
 }

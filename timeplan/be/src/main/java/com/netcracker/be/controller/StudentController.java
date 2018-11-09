@@ -16,7 +16,6 @@ public class StudentController {
     @Autowired
     public StudentController(StudentService studentService){
         this.studentService = studentService;
-
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -33,5 +32,10 @@ public class StudentController {
     public ResponseEntity<StudentModel> deleteStudent(@PathVariable(name ="id") Long id){
         studentService.deleteStudent(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public StudentModel updateStudent(@RequestBody StudentModel studentModel){
+        return studentService.updateStudentAccount(studentModel);
     }
 }

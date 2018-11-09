@@ -34,4 +34,12 @@ public class StudentController {
         studentService.deleteStudentAccount(Long.valueOf(id));
     }
 
+
+    @RequestMapping(value ="/update", method = RequestMethod.POST)
+    public ResponseEntity<StudentModel> updateStudent(@RequestBody StudentModel studentModel){
+        if(studentModel != null){
+            return ResponseEntity.ok(studentService.updateStudentAccount(studentModel));
+        }
+        return null;
+    }
 }

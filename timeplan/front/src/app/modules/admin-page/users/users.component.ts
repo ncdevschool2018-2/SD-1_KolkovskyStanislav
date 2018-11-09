@@ -4,6 +4,8 @@ import {Teacher} from "../../../models/teacher";
 import {UsersService} from "../../../services/users.service";
 import {BsModalRef, BsModalService} from "ngx-bootstrap";
 import {Template} from "@angular/compiler/src/render3/r3_ast";
+import {SubjectService} from "../../../services/subject.service";
+import {Subject} from "../../../models/subject";
 
 @Component({
   selector:'users',
@@ -13,9 +15,10 @@ import {Template} from "@angular/compiler/src/render3/r3_ast";
 
 export class UsersComponent implements OnInit{
 
-  public editMode:false;
+  public editMode:boolean =false;
   public students: Student[];
   public teachers: Teacher[];
+  public subjects: Subject[];
   public modalRef:BsModalRef;
   public create_student:Student = new Student();
   public create_teacher:Teacher = new Teacher();
@@ -25,26 +28,12 @@ export class UsersComponent implements OnInit{
   showStundets:boolean = true;
   showTeacher:boolean = true;
 
-  fname_student:string;
-  lname_student:string;
-  mail_student:string;
-  password_student:string;
-  ng_student:string;
 
-  fname_teacher:string;
-  lname_teacher:string;
-  mail_teacher:string;
-  password_teacher:string;
-  level_teacher:string;
-
-  readonly level_list: string[] = [
-    "Научный сотрудник",
-    "Ассистент",
-    "Доцент",
-    "Профессор"];
+  readonly level_list: string[] = ["Научный сотрудник", "Ассистент", "Доцент", "Профессор"];
 
   constructor(private usersService: UsersService,
-              private modalService:BsModalService){}
+              private modalService:BsModalService,
+              private subjectService:SubjectService){}
 
   ngOnInit(){
     this.usersService.getAllTeachers().subscribe(teachers =>{
@@ -52,29 +41,68 @@ export class UsersComponent implements OnInit{
     })
 
     this.usersService.getAllStudents().subscribe(students =>{
-      this.students = students as Student [];
+      this.students = students as Student[];
     });
+
+    this.subjectService.getSubjects().subscribe(subjects =>{
+      this.subjects = subjects as Subject[];
+    })
   }
 
   openModal(template: TemplateRef<any>){
     this.modalRef = this.modalService.show(template);
   }
 
-  closeModal():void{
-    this.modalRef.hide;
+  updateStudent(template: TemplateRef<any>,student: Student):void{
+    this.create_student = Student.cloneStudent(student);
+    this.editMode = true;
+    this.modalRef = this.modalService.show(template);
   }
 
+  public updateTeacher(template: TemplateRef<any>,teacher:Teacher):void{
+    this.create_teacher= Teacher.cloneStudent(teacher);
+    this.editMode = true;
+    this.modalRef = this.modalService.show(template);
+  }
 
-  addStudent():void{
-    this.create_student.idstudents = this.calculateIdStudent(this.students.length);
-    this.create_student.fname = this.fname_student;
-    this.create_student.lname = this.lname_student;
-    this.create_student.email = this.mail_student;
-    this.create_student.password = this.password_student;
+  public closeModal():void{
+    this.modalRef.hide();
+    this.editMode =false;
+    this.create_student = new Student();
+    this.create_teacher = new Teacher();
+  }
+
+  public addStudent(student_account?:Student):void{
+
+    if(student_account == null){
+      this.create_student.idstudents = this.calculateIdStudent(this.students.length);
+      this.usersService.addStudent(this.create_student).subscribe( ()=>{
+        console.log(this.create_student);
+        this.updateListStudent();
+      })
+    }else{
+      this.create_student.idstudents = student_account.idstudents;
+      this.create_student.ng = student_account.ng;
+      this.usersService.updateStudent(this.create_student, this.create_student.idstudents).subscribe(()=>{
+        this.updateListStudent();
+      })
+    }
+    this.modalRef.hide();
+  }
+  public editStudent():void{
     this.usersService.addStudent(this.create_student).subscribe( ()=>{
       console.log(this.create_student);
       this.updateListStudent();
     })
+    this.modalRef.hide();
+  }
+
+  public editTeacher():void{
+    this.usersService.addTeacher(this.create_teacher).subscribe(()=>{
+      console.log(this.create_teacher);
+      this.updateListTeacher();
+    })
+    this.modalRef.hide();
   }
 
 
@@ -91,28 +119,32 @@ export class UsersComponent implements OnInit{
   }
 
   private calculateIdStudent(count_student:number):number{
-    let id_student:number;
-    return count_student > 0 ?  count_student + 1 :  0;
+    return count_student > 0 ?  this.students[count_student-1].idstudents + 1 :  0;
   }
 
   private calculateIdTeacher(count_teacher:number):number{
-    let id_teacher:number;
     return count_teacher > 0 ?  count_teacher + 1 :  0;
   }
 
-  public addTeacher():void{
-    this.create_teacher.id = this.calculateIdTeacher(this.teachers.length);
-    this.create_teacher.fname = this.fname_teacher;
-    this.create_teacher.lname = this.lname_teacher;
-    this.create_teacher.email = this.mail_teacher;
-    this.create_teacher.password = this.password_teacher;
-    this.create_teacher.level = this.level_teacher;
-    console.log(this.create_teacher);
-    this.usersService.addTeacher(this.create_teacher).subscribe(()=>{
+  public addTeacher(teacher?:Teacher):void{
+    if(teacher == null){
+      this.create_teacher.id = this.calculateIdTeacher(this.teachers.length);
       console.log(this.create_teacher);
-      this.updateListTeacher();
-    })
+      this.usersService.addTeacher(this.create_teacher).subscribe(()=>{
+        console.log(this.create_teacher);
+        this.updateListTeacher();
+      })
+    }else{
+      this.create_teacher.id = teacher.id;
+      this.usersService.addTeacher(this.create_teacher).subscribe(()=>{
+        console.log(this.create_teacher);
+        this.updateListTeacher();
+      })
+    }
+    this.modalRef.hide();
   }
+
+
 
   private updateListTeacher():void{
     this.usersService.getAllTeachers().subscribe(teachers =>{
@@ -129,18 +161,13 @@ export class UsersComponent implements OnInit{
 
   display(value){
     //console.log(value);
-    if(value == "Все пользователи"){
-      this.showAll = false;
-      this.showStundets = true;
-      this.showTeacher = true;
-    }
-    if(value == "Преподаватели"){
+    if(value == "Показать преподавателей"){
       this.showAll = true;
       this.showStundets = true;
       this.showTeacher = false;
 
     }
-    if(value == "Студенты"){
+    if(value == "Показать студентов"){
       this.showAll = true;
       this.showStundets = false;
       this.showTeacher = true;

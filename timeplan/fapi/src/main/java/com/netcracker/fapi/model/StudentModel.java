@@ -14,7 +14,6 @@ public class StudentModel {
     private String password;
     private String ng;
 
-
     public StudentModel() {
     }
 

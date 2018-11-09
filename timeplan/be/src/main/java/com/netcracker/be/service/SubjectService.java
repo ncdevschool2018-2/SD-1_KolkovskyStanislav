@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class SubjectService {
 
-
     private SubjectRepository subjectRepository;
 
     @Autowired
@@ -23,4 +22,6 @@ public class SubjectService {
     public Iterable<SubjectModel> getSubjects(){
         return subjectRepository.findAll();
     }
+
+    public void deleteSubject(Long id){ subjectRepository.deleteById(id);}
 }

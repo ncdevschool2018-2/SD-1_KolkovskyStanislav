@@ -40,5 +40,9 @@ export class UsersService{
   }
 
 
+  updateStudent(student:Student, studentId: number):Observable<Student>{
+    return this.http.post<Student>('/api/st/update/'+studentId, student);
+  }
+
 
 }

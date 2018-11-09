@@ -5,6 +5,8 @@ import com.netcracker.be.entity.StudentModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class StudentService {
 
@@ -23,5 +25,16 @@ public class StudentService {
 
     public void deleteStudent(Long id){
         studentRepository.deleteById(id);
+    }
+
+    public StudentModel updateStudentAccount(StudentModel student){
+
+        Optional<StudentModel> studentModel = studentRepository.findById(student.getIdstudents());
+        if(studentModel.isPresent()){
+            StudentModel ss = studentModel.get();
+            ss = student;
+
+        }
+        return  student;
     }
 }

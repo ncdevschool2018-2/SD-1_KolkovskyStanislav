@@ -1,10 +1,12 @@
-<div class="col-8">
-  <form (ngSubmit) ="createSubject(); subjectForm.reset()" #subjectForm="ngForm">
+<div class="col-8 pt-3">
+  <form (ngSubmit) ="createSubject(); subjectForm.reset()" #subjectForm="ngForm" >
     <div class="form-row">
-
+      <div class="col-12">
+        <alert *ngIf="show_alert" class="alert-danger" (onClosed)="closeAlert()">Такой предмет уже есть!</alert>
+      </div>
       <div class="form-group col-md-6">
-        <input type="text" class="form-control" id="inputNameSubject" placeholder="Введите название предмета" required
-               [(ngModel)] ="inputString" name="inputSubject">
+        <input type="text" class="form-control" placeholder="Введите название предмета"
+               [(ngModel)]="inputString" name="inputString" required>
       </div>
       <div class="form-group col-md-4">
         <button type="submit" class="btn btn-primary" style="width: 18rem;" [disabled]="subjectForm.form.invalid" >Создать предмет</button>
@@ -12,15 +14,19 @@
     </div>
   </form>
 
-  <table class="table table-hover"  *ngIf="subjects.length != 0">
+  <table class="table table-hover" *ngIf="subjects.length != 0">
     <thead>
     <tr>
-      <th scope="col">Список существующих предметов</th>
+      <th scope="col">ID</th>
+      <th>Название предмета</th>
+      <th>Действие</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let subject of subjects">
+      <td>{{subject.idsubject}}</td>
       <td>{{subject.name}}</td>
+      <td><button class="btn btn-dark" type="button" (click)="deleteSubject(subject.idsubject)">Удалить</button></td>
     </tr>
     </tbody>
   </table>

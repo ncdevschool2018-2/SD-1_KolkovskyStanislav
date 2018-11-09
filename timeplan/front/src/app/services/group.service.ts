@@ -12,19 +12,10 @@ import {Student} from "../models/student";
 export class GroupService{
 
   constructor(private http: HttpClient){}
-
-
-
-
-  getAllStudentNoGroups():Observable<Student[]>{
-    return this.http.get<Student[]>('/api/cg');
+  
+  createGroup(students:Student[]):Observable<Student[]>{
+    return this.http.post<Student[]>('/api/gp',students);
   }
-
-  createNewGroup(students:Student[]):Observable<Student[]>{
-    return this.http.post<Student[]>('/api/cg',students);
-  }
-
-
 
   deleteStudent(){}
 

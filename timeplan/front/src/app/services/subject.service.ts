@@ -16,8 +16,12 @@ export class SubjectService{
     return this.http.post<Subject>("/api/sb", subject);
   }
 
-  getSubject():Observable<Subject[]>{
+  getSubjects():Observable<Subject[]>{
     return this.http.get<Subject[]>('/api/sb');
+  }
+
+  deleteSubject(idsubject:number):Observable<void>{
+    return this.http.delete<void>('/api/sb/'+idsubject);
   }
 
 }

@@ -6,11 +6,6 @@ import {StudentPageComponent} from "./modules/student-page/student-page.componen
 import {TeacherPageComponent} from "./modules/teacher-page/teacher-page.component";
 
 
-const routes: Routes = [
-  {path : '' , component : AdminPageComponent},
-  {path : '' , component : StudentPageComponent},
-  {path : '' , component : TeacherPageComponent}
-  ]
 
 
 
@@ -18,7 +13,6 @@ const routes: Routes = [
 
   imports: [
     CommonModule,
-    RouterModule.forRoot(routes)
   ],
   declarations: []
 })

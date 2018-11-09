@@ -5,9 +5,7 @@ import com.netcracker.fapi.model.SubjectModel;
 import com.netcracker.fapi.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,10 +22,15 @@ public class SubjectController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<SubjectModel> createSubject(SubjectModel subjectModel){
+    public ResponseEntity<SubjectModel> createSubject(@RequestBody  SubjectModel subjectModel){
         if(subjectModel != null)
             return ResponseEntity.ok(subjectService.createSubject(subjectModel));
         else
             return  null;
+    }
+
+    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
+    public void deleteSubject(@PathVariable String id){
+        subjectService.deleteSubject(Long.valueOf(id));
     }
 }

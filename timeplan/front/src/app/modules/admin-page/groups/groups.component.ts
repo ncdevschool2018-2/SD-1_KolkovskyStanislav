@@ -3,7 +3,6 @@ import {Group} from "../../../models/group";
 import {Student} from "../../../models/student";
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
-import {GroupsService} from "./groups.service";
 import {group} from "@angular/animations";
 
 
@@ -28,7 +27,7 @@ export class GroupsComponent implements OnInit{
 
 
 
-  constructor(private modalService: BsModalService, private groupService: GroupsService) {}
+  constructor(private modalService: BsModalService) {}
 
 
   ngOnInit(){

@@ -1,16 +1,15 @@
-<div class="container pt-3">
+<div class="container-fluid pt-3">
 
   <div class="row">
-      <button class="btn btn-primary mr-2" type="button" [disabled]="!showAll" (click)="display(all.textContent)" #all>Все пользователи</button>
-      <button class="btn btn-primary mr-2" type="button" [disabled]="!showStundets" (click)="display(student.textContent)" #student>Студенты</button>
-      <button class="btn btn-primary mr-2" type="button" [disabled]="!showTeacher" (click)="display(teacher.textContent)" #teacher>Преподаватели</button>
+      <button class="btn btn-primary mr-2" type="button" [disabled]="!showStundets" (click)="display(student.textContent)" #student>Показать студентов</button>
+      <button class="btn btn-primary mr-2" type="button" [disabled]="!showTeacher" (click)="display(teacher.textContent)" #teacher>Показать преподавателей</button>
       <button class="btn btn-dark mr-2" type="button" (click)="openModal(createStudent)">Создать студента</button>
       <button class="btn btn-dark" type="button" (click)="openModal(createTeacher)">Создать преподавателя</button>
   </div>
 
-  <div class="row">
+
     <!--Table of teacher-->
-    <div class="row pt-3" *ngIf="!showTeacher || !showAll">
+    <div class="row pt-3" *ngIf="!showTeacher ">
       <table class="table table-hover ">
         <thead class="thead-dark">
         <tr>
@@ -20,8 +19,9 @@
           <th scope="col" class="emailt">Почта</th>
           <th scope="col" class="pssw">Пароль</th>
           <th scope="col" class="level">Степень</th>
-          <th></th>
-          <th></th>
+          <th scope="col" class="subject">Дисциплина</th>
+          <th>Изменить</th>
+          <th>Удалить</th>
         </tr>
         </thead>
         <tbody>
@@ -32,17 +32,16 @@
           <td scope="col">{{teacher.email}}</td>
           <td scope="col">{{teacher.password}}</td>
           <td scope="col">{{teacher.level}}</td>
-          <td><button class="btn btn-secondary" type="button">Изменить</button></td>
+          <td scope="col">{{teacher.subject}}</td>
+          <td><button class="btn btn-secondary" type="button" (click)="updateTeacher(createTeacher,teacher)">Изменить</button></td>
           <td><button class="btn btn-danger" type="button" (click)="deleteTeacher(teacher.id)">Удалить</button></td>
         </tr>
         </tbody>
       </table>
     </div>
-  </div>
 
-  <div class="row">
     <!--Table of student-->
-    <div class="row pt-3" *ngIf="!showStundets || !showAll">
+    <div class="row pt-3" *ngIf="!showStundets">
       <table class="table table-hover">
         <thead class="thead-dark">
         <tr>
@@ -52,8 +51,8 @@
           <th scope="col" class="email">Почта</th>
           <th scope="col" class="pssw">Пароль</th>
           <th scope="col" class="group">Группа</th>
-          <th></th>
-          <th></th>
+          <th>Изменить</th>
+          <th>Удалить</th>
         </tr>
         </thead>
         <tbody>
@@ -64,14 +63,13 @@
           <td scope="col">{{student.email}}</td>
           <td scope="col">{{student.password}}</td>
           <td>{{student.ng == null ? "Неопределена" : student.ng}}</td>
-          <td> <button class="btn btn-secondary" type="button" >Изменить</button></td>
+          <td><button class="btn btn-secondary" type="button" (click)="updateStudent(createStudent, student)">Изменить</button></td>
           <td><button class="btn btn-danger" type="button" (click)="deleteStudent(student.idstudents)">Удалить</button></td>
+
         </tr>
         </tbody>
       </table>
     </div>
-  </div>
-
 </div>
 
 
@@ -79,21 +77,21 @@
 <ng-template #createStudent>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Создать студента</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     <div class="form-group">
       <label>Имя</label>
-      <input class="form-control" name="fname" [(ngModel)]="fname_student" #fname="ngModel" required/>
+      <input class="form-control" name="fname" [(ngModel)]="create_student.fname" #fname="ngModel"  required/>
       <!--<div [hidden]="username.valid || username.untouched" class="alert alert-danger">-->
         <!--Пожалуйста введите имя &lt;!&ndash;Easy way to create client validation&ndash;&gt;-->
       <!--</div>-->
     </div>
     <div class="form-group">
       <label>Фамилия</label>
-      <input class="form-control" name="lname" [(ngModel)]="lname_student" #lname="ngModel" required/>
+      <input class="form-control" name="lname" [(ngModel)]="create_student.lname" #lname="ngModel" required/>
       <!--<div [hidden]="lname.valid || lname.untouched" class="alert alert-danger">-->
         <!--Пожалуйста введите фамилию-->
       <!--</div>-->
@@ -101,7 +99,7 @@
 
     <div class="form-group">
       <label>E-mail</label>
-      <input class="form-control" name="email" [(ngModel)]="mail_student" #email="ngModel"
+      <input class="form-control" name="email" [(ngModel)]="create_student.email" #email="ngModel"
              required pattern="[a-zA-Z0-9_]+@[a-zA-Z_]+?\.[a-zA-Z]{2,4}"/>
       <!--<div [hidden]="email.valid || email.untouched" class="alert alert-danger">-->
         <!--Email введен некоректно-->
@@ -109,7 +107,7 @@
     </div>
     <div class="form-group">
       <label>Пароль</label>
-      <input class="form-control" name="password" [(ngModel)]="password_student" #password="ngModel" type="password" required/>
+      <input class="form-control" name="password" [(ngModel)]="create_student.password" #password="ngModel" type="password" required/>
       <!--<div [hidden]="password.valid || password.untouched" class="alert alert-danger">-->
         <!--Password введен некоректно-->
       <!--</div>-->
@@ -117,7 +115,8 @@
   </div>
 
   <div class="modal-footer">
-    <button type="button" class="btn btn-default" (click)="addStudent() " (click)="closeModal()">Create
+    <button type="button" class="btn btn-default" (click)="editStudent()" *ngIf="editMode">Изменить</button>
+    <button type="button" class="btn btn-default" (click)="addStudent() "  *ngIf="!editMode">Create
     </button>
   </div>
 </ng-template>
@@ -126,21 +125,21 @@
 <ng-template #createTeacher>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Создать преподавателя</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     <div class="form-group">
       <label>Имя</label>
-      <input class="form-control" name="fnamet" [(ngModel)]="fname_teacher" #fnamet="ngModel" required/>
+      <input class="form-control" name="fnamet" [(ngModel)]="create_teacher.fname" #fnamet="ngModel" required/>
       <!--<div [hidden]="username.valid || username.untouched" class="alert alert-danger">-->
       <!--Пожалуйста введите имя &lt;!&ndash;Easy way to create client validation&ndash;&gt;-->
       <!--</div>-->
     </div>
     <div class="form-group">
       <label>Фамилия</label>
-      <input class="form-control" name="lnamet" [(ngModel)]="lname_teacher" #lnamet="ngModel" required/>
+      <input class="form-control" name="lnamet" [(ngModel)]="create_teacher.lname" #lnamet="ngModel" required/>
       <!--<div [hidden]="lname.valid || lname.untouched" class="alert alert-danger">-->
       <!--Пожалуйста введите фамилию-->
       <!--</div>-->
@@ -148,14 +147,21 @@
 
     <div class="form-group">
       <label>Степень</label>
-      <select id="inputLevel" class="form-control" [(ngModel)] = "level_teacher" name="level_teacher" required>
+      <select id="inputLevel" class="form-control" [(ngModel)] = "create_teacher.level" name="level_teacher" required>
         <option *ngFor="let level of level_list" [value]="level">{{level}}</option>
       </select>
     </div>
 
     <div class="form-group">
+      <label>Дисциплина</label>
+      <select class="form-control" [(ngModel)]="create_teacher.subject" name="subject" required>
+        <option *ngFor="let subject of subjects">{{subject.name}}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
       <label>E-mail</label>
-      <input class="form-control" name="emailt" [(ngModel)]="mail_teacher" #emailt="ngModel"
+      <input class="form-control" name="emailt" [(ngModel)]="create_teacher.email" #emailt="ngModel"
              required pattern="[a-zA-Z0-9_]+@[a-zA-Z_]+?\.[a-zA-Z]{2,4}"/>
       <!--<div [hidden]="email.valid || email.untouched" class="alert alert-danger">-->
       <!--Email введен некоректно-->
@@ -163,7 +169,7 @@
     </div>
     <div class="form-group">
       <label>Пароль</label>
-      <input class="form-control" name="passwordt" [(ngModel)]="password_teacher" #passwordt="ngModel" type="password" required/>
+      <input class="form-control" name="passwordt" [(ngModel)]="create_teacher.password" #passwordt="ngModel" type="password" required/>
       <!--<div [hidden]="password.valid || password.untouched" class="alert alert-danger">-->
       <!--Password введен некоректно-->
       <!--</div>-->
@@ -171,6 +177,7 @@
   </div>
 
   <div class="modal-footer">
-    <button type="button" class="btn btn-default" (click)="addTeacher() " (click)="closeModal()">Create</button>
+    <button type="button" class="btn btn-default" (click)="editTeacher()"  *ngIf="editMode">Изменить</button>
+    <button type="button" class="btn btn-default" (click)="addTeacher()"  *ngIf="!editMode">Создать</button>
   </div>
 </ng-template>
