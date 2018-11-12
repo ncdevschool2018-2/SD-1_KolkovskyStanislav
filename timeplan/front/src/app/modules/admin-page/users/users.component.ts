@@ -6,11 +6,13 @@ import {BsModalRef, BsModalService} from "ngx-bootstrap";
 import {Template} from "@angular/compiler/src/render3/r3_ast";
 import {SubjectService} from "../../../services/subject.service";
 import {Subject} from "../../../models/subject";
+import {DataService} from "../../../services/data.service";
 
 @Component({
   selector:'users',
   templateUrl:"./users.component.html",
-  styleUrls:["./users.component.css"]
+  styleUrls:["./users.component.css"],
+  providers:[]
 })
 
 export class UsersComponent implements OnInit{
@@ -31,7 +33,8 @@ export class UsersComponent implements OnInit{
 
   readonly level_list: string[] = ["Научный сотрудник", "Ассистент", "Доцент", "Профессор"];
 
-  constructor(private usersService: UsersService,
+  constructor(private dataService:DataService,
+              private usersService: UsersService,
               private modalService:BsModalService,
               private subjectService:SubjectService){}
 
@@ -89,6 +92,7 @@ export class UsersComponent implements OnInit{
     }
     this.modalRef.hide();
   }
+
   public editStudent():void{
     this.usersService.addStudent(this.create_student).subscribe( ()=>{
       console.log(this.create_student);
@@ -105,14 +109,14 @@ export class UsersComponent implements OnInit{
     this.modalRef.hide();
   }
 
-
-  deleteStudent(id_student:number):void{
+  public deleteStudent(id_student:number):void{
     this.usersService.deleteStudent(id_student).subscribe(()=>{
       this.updateListStudent();
     })
   }
 
   private updateListStudent():void {
+
       this.usersService.getAllStudents().subscribe(students =>{
         this.students = students as Student [];
     })
@@ -144,20 +148,18 @@ export class UsersComponent implements OnInit{
     this.modalRef.hide();
   }
 
-
-
   private updateListTeacher():void{
     this.usersService.getAllTeachers().subscribe(teachers =>{
       this.teachers = teachers as Teacher[];
+      // this.dataService.changeTeacher(this.teachers);
     })
   }
 
-  deleteTeacher(id_teacher: number){
+  public deleteTeacher(id_teacher: number){
     this.usersService.deleteTeacher(id_teacher).subscribe(()=>{
       this.updateListTeacher();
     })
   }
-
 
   display(value){
     //console.log(value);

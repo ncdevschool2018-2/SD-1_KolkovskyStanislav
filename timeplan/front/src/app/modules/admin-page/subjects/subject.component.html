@@ -2,7 +2,12 @@
   <form (ngSubmit) ="createSubject(); subjectForm.reset()" #subjectForm="ngForm" >
     <div class="form-row">
       <div class="col-12">
-        <alert *ngIf="show_alert" class="alert-danger" (onClosed)="closeAlert()">Такой предмет уже есть!</alert>
+        <!--<div *ngFor="let alert of alerts">-->
+          <!--<alert [type]="alert.type" *ngIf="show_alert" (onClosed)="closeAlert()">{{ alert.msg }}</alert>-->
+        <!--</div>-->
+        <alert *ngIf="show_alert_add" class="alert-danger" (onClosed)="closeAlert()">Такой предмет уже есть!</alert>
+        <alert *ngIf="show_alert_del" class="alert-danger" (onClosed)="closeAlert()">Нельзя удалить этот предмет, так как есть преподаватель(и)
+        с этим предметом</alert>
       </div>
       <div class="form-group col-md-6">
         <input type="text" class="form-control" placeholder="Введите название предмета"
@@ -26,7 +31,7 @@
     <tr *ngFor="let subject of subjects">
       <td>{{subject.idsubject}}</td>
       <td>{{subject.name}}</td>
-      <td><button class="btn btn-dark" type="button" (click)="deleteSubject(subject.idsubject)">Удалить</button></td>
+      <td><button class="btn btn-dark" type="button" (click)="deleteSubject(subject.idsubject, subject.name)">Удалить</button></td>
     </tr>
     </tbody>
   </table>

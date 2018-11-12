@@ -155,6 +155,7 @@
     <div class="form-group">
       <label>Дисциплина</label>
       <select class="form-control" [(ngModel)]="create_teacher.subject" name="subject" required>
+        <option>Не выбранно</option>
         <option *ngFor="let subject of subjects">{{subject.name}}</option>
       </select>
     </div>

@@ -10,6 +10,8 @@ public class GroupModel {
     private Long idgroup;
     private String name;
 
+
+
     public Long getIdgroup() {
         return idgroup;
     }

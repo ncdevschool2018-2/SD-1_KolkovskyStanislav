@@ -11,7 +11,7 @@ import {StudentPageModule} from "./modules/student-page/student-page.module";
 import {TeacherPageModule} from "./modules/teacher-page/teacher-page.module";
 import {StudentPageComponent} from "./modules/student-page/student-page.component";
 import {TeacherPageComponent} from "./modules/teacher-page/teacher-page.component";
-
+import { FormsModule } from '@angular/forms'; // <--- JavaScript import from Angular
 
 
 const routes: Routes = [

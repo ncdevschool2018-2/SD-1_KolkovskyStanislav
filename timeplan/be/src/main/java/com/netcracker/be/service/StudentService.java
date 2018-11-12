@@ -23,6 +23,10 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
+//    public Iterable<StudentModel> getAllStudentsNotGroup(){
+//
+//    }
+
     public void deleteStudent(Long id){
         studentRepository.deleteById(id);
     }

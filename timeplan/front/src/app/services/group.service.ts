@@ -13,8 +13,12 @@ export class GroupService{
 
   constructor(private http: HttpClient){}
   
-  createGroup(students:Student[]):Observable<Student[]>{
-    return this.http.post<Student[]>('/api/gp',students);
+  createGroup(group:Group):Observable<Group>{
+    return this.http.post<Group>('/api/gp',group);
+  }
+
+  getAllGroups():Observable<Group[]>{
+    return this.http.get<Group[]>('/api/gp');
   }
 
   deleteStudent(){}

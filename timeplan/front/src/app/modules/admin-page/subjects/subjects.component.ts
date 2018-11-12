@@ -1,10 +1,13 @@
-import {Component, OnInit, TemplateRef} from "@angular/core";
+import {Component, OnInit, TemplateRef, Input} from "@angular/core";
 import {Subject} from "../../../models/subject";
 import {SubjectService} from "../../../services/subject.service";
 import {UsersService} from "../../../services/users.service";
 import {Teacher} from "../../../models/teacher";
 import {Form} from "@angular/forms";
 import {Alert} from "selenium-webdriver";
+import {DataService} from "../../../services/data.service";
+
+
 
 @Component({
   selector:'subjects',
@@ -14,14 +17,17 @@ import {Alert} from "selenium-webdriver";
 
 export class SubjectsComponent implements OnInit{
 
-
   teachers:Teacher[];
   subjects: Subject[] = [];
   inputString:string;
-  show_alert:boolean = false;
+  show_alert_add:boolean = false;
+  show_alert_del:boolean = false;
 
 
   ngOnInit(){
+
+    // this.dataService.currentTeacher.subscribe(teacher => this.teachers = teacher);
+
     this.subjectService.getSubjects().subscribe(subjects =>{
       this.subjects = subjects as Subject[];
     })
@@ -31,27 +37,28 @@ export class SubjectsComponent implements OnInit{
     })
   }
 
-  constructor(private subjectService: SubjectService,
+  constructor(private dataService: DataService,
+              private subjectService: SubjectService,
               private teacherService: UsersService){}
 
   createSubject(){
     let newSubject: Subject = new Subject();
     newSubject.idsubject = this.calculateIdSubject();
     if(this.findDuplicates(this.inputString)){
-      this.show_alert = true;
+      this.show_alert_add = true;
     }else{
-      this.show_alert = false
+      this.show_alert_add = false
       newSubject.name = this.inputString;
       console.log(newSubject);
       this.subjectService.createSubject(newSubject).subscribe(()=>{
         this.updateListSubjects();
       })
     }
-
   }
 
   closeAlert():void{
-    this.show_alert = false
+    this.show_alert_add = false;
+    this.show_alert_del = false;
   }
 
   public calculateIdSubject():number{
@@ -70,15 +77,33 @@ export class SubjectsComponent implements OnInit{
     return false;
   }
 
-  public deleteSubject(idsubject:number):void{
-    this.subjectService.deleteSubject(idsubject).subscribe(()=>{
-      this.updateListSubjects();
-    })
+  public deleteSubject(idsubject:number, name_sub:string):void{
+    if(this.validateDelete(name_sub)){
+      this.show_alert_del = true;
+    }else{
+      this.show_alert_del = false;
+
+      this.subjectService.deleteSubject(idsubject).subscribe(()=>{
+        this.updateListSubjects();
+      })
+    }
+
+
+  }
+
+  private validateDelete(name_sub:string):boolean{
+    for(let i = 0 ; i < this.teachers.length; i++){
+      if(this.teachers[i].subject == name_sub){
+          return true;
+      }
+    }
+    return false;
   }
 
   private updateListSubjects(){
     this.subjectService.getSubjects().subscribe(subjects =>{
       this.subjects = subjects as Subject[];
     });
+    // this.dataService.changeSubject(this.subjects);
   }
 }
