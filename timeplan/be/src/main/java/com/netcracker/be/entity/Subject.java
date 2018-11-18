@@ -12,7 +12,7 @@ public class Subject {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idsubject;
+    private Long idsubjects;
     private String name;
 
     @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
@@ -22,14 +22,13 @@ public class Subject {
     public Subject(){}
 
 
-    public Long getIdsubject() {
-        return idsubject;
+    public Long getIdsubjects() {
+        return idsubjects;
     }
 
-    public void setIdsubject(Long idsubject) {
-        this.idsubject = idsubject;
+    public void setIdsubjects(Long idsubjects) {
+        this.idsubjects = idsubjects;
     }
-
 
     public String getName() {
         return name;

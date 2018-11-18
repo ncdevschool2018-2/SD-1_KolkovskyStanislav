@@ -10,23 +10,23 @@ import javax.persistence.*;
 public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idteachers;
     private String fname;
     private String lname;
     private String email;
     private String password;
     private String level;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idsubject")
+    @JoinColumn(name = "idsubjects")
     @JsonIgnore
     private Subject subject;
 
-    public Long getId() {
-        return id;
+    public Long getIdteachers() {
+        return idteachers;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdteachers(Long idteachers) {
+        this.idteachers = idteachers;
     }
 
     public String getFname() {
