@@ -1,4 +1,4 @@
 package com.netcracker.fapi.model;
 
-public class TimetableModel {
+public class Timetable {
 }

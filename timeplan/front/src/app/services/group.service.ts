@@ -21,6 +21,8 @@ export class GroupService{
     return this.http.get<Group[]>('/api/gp');
   }
 
+
+
   deleteStudent(){}
 
 }

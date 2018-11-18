@@ -1,6 +1,6 @@
 package com.netcracker.be.service;
 
-import com.netcracker.be.entity.GroupModel;
+import com.netcracker.be.entity.Group;
 import com.netcracker.be.repository.GroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,11 @@ public class GroupService {
         this.groupRepository = repository;
     }
 
-    public GroupModel createGroup(GroupModel groupModel){
-        return groupRepository.save(groupModel);
+    public Group createGroup(Group group){
+        return groupRepository.save(group);
+    }
+
+    public Iterable<Group> getGroups(){
+        return  groupRepository.findAll();
     }
 }

@@ -1,6 +1,6 @@
 package com.netcracker.fapi.service;
 
-import com.netcracker.fapi.model.SubjectModel;
+import com.netcracker.fapi.model.Subject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -14,15 +14,15 @@ public class SubjectService {
     @Value("${backend.server.url}")
     private String backendServerUrl;
 
-    public List<SubjectModel> getSubjects(){
+    public List<Subject> getSubjects(){
         RestTemplate restTemplate = new RestTemplate();
-        SubjectModel[] subjectModels = restTemplate.getForObject(backendServerUrl + "/api/subject", SubjectModel[].class );
-        return Arrays.asList(subjectModels);
+        Subject[] subjects = restTemplate.getForObject(backendServerUrl + "/api/subject", Subject[].class );
+        return Arrays.asList(subjects);
     }
 
-    public SubjectModel createSubject(SubjectModel subjectModel){
+    public Subject createSubject(Subject subject){
         RestTemplate restTemplate = new RestTemplate();
-        return  restTemplate.postForEntity(backendServerUrl + "/api/subject", subjectModel, SubjectModel.class).getBody();
+        return  restTemplate.postForEntity(backendServerUrl + "/api/subject", subject, Subject.class).getBody();
     }
 
 

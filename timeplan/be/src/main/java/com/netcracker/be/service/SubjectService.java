@@ -1,6 +1,6 @@
 package com.netcracker.be.service;
 
-import com.netcracker.be.entity.SubjectModel;
+import com.netcracker.be.entity.Subject;
 import com.netcracker.be.repository.SubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,11 +15,11 @@ public class SubjectService {
         this.subjectRepository = repository;
     }
 
-    public SubjectModel createSubject(SubjectModel subjectModel){
-        return subjectRepository.save(subjectModel);
+    public Subject createSubject(Subject subject){
+        return subjectRepository.save(subject);
     }
 
-    public Iterable<SubjectModel> getSubjects(){
+    public Iterable<Subject> getSubjects(){
         return subjectRepository.findAll();
     }
 

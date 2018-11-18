@@ -1,11 +1,12 @@
 package com.netcracker.fapi.service;
 
-import com.netcracker.fapi.model.StudentModel;
+import com.netcracker.fapi.model.Student;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -16,19 +17,19 @@ public class StudentService {
     private String backendServerUrl;
 
 
-    public List<StudentModel> getAllStudent() {
+    public List<Student> getAllStudent() {
         RestTemplate restTemplate = new RestTemplate();
-        StudentModel[] studentModels = restTemplate.getForObject(backendServerUrl + "/api/student", StudentModel[].class);
-        return Arrays.asList(studentModels);
+        Student[] students = restTemplate.getForObject(backendServerUrl + "/api/student/getall", Student[].class);
+        return students  == null ? Collections.emptyList() :Arrays.asList(students);
     }
 
-    public StudentModel getStudentAccount(int id) {
+    public Student getStudentAccount(int id) {
         return null;
     }
 
-    public StudentModel saveStudentAccount(StudentModel studentModel) {
+    public Student saveStudentAccount(Student student) {
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.postForEntity(backendServerUrl + "/api/student", studentModel, StudentModel.class).getBody();
+        return restTemplate.postForEntity(backendServerUrl + "/api/student", student, Student.class).getBody();
     }
 
     public void deleteStudentAccount(Long id) {
@@ -36,8 +37,12 @@ public class StudentService {
         restTemplate.delete(backendServerUrl + "/api/student/"+id);
     }
 
-    public StudentModel updateStudentAccount(StudentModel studentModel){
+
+    public List<Student> getAllStudentsNotGroup(){
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.postForEntity(backendServerUrl+"/api/student/update", studentModel, StudentModel.class).getBody();
+        Student[] students = restTemplate.getForObject(backendServerUrl + "/api/student/notgroup", Student[].class);
+        return  Arrays.asList(students);
     }
+
+
 }

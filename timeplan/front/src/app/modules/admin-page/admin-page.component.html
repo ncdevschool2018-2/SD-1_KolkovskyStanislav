@@ -1,34 +1,38 @@
-<!--NavBar-->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top" >
-  <a class="navbar-brand" href="#">TimePlan</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">
+    TimePlan
+  </a>
 
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+  <button class="navbar-toggler" type="button" (click)="toggleNavbar()"><span class="navbar-toggler-icon"></span></button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav  ml-auto">
+
+  <div class="collapse navbar-collapse" [ngClass]="{ 'show': navbarOpen }">
+    <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link" href="#">Support</a>
+        <a class="nav-link" routerLink="/home">Главная</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/users">Пользователи</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/groups">Группы</a>
+      </li>
+      <li>
+        <a class="nav-link" href="#">Расписание</a>
+      </li>
+      <li>
+        <a class="nav-link" routerLink="/subjects">Дисциплины</a>
       </li>
     </ul>
 
     <form class="form-inline ml-2 my-lg-0">
-      <!--<button class="btn btn-outline-success my-2 my-sm-0 btn-outline-danger" type="submit" >Register</button>-->
       <button type="button" class="btn btn-primary  my-2 my-sm-0"  data-target="#singupModal" data-toggle="modal">Logout</button>
     </form>
   </div>
 </nav>
 
-
 <div class="container pt-2 pl-5">
   <div class="row">
-        <tabset>
-          <tab heading="Пользователи"><users></users></tab>
-          <tab heading="Студентческие группы"><groups></groups></tab>
-          <tab heading="Расписание студентов"></tab>
-          <tab heading="Расписание преподавателей"></tab>
-          <tab heading="Дисциплины"><subjects></subjects></tab>
-        </tabset>
+    <router-outlet></router-outlet>
   </div>
 </div>

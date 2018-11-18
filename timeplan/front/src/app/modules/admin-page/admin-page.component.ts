@@ -12,10 +12,14 @@ import {Student} from "../../models/student";
 
 export class AdminPageComponent {
 
-  teachers:Teacher[];
-  subjects:Subject[];
-  students:Student[];
-
 
   constructor(){}
+
+  navbarOpen = false;
+
+  toggleNavbar() {
+    this.navbarOpen = !this.navbarOpen;
+  }
+
+
 }

@@ -4,7 +4,8 @@
       <button class="btn btn-primary mr-2" type="button" [disabled]="!showStundets" (click)="display(student.textContent)" #student>Показать студентов</button>
       <button class="btn btn-primary mr-2" type="button" [disabled]="!showTeacher" (click)="display(teacher.textContent)" #teacher>Показать преподавателей</button>
       <button class="btn btn-dark mr-2" type="button" (click)="openModal(createStudent)">Создать студента</button>
-      <button class="btn btn-dark" type="button" (click)="openModal(createTeacher)">Создать преподавателя</button>
+      <button class="btn btn-dark mr-2" type="button" (click)="openModal(createTeacher)">Создать преподавателя</button>
+      <button class="btn btn-dark" type="button" (click)="updateComponent()">Обновить</button>
   </div>
 
 
@@ -62,7 +63,7 @@
           <td scope="col">{{student.lname}}</td>
           <td scope="col">{{student.email}}</td>
           <td scope="col">{{student.password}}</td>
-          <td>{{student.ng == null ? "Неопределена" : student.ng}}</td>
+          <td>{{student.group == null ? "Неопределена" : student.group.name}}</td>
           <td><button class="btn btn-secondary" type="button" (click)="updateStudent(createStudent, student)">Изменить</button></td>
           <td><button class="btn btn-danger" type="button" (click)="deleteStudent(student.idstudents)">Удалить</button></td>
 

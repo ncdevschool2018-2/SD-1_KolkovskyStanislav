@@ -1,12 +1,17 @@
 package com.netcracker.be.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 
 @Entity
-@Table(name ="students")
-public class StudentModel {
+@Table(name ="studenttest")
+public class Student {
     @Id
-    private Long idstudents;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name ="idstudent")
+    private Long idstudent;
     @Column(name="fname")
     private String fname;
     @Column(name="lname")
@@ -15,15 +20,20 @@ public class StudentModel {
     private String email;
     @Column(name="password")
     private String password;
-    @Column(name="ng")
-    private String ng;
+
+    //    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idgroup")
+    @JsonIgnore
+    private Group group;
+
 
     public Long getIdstudents() {
-        return idstudents;
+        return idstudent;
     }
 
     public void setIdstudents(Long idstudents) {
-        this.idstudents = idstudents;
+        this.idstudent = idstudents;
     }
 
     public String getFname() {
@@ -58,11 +68,13 @@ public class StudentModel {
         this.password = password;
     }
 
-    public String getNg() {
-        return ng;
+    public Group getGroup() {
+        return group;
     }
 
-    public void setNg(String ng) {
-        this.ng = ng;
+    public void setGroup(Group group) {
+        this.group = group;
     }
+
+
 }

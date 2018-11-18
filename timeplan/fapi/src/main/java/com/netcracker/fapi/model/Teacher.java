@@ -1,37 +1,36 @@
 package com.netcracker.fapi.model;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.springframework.data.annotation.Id;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class StudentModel {
-
-    private Long idstudents;
+public class Teacher {
+    private Long id;
     private String fname;
     private String lname;
     private String email;
     private String password;
-    private String ng;
+    private String level;
+    private String subject;
 
-    public StudentModel() {
+    public Teacher() {
     }
 
-    public StudentModel(Long idstudents, String fname, String lname, String email, String password, String ng) {
-        this.idstudents = idstudents;
+    public Teacher(Long id, String fname, String lname, String email, String password, String level, String subject) {
+        this.id = id;
         this.fname = fname;
         this.lname = lname;
         this.email = email;
         this.password = password;
-        this.ng = ng;
+        this.level = level;
+        this.subject = subject;
     }
 
-    public Long getIdstudents() {
-        return idstudents;
+    public Long getId() {
+        return id;
     }
 
-    public void setIdstudents(Long idstudents) {
-        this.idstudents = idstudents;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFname() {
@@ -66,11 +65,19 @@ public class StudentModel {
         this.password = password;
     }
 
-    public String getNg() {
-        return ng;
+    public String getLevel() {
+        return level;
     }
 
-    public void setNg(String ng) {
-        this.ng = ng;
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 }

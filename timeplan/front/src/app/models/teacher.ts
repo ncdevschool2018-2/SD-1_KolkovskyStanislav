@@ -7,14 +7,13 @@ export class Teacher{
   email:string;
   password:string;
   level:string;
-  subject:string;
+  subject:Subject;
 
   constructor(){}
 
 
   static cloneStudent(teacher: Teacher):Teacher{
     let copyTeacher = new Teacher();
-
    copyTeacher.id = teacher.id;
    copyTeacher.fname = teacher.fname;
    copyTeacher.lname = teacher.lname;

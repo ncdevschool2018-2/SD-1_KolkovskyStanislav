@@ -23,6 +23,10 @@ export class UsersService{
     return this.http.post<Teacher>('api/tr',teacher);
   }
 
+  getAllStudentsNotGroup():Observable<Student[]>{
+    return this.http.get<Student[]>("api/st");
+  }
+
   getAllStudents():Observable<Student[]>{
     return this.http.get<Student[]>('api/st')
   }
@@ -37,11 +41,6 @@ export class UsersService{
 
   deleteTeacher(teacherId: number):Observable<void>{
     return this.http.delete<void>('api/tr/'+teacherId);
-  }
-
-
-  updateStudent(student:Student, studentId: number):Observable<Student>{
-    return this.http.post<Student>('/api/st/update/'+studentId, student);
   }
 
 

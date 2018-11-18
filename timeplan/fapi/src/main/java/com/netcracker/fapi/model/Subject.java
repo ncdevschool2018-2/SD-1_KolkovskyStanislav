@@ -1,16 +1,29 @@
 package com.netcracker.fapi.model;
 
-public class SubjectModel {
+import java.util.List;
+
+public class Subject {
 
     private Long idsubject;
     private String name;
 
-    public SubjectModel() {
+    private List<Teacher> teacherList;
+
+    public Subject() {
     }
 
-    public SubjectModel(Long idsubject, String name) {
+    public Subject(Long idsubject, String name, List<Teacher> teacherList) {
         this.idsubject = idsubject;
         this.name = name;
+        this.teacherList = teacherList;
+    }
+
+    public List<Teacher> getTeacherList() {
+        return teacherList;
+    }
+
+    public void setTeacherList(List<Teacher> teacherList) {
+        this.teacherList = teacherList;
     }
 
     public Long getIdsubject() {

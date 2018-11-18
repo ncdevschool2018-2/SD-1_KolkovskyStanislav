@@ -1,3 +1,5 @@
+import {Group} from "./group";
+
 export class Student{
 
   choosen:boolean = false;
@@ -9,7 +11,7 @@ export class Student{
   lname:string;
   email:string;
   password: string;
-  ng:string= null;
+  group:Group;
 
   constructor(){}
 
@@ -21,7 +23,7 @@ export class Student{
     copyStudent.lname =  student.lname;
     copyStudent.email =   student.email;
     copyStudent.password =  student.password;
-    copyStudent.ng = student.ng;
+    copyStudent.group = student.group;
     return copyStudent;
   }
 }

@@ -1,7 +1,7 @@
 package com.netcracker.fapi.controller;
 
 
-import com.netcracker.fapi.model.SubjectModel;
+import com.netcracker.fapi.model.Subject;
 import com.netcracker.fapi.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,14 +17,14 @@ public class SubjectController {
     private SubjectService subjectService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<SubjectModel>> getSubjects(){
+    public ResponseEntity<List<Subject>> getSubjects(){
         return ResponseEntity.ok(subjectService.getSubjects());
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<SubjectModel> createSubject(@RequestBody  SubjectModel subjectModel){
-        if(subjectModel != null)
-            return ResponseEntity.ok(subjectService.createSubject(subjectModel));
+    public ResponseEntity<Subject> createSubject(@RequestBody Subject subject){
+        if(subject != null)
+            return ResponseEntity.ok(subjectService.createSubject(subject));
         else
             return  null;
     }

@@ -5,7 +5,7 @@ import {UsersService} from "../../../services/users.service";
 import {Teacher} from "../../../models/teacher";
 import {Form} from "@angular/forms";
 import {Alert} from "selenium-webdriver";
-import {DataService} from "../../../services/data.service";
+
 
 
 
@@ -37,13 +37,12 @@ export class SubjectsComponent implements OnInit{
     })
   }
 
-  constructor(private dataService: DataService,
+  constructor(
               private subjectService: SubjectService,
               private teacherService: UsersService){}
 
-  createSubject(){
+  public createSubject():void{
     let newSubject: Subject = new Subject();
-    newSubject.idsubject = this.calculateIdSubject();
     if(this.findDuplicates(this.inputString)){
       this.show_alert_add = true;
     }else{
@@ -61,13 +60,6 @@ export class SubjectsComponent implements OnInit{
     this.show_alert_del = false;
   }
 
-  public calculateIdSubject():number{
-    if(this.subjects.length != 0){
-      return this.subjects[this.subjects.length-1].idsubject +1;
-    }else{
-      return 1;
-    }
-  }
 
   private findDuplicates(name:string):boolean{
     for(let i = 0; i < this.subjects.length; i++){
@@ -93,7 +85,7 @@ export class SubjectsComponent implements OnInit{
 
   private validateDelete(name_sub:string):boolean{
     for(let i = 0 ; i < this.teachers.length; i++){
-      if(this.teachers[i].subject == name_sub){
+      if(this.teachers[i].subject.name == name_sub){
           return true;
       }
     }
@@ -105,5 +97,15 @@ export class SubjectsComponent implements OnInit{
       this.subjects = subjects as Subject[];
     });
     // this.dataService.changeSubject(this.subjects);
+  }
+
+  public updateComponent():void{
+    // this.subjectService.getSubjects().subscribe(subjects =>{
+    //   this.subjects = subjects as Subject[];
+    // })
+
+    this.teacherService.getAllTeachers().subscribe(teachers =>{
+      this.teachers = teachers as Teacher [];
+    })
   }
 }

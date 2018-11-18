@@ -6,7 +6,7 @@ import {BsModalRef, BsModalService} from "ngx-bootstrap";
 import {Template} from "@angular/compiler/src/render3/r3_ast";
 import {SubjectService} from "../../../services/subject.service";
 import {Subject} from "../../../models/subject";
-import {DataService} from "../../../services/data.service";
+
 
 @Component({
   selector:'users',
@@ -33,7 +33,7 @@ export class UsersComponent implements OnInit{
 
   readonly level_list: string[] = ["Научный сотрудник", "Ассистент", "Доцент", "Профессор"];
 
-  constructor(private dataService:DataService,
+  constructor(
               private usersService: UsersService,
               private modalService:BsModalService,
               private subjectService:SubjectService){}
@@ -76,17 +76,17 @@ export class UsersComponent implements OnInit{
   }
 
   public addStudent(student_account?:Student):void{
-
     if(student_account == null){
-      this.create_student.idstudents = this.calculateIdStudent(this.students.length);
+     // this.create_student.idstudents = this.calculateIdStudent(this.students.length);
       this.usersService.addStudent(this.create_student).subscribe( ()=>{
         console.log(this.create_student);
         this.updateListStudent();
       })
     }else{
       this.create_student.idstudents = student_account.idstudents;
-      this.create_student.ng = student_account.ng;
-      this.usersService.updateStudent(this.create_student, this.create_student.idstudents).subscribe(()=>{
+      this.create_student.group = student_account.group;
+      this.usersService.addStudent(this.create_student).subscribe( ()=>{
+        console.log(this.create_student);
         this.updateListStudent();
       })
     }
@@ -116,23 +116,14 @@ export class UsersComponent implements OnInit{
   }
 
   private updateListStudent():void {
-
       this.usersService.getAllStudents().subscribe(students =>{
         this.students = students as Student [];
     })
   }
 
-  private calculateIdStudent(count_student:number):number{
-    return count_student > 0 ?  this.students[count_student-1].idstudents + 1 :  0;
-  }
-
-  private calculateIdTeacher(count_teacher:number):number{
-    return count_teacher > 0 ?  count_teacher + 1 :  0;
-  }
-
   public addTeacher(teacher?:Teacher):void{
     if(teacher == null){
-      this.create_teacher.id = this.calculateIdTeacher(this.teachers.length);
+     // this.create_teacher.id = this.calculateIdTeacher(this.teachers.length);
       console.log(this.create_teacher);
       this.usersService.addTeacher(this.create_teacher).subscribe(()=>{
         console.log(this.create_teacher);
@@ -161,6 +152,20 @@ export class UsersComponent implements OnInit{
     })
   }
 
+  public updateComponent():void{
+    this.usersService.getAllTeachers().subscribe(teachers =>{
+      this.teachers = teachers as Teacher[];
+    })
+
+    this.usersService.getAllStudents().subscribe(students =>{
+      this.students = students as Student[];
+    });
+
+    this.subjectService.getSubjects().subscribe(subjects =>{
+      this.subjects = subjects as Subject[];
+    })
+  }
+
   display(value){
     //console.log(value);
     if(value == "Показать преподавателей"){
@@ -175,4 +180,7 @@ export class UsersComponent implements OnInit{
       this.showTeacher = true;
     }
   }
+
+  public getSt
+
 }

@@ -9,6 +9,4 @@ import {NgModule} from "@angular/core";
 
 export class AppComponent {
   @HostBinding('class.app') private readonly hostClass = true;
-
-
 }

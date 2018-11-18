@@ -37,9 +37,9 @@ export class GroupsComponent implements OnInit{
       this.student_list = students as Student[];
     })
 
-    // this.groupService.getAllGroups().subscribe(groups =>{
-    //   this.group_list = groups as Group[];
-    // })
+    this.groupService.getAllGroups().subscribe(groups =>{
+      this.group_list = groups as Group[];
+    })
   }
 
   public openModal(template: TemplateRef<any>):void {
@@ -82,10 +82,10 @@ export class GroupsComponent implements OnInit{
   }
 
   public create_group():void {
+    this.group.name = this.selectedGroup;
     for (let i = 0; i < this.student_list.length; i++) {
       if (this.student_list[i].choosen == true) {
-        this.student_list[i].ng = this.selectedGroup;
-        this.group.name= this.selectedGroup;
+        this.student_list[i].group.name = this.selectedGroup;
         this.userService.addStudent(this.student_list[i]).subscribe(()=>{
           console.log(this.student_list[i]);
         })
@@ -96,7 +96,6 @@ export class GroupsComponent implements OnInit{
     })
     this.updateListStudent();
   }
-
 
   private updateListStudent():void {
     this.userService.getAllStudents().subscribe(students =>{

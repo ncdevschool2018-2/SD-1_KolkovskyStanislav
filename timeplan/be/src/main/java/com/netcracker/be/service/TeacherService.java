@@ -1,10 +1,8 @@
 package com.netcracker.be.service;
 
-import com.netcracker.be.entity.StudentModel;
-import com.netcracker.be.entity.TeacherModel;
+import com.netcracker.be.entity.Teacher;
 import com.netcracker.be.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,11 +15,11 @@ public class TeacherService {
         this.teacherRepository = teacherRepository;
     }
 
-    public TeacherModel saveTeacherAccount(TeacherModel teacherModel){
-        return teacherRepository.save(teacherModel);
+    public Teacher saveTeacherAccount(Teacher teacher){
+        return teacherRepository.save(teacher);
     }
 
-    public Iterable<TeacherModel> getAllTeachers() {
+    public Iterable<Teacher> getAllTeachers() {
         return teacherRepository.findAll();
     }
 

@@ -1,29 +1,25 @@
-package com.netcracker.fapi.model;
+package com.netcracker.be.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class TeacherModel {
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "teachers")
+public class Teacher {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String fname;
     private String lname;
     private String email;
     private String password;
     private String level;
-    private String subject;
-
-    public TeacherModel() {
-    }
-
-    public TeacherModel(Long id, String fname, String lname, String email, String password, String level,String subject) {
-        this.id = id;
-        this.fname = fname;
-        this.lname = lname;
-        this.email = email;
-        this.password = password;
-        this.level = level;
-        this.subject = subject;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idsubject")
+    @JsonIgnore
+    private Subject subject;
 
     public Long getId() {
         return id;
@@ -73,11 +69,11 @@ public class TeacherModel {
         this.level = level;
     }
 
-    public String getSubject() {
+    public Subject getSubject() {
         return subject;
     }
 
-    public void setSubject(String subject) {
+    public void setSubject(Subject subject) {
         this.subject = subject;
     }
 }

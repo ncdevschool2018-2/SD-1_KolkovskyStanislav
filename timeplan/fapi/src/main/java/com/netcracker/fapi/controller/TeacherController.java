@@ -1,7 +1,6 @@
 package com.netcracker.fapi.controller;
 
-import com.netcracker.fapi.model.StudentModel;
-import com.netcracker.fapi.model.TeacherModel;
+import com.netcracker.fapi.model.Teacher;
 import com.netcracker.fapi.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,15 +17,15 @@ public class TeacherController {
 
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<TeacherModel> addTeacher(@RequestBody TeacherModel teacherModel){
-        if(teacherModel != null)
-            return  ResponseEntity.ok(teacherService.saveTeacherAccount(teacherModel));
+    public ResponseEntity<Teacher> addTeacher(@RequestBody Teacher teacher){
+        if(teacher != null)
+            return  ResponseEntity.ok(teacherService.saveTeacherAccount(teacher));
         else
             return null;
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<TeacherModel>> getAllTeachers(){
+    public ResponseEntity<List<Teacher>> getAllTeachers(){
         return ResponseEntity.ok(teacherService.getAllTeachers());
     }
 

@@ -1,6 +1,6 @@
 package com.netcracker.fapi.controller;
 
-import com.netcracker.fapi.model.StudentModel;
+import com.netcracker.fapi.model.Student;
 import com.netcracker.fapi.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,18 +16,17 @@ public class StudentController {
     private StudentService studentService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<StudentModel> addStudent(@RequestBody StudentModel studentModel){
-        if(studentModel != null){
-            return ResponseEntity.ok(studentService.saveStudentAccount(studentModel));
+    public ResponseEntity<Student> addStudent(@RequestBody Student student){
+        if(student != null){
+            return ResponseEntity.ok(studentService.saveStudentAccount(student));
         }
         return null;
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<StudentModel>> getAllStudents(){
+    public ResponseEntity<List<Student>> getAllStudents(){
         return ResponseEntity.ok(studentService.getAllStudent());
     }
-
 
     @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
     public void deleteStudent(@PathVariable String id){
@@ -35,13 +34,9 @@ public class StudentController {
     }
 
 
-    @RequestMapping(value ="/update", method = RequestMethod.POST)
-    public ResponseEntity<StudentModel> updateStudent(@RequestBody StudentModel studentModel){
-        if(studentModel != null){
-            return ResponseEntity.ok(studentService.updateStudentAccount(studentModel));
-        }
-        return null;
+    @RequestMapping(path = "/notgroup",method =RequestMethod.GET)
+    public ResponseEntity<List<Student>> getAllStudentsNotGroup(){
+        return ResponseEntity.ok(studentService.getAllStudentsNotGroup());
     }
-
 
 }

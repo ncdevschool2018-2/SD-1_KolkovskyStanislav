@@ -6,7 +6,6 @@ import {WelcomePageModule} from "./modules/welcome-page/welcome-page.module";
 import {WelcomePageComponent} from "./modules/welcome-page/welcome-page.component";
 import {AdminPageComponent} from "./modules/admin-page/admin-page.component";
 import {AdminPageModule} from "./modules/admin-page/admin-page.module";
-import { AppRoutingModule } from './app-routing.module';
 import {StudentPageModule} from "./modules/student-page/student-page.module";
 import {TeacherPageModule} from "./modules/teacher-page/teacher-page.module";
 import {StudentPageComponent} from "./modules/student-page/student-page.component";
@@ -14,23 +13,19 @@ import {TeacherPageComponent} from "./modules/teacher-page/teacher-page.componen
 import { FormsModule } from '@angular/forms'; // <--- JavaScript import from Angular
 
 
-const routes: Routes = [
-  {path : 'admin-page' , component : AdminPageComponent},
-  {path : 'student-page' , component : StudentPageComponent},
-  {path : 'teacher-page' , component : TeacherPageComponent}
-]
-
 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
-    BrowserModule,WelcomePageModule,AdminPageModule, AppRoutingModule, StudentPageModule,
+    BrowserModule,
+    WelcomePageModule,
+    AdminPageModule,
+    StudentPageModule,
     TeacherPageModule,
-    RouterModule.forRoot(routes)
   ],
-  exports:[AppRoutingModule],
+  exports:[],
   providers: [],
   bootstrap: [AppComponent]
 })

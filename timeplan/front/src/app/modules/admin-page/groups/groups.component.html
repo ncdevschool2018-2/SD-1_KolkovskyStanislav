@@ -8,8 +8,9 @@
     <div class="form-group">
       <input class="form-control" [(ngModel)]="selectedGroup" name="name_group" #name_group="ngModel" required>
     </div>
-    <div class="col-4"><button class="btn btn-outline-success" (click)="create_group()">Создать группу</button></div>
-    <p>Список студентов несостоящих в группах</p>
+
+    <div class="col-4"><button class="btn btn-outline-danger" (click)="create_group()">Создать группу</button></div>
+
     <table class="table table-hover pt-3">
       <thead class="thead-dark">
       <tr>

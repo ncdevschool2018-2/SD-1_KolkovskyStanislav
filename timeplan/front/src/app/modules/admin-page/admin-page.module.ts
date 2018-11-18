@@ -10,12 +10,12 @@ import {AlertModule} from "ngx-bootstrap/alert";
 import {TabsModule } from 'ngx-bootstrap/tabs';
 import {ButtonsModule} from 'ngx-bootstrap';
 import {ModalModule} from "ngx-bootstrap";
-import {StudentService} from "../../services/student.service";
 import {HttpClientModule} from "@angular/common/http";
 import {UsersService} from "../../services/users.service";
 import {SubjectsComponent} from "./subjects/subjects.component";
 import {SubjectService} from "../../services/subject.service";
-import {DataService} from "../../services/data.service";
+import {MainComponent} from "./main/main.component";
+import {RouterModule} from "@angular/router";
 
 
 
@@ -25,7 +25,8 @@ import {DataService} from "../../services/data.service";
     AdminPageComponent,
     GroupsComponent,
     UsersComponent,
-    SubjectsComponent],
+    SubjectsComponent,
+    MainComponent],
   imports:[CommonModule,
           FormsModule,
           BrowserModule,
@@ -33,14 +34,16 @@ import {DataService} from "../../services/data.service";
           TabsModule.forRoot(),
           ButtonsModule.forRoot(),
           ModalModule.forRoot(),
+          RouterModule.forRoot([
+            {path :'users',component: UsersComponent},
+            {path :'groups',component: GroupsComponent},
+            {path :'subjects',component: SubjectsComponent}
+            ]),
           HttpClientModule],
   exports:[AdminPageComponent],
-  providers:[StudentService,
-            UsersService,
-            DataService,
+  providers:[UsersService,
             SubjectService]
 })
-
 
 export class AdminPageModule{
 

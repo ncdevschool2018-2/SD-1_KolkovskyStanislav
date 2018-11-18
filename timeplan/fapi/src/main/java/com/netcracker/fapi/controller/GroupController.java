@@ -1,6 +1,6 @@
 package com.netcracker.fapi.controller;
 
-import com.netcracker.fapi.model.GroupModel;
+import com.netcracker.fapi.model.Group;
 import com.netcracker.fapi.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +17,9 @@ public class GroupController {
     private GroupService groupService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<GroupModel> createGroup(@RequestBody GroupModel groupModel){
-        if(groupModel != null){
-            return ResponseEntity.ok(groupService.createGroup(groupModel));
+    public ResponseEntity<Group> createGroup(@RequestBody Group group){
+        if(group != null){
+            return ResponseEntity.ok(groupService.createGroup(group));
         }
         return null;
     }

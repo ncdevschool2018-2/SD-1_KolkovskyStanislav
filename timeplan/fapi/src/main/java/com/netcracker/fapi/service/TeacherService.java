@@ -1,13 +1,13 @@
 package com.netcracker.fapi.service;
 
 
-import com.netcracker.fapi.model.StudentModel;
-import com.netcracker.fapi.model.TeacherModel;
+import com.netcracker.fapi.model.Teacher;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -16,15 +16,15 @@ public class TeacherService {
     @Value("${backend.server.url}")
     private String backendServerUrl;
 
-    public List<TeacherModel> getAllTeachers() {
+    public List<Teacher> getAllTeachers() {
         RestTemplate restTemplate = new RestTemplate();
-        TeacherModel[] teacherModels = restTemplate.getForObject(backendServerUrl + "/api/teacher/", TeacherModel[].class);
-        return Arrays.asList(teacherModels);
+        Teacher[] teachers = restTemplate.getForObject(backendServerUrl + "/api/teacher/getall", Teacher[].class);
+        return  teachers == null ? Collections.emptyList() :Arrays.asList(teachers);
     }
 
-    public TeacherModel saveTeacherAccount(TeacherModel teacherModel){
+    public Teacher saveTeacherAccount(Teacher teacher){
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.postForEntity(backendServerUrl + "/api/teacher/", teacherModel, TeacherModel.class).getBody();
+        return restTemplate.postForEntity(backendServerUrl + "/api/teacher/", teacher, Teacher.class).getBody();
     }
 
     public void deleteTeacherAccount(Long id){
