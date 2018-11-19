@@ -24,6 +24,7 @@ export class GroupsComponent implements OnInit{
   selectedGroup:string;
 
   group:Group = new Group();
+  student_not_group:Student[];
   student_list:Student[];
   group_list:Group[];
   new_group:Student[];
@@ -33,8 +34,14 @@ export class GroupsComponent implements OnInit{
 
 
   ngOnInit(){
+
     this.userService.getAllStudents().subscribe(students =>{
       this.student_list = students as Student[];
+    })
+
+    this.userService.getAllStudentsNotGroup().subscribe(students=>{
+      this.student_not_group = students as Student[];
+
     })
 
     this.groupService.getAllGroups().subscribe(groups =>{
@@ -55,46 +62,43 @@ export class GroupsComponent implements OnInit{
   public showGroup:boolean = false;
   public create_mode:boolean = false;
 
-  display(value){
-    if(value == "Показать группы"){
-      this.showGroup = true;
-      this.create_mode = false;
-    }
-    if(value == "Создать группу"){
-      this.showGroup = false;
-      this.create_mode = true;
-    }
-  }
 
   //Buisness logic of creating group of STUDENTS
   public addStudent(student:Student):void{
     console.log(this.selectedGroup);
-    let indexStudent = this.student_list.indexOf(student);
-    console.log(" index: " + indexStudent + " id:" + student.idstudents);
-    this.student_list[indexStudent].choosen = true;
+    let indexStudent = this.student_not_group.indexOf(student);
+    console.log(" index: " + indexStudent + " id:" + student.idstudent);
+    this.student_not_group[indexStudent].choosen = true;
     this.count_choose_student++;
   }
 
   public removeStudent(student:Student):void{
     this.count_choose_student--;
-    let indexStudent = this.student_list.indexOf(student);
-    this.student_list[indexStudent].choosen = false;
+    let indexStudent = this.student_not_group.indexOf(student);
+    this.student_not_group[indexStudent].choosen = false;
   }
 
   public create_group():void {
     this.group.name = this.selectedGroup;
-    for (let i = 0; i < this.student_list.length; i++) {
-      if (this.student_list[i].choosen == true) {
-        this.student_list[i].group.name = this.selectedGroup;
-        this.userService.addStudent(this.student_list[i]).subscribe(()=>{
-          console.log(this.student_list[i]);
-        })
+    for (let i = 0; i < this.student_not_group.length; i++) {
+      if (this.student_not_group[i].choosen == true) {
+        this.group.student_list.push(this.student_not_group[i]);
+        // this.student_not_group[i].group = this.group;
+        // this.userService.addStudent(this.student_not_group[i]).subscribe(()=>{
+        //   console.log(this.student_list[i]);
+        // })
       }
     }
+
+    for(let i = 0; i < this.group.student_list.length;i++){
+      console.log(this.group.student_list[i]);
+    }
+
     this.groupService.createGroup(this.group).subscribe(()=>{
       console.log(this.group);
     })
     this.updateListStudent();
+
   }
 
   private updateListStudent():void {
@@ -102,4 +106,12 @@ export class GroupsComponent implements OnInit{
       this.student_list = students as Student [];
     })
   }
+
+  public deleteGroup(id:number):void{
+    this.groupService.deleteById(id).subscribe(()=>{
+      console.log("Succsess delete!")
+      this.ngOnInit();
+    })
+  }
+
 }

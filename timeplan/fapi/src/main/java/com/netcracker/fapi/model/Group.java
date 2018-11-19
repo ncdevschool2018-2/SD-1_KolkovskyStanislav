@@ -1,33 +1,33 @@
 package com.netcracker.fapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.List;
 
-//@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Group {
 
-    private Long idgroup;
+    private Long id;
     private String name;
-
-    private List<Student> studentList;
+    @JsonIgnore
+    private List<Student> students;
 
     public Group() {
     }
 
-
-    public Group(Long idgroup, String name, List<Student> studentList) {
-        this.idgroup = idgroup;
+    public Group(Long id, String name, List<Student> students) {
+        this.id = id;
         this.name = name;
-        this.studentList = studentList;
+        this.students = students;
     }
 
     public Long getId() {
-        return idgroup;
+        return id;
     }
 
     public void setId(Long id) {
-        this.idgroup = id;
+        this.id = id;
     }
 
     public String getName() {
@@ -38,19 +38,11 @@ public class Group {
         this.name = name;
     }
 
-    public Long getIdgroup() {
-        return idgroup;
+    public List<Student> getStudents() {
+        return students;
     }
 
-    public void setIdgroup(Long idgroup) {
-        this.idgroup = idgroup;
-    }
-
-    public List<Student> getStudentList() {
-        return studentList;
-    }
-
-    public void setStudentList(List<Student> studentList) {
-        this.studentList = studentList;
+    public void setStudents(List<Student> students) {
+        this.students = students;
     }
 }

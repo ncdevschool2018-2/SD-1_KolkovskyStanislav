@@ -16,12 +16,12 @@ public class SubjectController {
     @Autowired
     private SubjectService subjectService;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value="/getsb",method = RequestMethod.GET)
     public ResponseEntity<List<Subject>> getSubjects(){
         return ResponseEntity.ok(subjectService.getSubjects());
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "/createsb",method = RequestMethod.POST)
     public ResponseEntity<Subject> createSubject(@RequestBody Subject subject){
         if(subject != null)
             return ResponseEntity.ok(subjectService.createSubject(subject));
@@ -29,7 +29,7 @@ public class SubjectController {
             return  null;
     }
 
-    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{id}",method = RequestMethod.DELETE)
     public void deleteSubject(@PathVariable String id){
         subjectService.deleteSubject(Long.valueOf(id));
     }

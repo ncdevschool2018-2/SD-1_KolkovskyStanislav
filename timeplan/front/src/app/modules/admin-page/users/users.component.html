@@ -5,7 +5,7 @@
       <button class="btn btn-primary mr-2" type="button" [disabled]="!showTeacher" (click)="display(teacher.textContent)" #teacher>Показать преподавателей</button>
       <button class="btn btn-dark mr-2" type="button" (click)="openModal(createStudent)">Создать студента</button>
       <button class="btn btn-dark mr-2" type="button" (click)="openModal(createTeacher)">Создать преподавателя</button>
-      <button class="btn btn-dark" type="button" (click)="updateComponent()">Обновить</button>
+      <!--<button class="btn btn-dark" type="button" (click)="updateComponent()">Обновить</button>-->
   </div>
 
 
@@ -27,15 +27,15 @@
         </thead>
         <tbody>
         <tr *ngFor="let teacher of teachers">
-          <td scope="col">{{teacher.id}}</td>
+          <td scope="col">{{teacher.idteachers}}</td>
           <td scope="col">{{teacher.fname}}</td>
           <td scope="col">{{teacher.lname}}</td>
           <td scope="col">{{teacher.email}}</td>
           <td scope="col">{{teacher.password}}</td>
           <td scope="col">{{teacher.level}}</td>
-          <td scope="col">{{teacher.subject}}</td>
+          <td scope="col" >{{teacher.subject == null ? "Не выбранно" : teacher.subject.name}}</td>
           <td><button class="btn btn-secondary" type="button" (click)="updateTeacher(createTeacher,teacher)">Изменить</button></td>
-          <td><button class="btn btn-danger" type="button" (click)="deleteTeacher(teacher.id)">Удалить</button></td>
+          <td><button class="btn btn-danger" type="button" (click)="deleteTeacher(teacher.idteachers)">Удалить</button></td>
         </tr>
         </tbody>
       </table>
@@ -58,15 +58,14 @@
         </thead>
         <tbody>
         <tr *ngFor="let student of students">
-          <td>{{student.idstudents}}</td>
+          <td>{{student.idstudent}}</td>
           <td scope="col">{{student.fname}}</td>
           <td scope="col">{{student.lname}}</td>
           <td scope="col">{{student.email}}</td>
           <td scope="col">{{student.password}}</td>
           <td>{{student.group == null ? "Неопределена" : student.group.name}}</td>
           <td><button class="btn btn-secondary" type="button" (click)="updateStudent(createStudent, student)">Изменить</button></td>
-          <td><button class="btn btn-danger" type="button" (click)="deleteStudent(student.idstudents)">Удалить</button></td>
-
+          <td><button class="btn btn-danger" type="button" (click)="deleteStudent(student.idstudent)">Удалить</button></td>
         </tr>
         </tbody>
       </table>
@@ -155,7 +154,7 @@
 
     <div class="form-group">
       <label>Дисциплина</label>
-      <select class="form-control" [(ngModel)]="create_teacher.subject" name="subject" required>
+      <select class="form-control" [(ngModel)]="choose_subject" name="subject" required>
         <option>Не выбранно</option>
         <option *ngFor="let subject of subjects">{{subject.name}}</option>
       </select>

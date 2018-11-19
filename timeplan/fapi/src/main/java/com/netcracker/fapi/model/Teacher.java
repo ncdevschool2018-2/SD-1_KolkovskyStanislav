@@ -4,33 +4,23 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Teacher {
-    private Long id;
+    private Long idteachers;
     private String fname;
     private String lname;
     private String email;
     private String password;
     private String level;
-    private String subject;
+    private Subject subject;
 
     public Teacher() {
     }
 
-    public Teacher(Long id, String fname, String lname, String email, String password, String level, String subject) {
-        this.id = id;
-        this.fname = fname;
-        this.lname = lname;
-        this.email = email;
-        this.password = password;
-        this.level = level;
-        this.subject = subject;
+    public Long getIdteachers() {
+        return idteachers;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdteachers(Long idteachers) {
+        this.idteachers = idteachers;
     }
 
     public String getFname() {
@@ -73,11 +63,11 @@ public class Teacher {
         this.level = level;
     }
 
-    public String getSubject() {
+    public Subject getSubject() {
         return subject;
     }
 
-    public void setSubject(String subject) {
+    public void setSubject(Subject subject) {
         this.subject = subject;
     }
 }

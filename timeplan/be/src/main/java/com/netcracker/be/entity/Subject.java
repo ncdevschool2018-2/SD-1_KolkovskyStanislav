@@ -15,7 +15,7 @@ public class Subject {
     private Long idsubjects;
     private String name;
 
-    @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "subject", cascade = CascadeType.REFRESH,fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Teacher> teacherList;
 

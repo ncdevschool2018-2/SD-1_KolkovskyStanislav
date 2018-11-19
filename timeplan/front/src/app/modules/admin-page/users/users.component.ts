@@ -26,10 +26,12 @@ export class UsersComponent implements OnInit{
   public create_teacher:Teacher = new Teacher();
 
 
+
+
   showAll:boolean = true;
   showStundets:boolean = true;
   showTeacher:boolean = true;
-
+  choose_subject:string;
 
   readonly level_list: string[] = ["Научный сотрудник", "Ассистент", "Доцент", "Профессор"];
 
@@ -76,36 +78,31 @@ export class UsersComponent implements OnInit{
   }
 
   public addStudent(student_account?:Student):void{
-    if(student_account == null){
+
      // this.create_student.idstudents = this.calculateIdStudent(this.students.length);
+     this.create_student.group = null;
       this.usersService.addStudent(this.create_student).subscribe( ()=>{
         console.log(this.create_student);
         this.updateListStudent();
       })
-    }else{
-      this.create_student.idstudents = student_account.idstudents;
-      this.create_student.group = student_account.group;
-      this.usersService.addStudent(this.create_student).subscribe( ()=>{
-        console.log(this.create_student);
-        this.updateListStudent();
-      })
-    }
+
+      // this.create_student.idstudent = student_account.idstudent;
+      // this.create_student.group = student_account.group;
+      // this.usersService.addStudent(this.create_student).subscribe( ()=>{
+      //   console.log(this.create_student);
+      //   this.updateListStudent();
+      // })
+
     this.modalRef.hide();
   }
 
   public editStudent():void{
-    this.usersService.addStudent(this.create_student).subscribe( ()=>{
-      console.log(this.create_student);
-      this.updateListStudent();
-    })
+    this.addStudent();
     this.modalRef.hide();
   }
 
   public editTeacher():void{
-    this.usersService.addTeacher(this.create_teacher).subscribe(()=>{
-      console.log(this.create_teacher);
-      this.updateListTeacher();
-    })
+   this.addTeacher();
     this.modalRef.hide();
   }
 
@@ -122,20 +119,26 @@ export class UsersComponent implements OnInit{
   }
 
   public addTeacher(teacher?:Teacher):void{
-    if(teacher == null){
+
      // this.create_teacher.id = this.calculateIdTeacher(this.teachers.length);
-      console.log(this.create_teacher);
+      for(let i =0; i < this.subjects.length; i++){
+        if(this.subjects[i].name == this.choose_subject){
+          this.create_teacher.subject = this.subjects[i];
+          break;
+        }
+      }
+      //console.log(this.create_teacher);
       this.usersService.addTeacher(this.create_teacher).subscribe(()=>{
         console.log(this.create_teacher);
         this.updateListTeacher();
       })
-    }else{
-      this.create_teacher.id = teacher.id;
-      this.usersService.addTeacher(this.create_teacher).subscribe(()=>{
-        console.log(this.create_teacher);
-        this.updateListTeacher();
-      })
-    }
+
+      // this.create_teacher.idteachers = teacher.idteachers;
+      // this.usersService.addTeacher(this.create_teacher).subscribe(()=>{
+      //   console.log(this.create_teacher);
+      //   this.updateListTeacher();
+      // })
+
     this.modalRef.hide();
   }
 
@@ -181,6 +184,5 @@ export class UsersComponent implements OnInit{
     }
   }
 
-  public getSt
 
 }

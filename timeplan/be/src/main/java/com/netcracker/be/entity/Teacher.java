@@ -16,9 +16,8 @@ public class Teacher {
     private String email;
     private String password;
     private String level;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idsubjects")
-    @JsonIgnore
     private Subject subject;
 
     public Long getIdteachers() {

@@ -21,19 +21,18 @@ public class Student {
     @Column(name="password")
     private String password;
 
-    //    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idgroup")
-    @JsonIgnore
+    //@JsonIgnore
     private Group group;
 
 
-    public Long getIdstudents() {
+    public Long getIdstudent() {
         return idstudent;
     }
 
-    public void setIdstudents(Long idstudents) {
-        this.idstudent = idstudents;
+    public void setIdstudent(Long idstudent) {
+        this.idstudent = idstudent;
     }
 
     public String getFname() {

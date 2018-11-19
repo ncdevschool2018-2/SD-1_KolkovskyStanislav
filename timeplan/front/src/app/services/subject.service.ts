@@ -13,15 +13,15 @@ export class SubjectService{
   constructor(private http: HttpClient){}
 
   createSubject(subject: Subject):Observable<Subject>{
-    return this.http.post<Subject>("/api/sb", subject);
+    return this.http.post<Subject>("/api/sb/createsb", subject);
   }
 
   getSubjects():Observable<Subject[]>{
-    return this.http.get<Subject[]>('/api/sb');
+    return this.http.get<Subject[]>('/api/sb/getsb');
   }
 
   deleteSubject(idsubject:number):Observable<void>{
-    return this.http.delete<void>('/api/sb/'+idsubject);
+    return this.http.delete<void>('/api/sb/delete/'+idsubject);
   }
 
 }

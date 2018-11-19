@@ -16,10 +16,9 @@ public class StudentService {
     @Value("${backend.server.url}")
     private String backendServerUrl;
 
-
     public List<Student> getAllStudent() {
         RestTemplate restTemplate = new RestTemplate();
-        Student[] students = restTemplate.getForObject(backendServerUrl + "/api/student/getall", Student[].class);
+        Student[] students = restTemplate.getForObject(backendServerUrl + "/api/student/getall",Student[].class);
         return students  == null ? Collections.emptyList() :Arrays.asList(students);
     }
 
@@ -29,7 +28,7 @@ public class StudentService {
 
     public Student saveStudentAccount(Student student) {
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.postForEntity(backendServerUrl + "/api/student", student, Student.class).getBody();
+        return restTemplate.postForEntity(backendServerUrl + "/api/student/save", student, Student.class).getBody();
     }
 
     public void deleteStudentAccount(Long id) {
@@ -44,5 +43,10 @@ public class StudentService {
         return  Arrays.asList(students);
     }
 
+
+    public Student addingIntoGroup(Long id, Long idgroup){
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForObject(backendServerUrl + "/api/student/addinggroup/"+ id + "/" + idgroup,Student.class);
+    }
 
 }

@@ -40,7 +40,6 @@ public class SubjectController {
         return  ResponseEntity.noContent().build();
     }
 
-
     //Testing this method
     @RequestMapping(value="/create", method = RequestMethod.GET)
     public Subject addSubject(){
@@ -49,7 +48,6 @@ public class SubjectController {
         subject.setName("Математика");
 
         List<Teacher> teacherList = new ArrayList<>();
-
         Teacher teacher = new Teacher();
         teacher.setFname("fname");
         teacher.setLname("lname");

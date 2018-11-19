@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.ws.Response;
 import java.util.List;
 
 @RestController
@@ -15,7 +16,7 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "/createst",method = RequestMethod.POST)
     public ResponseEntity<Student> addStudent(@RequestBody Student student){
         if(student != null){
             return ResponseEntity.ok(studentService.saveStudentAccount(student));
@@ -23,20 +24,26 @@ public class StudentController {
         return null;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value="/getst",method = RequestMethod.GET)
     public ResponseEntity<List<Student>> getAllStudents(){
         return ResponseEntity.ok(studentService.getAllStudent());
     }
 
-    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{id}",method = RequestMethod.DELETE)
     public void deleteStudent(@PathVariable String id){
         studentService.deleteStudentAccount(Long.valueOf(id));
     }
 
 
-    @RequestMapping(path = "/notgroup",method =RequestMethod.GET)
+    @RequestMapping(value = "/notgroup",method =RequestMethod.GET)
     public ResponseEntity<List<Student>> getAllStudentsNotGroup(){
         return ResponseEntity.ok(studentService.getAllStudentsNotGroup());
     }
 
+    @RequestMapping(value = "/add_into_group/{id}/{idgroup}",method = RequestMethod.GET)
+    public ResponseEntity<Student> addStudentIntoGroup(@PathVariable(name="id") String id,
+                                                       @PathVariable(name="idgroup") String idroup){
+
+        return ResponseEntity.ok(studentService.addingIntoGroup(Long.valueOf(id), Long.valueOf(idroup)));
+    }
 }

@@ -1,37 +1,30 @@
 package com.netcracker.fapi.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;
 
-//@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Student {
-
-    private Long idstudents;
+    private Long idstudent;
     private String fname;
     private String lname;
     private String email;
     private String password;
+
     private Group group;
 
     public Student() {
     }
 
-    public Student(Long idstudents, String fname, String lname, String email, String password, Group group) {
-        this.idstudents = idstudents;
-        this.fname = fname;
-        this.lname = lname;
-        this.email = email;
-        this.password = password;
-        this.group = group;
+
+    public Long getIdstudent() {
+        return idstudent;
     }
 
-    public Long getIdstudents() {
-        return idstudents;
-    }
-
-    public void setIdstudents(Long idstudents) {
-        this.idstudents = idstudents;
+    public void setIdstudent(Long idstudent) {
+        this.idstudent = idstudent;
     }
 
     public String getFname() {

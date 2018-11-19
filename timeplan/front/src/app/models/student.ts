@@ -5,8 +5,7 @@ export class Student{
   choosen:boolean = false;
   // private adding_in_group:boolean = true;
   // private removing_from_group:boolean = false;
-
-  idstudents:number;
+  idstudent:number;
   fname: string;
   lname:string;
   email:string;
@@ -18,7 +17,7 @@ export class Student{
 
   static cloneStudent(student: Student):Student{
     let copyStudent = new Student();
-    copyStudent.idstudents = student.idstudents;
+    copyStudent.idstudent = student.idstudent;
     copyStudent.fname = student.fname;
     copyStudent.lname =  student.lname;
     copyStudent.email =   student.email;

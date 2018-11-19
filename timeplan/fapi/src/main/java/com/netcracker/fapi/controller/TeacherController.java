@@ -15,8 +15,7 @@ public class TeacherController {
     @Autowired
     private TeacherService teacherService;
 
-
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "/createtr",method = RequestMethod.POST)
     public ResponseEntity<Teacher> addTeacher(@RequestBody Teacher teacher){
         if(teacher != null)
             return  ResponseEntity.ok(teacherService.saveTeacherAccount(teacher));
@@ -24,13 +23,13 @@ public class TeacherController {
             return null;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/gettr",method = RequestMethod.GET)
     public ResponseEntity<List<Teacher>> getAllTeachers(){
         return ResponseEntity.ok(teacherService.getAllTeachers());
     }
 
 
-    @RequestMapping(value="/{id}" , method = RequestMethod.DELETE)
+    @RequestMapping(value="/delete/{id}" , method = RequestMethod.DELETE)
     public void deleteTeacher(@PathVariable String id){
         teacherService.deleteTeacherAccount(Long.valueOf(id));
     }

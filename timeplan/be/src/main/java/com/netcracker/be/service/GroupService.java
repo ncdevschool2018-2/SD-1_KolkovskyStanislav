@@ -19,6 +19,9 @@ public class GroupService {
         return groupRepository.save(group);
     }
 
+    public void deleteById(Long id){
+        groupRepository.deleteById(id);
+    }
     public Iterable<Group> getGroups(){
         return  groupRepository.findAll();
     }

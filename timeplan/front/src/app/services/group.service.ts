@@ -14,15 +14,15 @@ export class GroupService{
   constructor(private http: HttpClient){}
   
   createGroup(group:Group):Observable<Group>{
-    return this.http.post<Group>('/api/gp',group);
+    return this.http.post<Group>('/api/gp/creategp',group);
   }
 
   getAllGroups():Observable<Group[]>{
-    return this.http.get<Group[]>('/api/gp');
+    return this.http.get<Group[]>('/api/gp/getgp');
   }
 
-
-
-  deleteStudent(){}
+  deleteById(idgroup:number):Observable<void>{
+    return this.http.delete<void>('/api/gp/delete/'+idgroup);
+  }
 
 }

@@ -32,6 +32,8 @@ export class SubjectsComponent implements OnInit{
       this.subjects = subjects as Subject[];
     })
 
+    console.log(this.subjects);
+
     this.teacherService.getAllTeachers().subscribe(teachers =>{
       this.teachers = teachers as Teacher [];
     })
@@ -69,12 +71,11 @@ export class SubjectsComponent implements OnInit{
     return false;
   }
 
-  public deleteSubject(idsubject:number, name_sub:string):void{
-    if(this.validateDelete(name_sub)){
+  public deleteSubject(idsubject:number):void{
+    if(this.validateDelete(idsubject)){
       this.show_alert_del = true;
     }else{
       this.show_alert_del = false;
-
       this.subjectService.deleteSubject(idsubject).subscribe(()=>{
         this.updateListSubjects();
       })
@@ -83,10 +84,14 @@ export class SubjectsComponent implements OnInit{
 
   }
 
-  private validateDelete(name_sub:string):boolean{
+  private validateDelete(idsubjects:number):boolean{
     for(let i = 0 ; i < this.teachers.length; i++){
-      if(this.teachers[i].subject.name == name_sub){
+      if(this.teachers[i].subject == null){
+          return false;
+      }else{
+        if(this.teachers[i].subject.idsubjects == idsubjects){
           return true;
+        }
       }
     }
     return false;

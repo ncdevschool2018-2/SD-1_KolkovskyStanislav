@@ -5,10 +5,8 @@ import com.netcracker.be.entity.Student;
 import com.netcracker.be.service.GroupService;
 import com.netcracker.be.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -27,9 +25,15 @@ public class GroupController {
 
     @RequestMapping(method = RequestMethod.POST)
     public Group addStudent(@RequestBody Group group) {
+
         return groupService.createGroup(group);
     }
 
+    @RequestMapping(value="/delete/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Group>deleteGroup(@PathVariable(name ="id") String id){
+        groupService.deleteById(Long.valueOf(id));
+        return ResponseEntity.noContent().build();
+    }
 
     @RequestMapping(value="/creategroup", method = RequestMethod.GET)
     public Group createGroup(){
@@ -53,10 +57,10 @@ public class GroupController {
     @RequestMapping(value = "/getgroups", method = RequestMethod.GET)
     public Iterable<Group> getGroups(){
         Iterable<Group> groups = groupService.getGroups();
-        Iterator<Group> groupIterator = groups.iterator();
-        while(groupIterator.hasNext()){
-            System.out.println(groupIterator.next().getStudents());
-        }
+//        Iterator<Group> groupIterator = groups.iterator();
+//        while(groupIterator.hasNext()){
+//            System.out.println(groupIterator.next().getStudents());
+//        }
         return groups;
     }
 }

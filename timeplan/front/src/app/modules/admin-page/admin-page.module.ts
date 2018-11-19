@@ -37,7 +37,8 @@ import {RouterModule} from "@angular/router";
           RouterModule.forRoot([
             {path :'users',component: UsersComponent},
             {path :'groups',component: GroupsComponent},
-            {path :'subjects',component: SubjectsComponent}
+            {path :'subjects',component: SubjectsComponent},
+            {path : 'home', component: MainComponent}
             ]),
           HttpClientModule],
   exports:[AdminPageComponent],

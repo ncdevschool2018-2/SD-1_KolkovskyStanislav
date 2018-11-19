@@ -27,7 +27,7 @@ public class StudentController {
         this.groupService = groupService;
     }
 
-    @RequestMapping(value ="/" ,method = RequestMethod.POST)
+    @RequestMapping(value ="/save" ,method = RequestMethod.POST)
     public Student addStudent(@RequestBody Student account) {
         return studentService.saveStudentAccount(account);
     }
@@ -36,10 +36,18 @@ public class StudentController {
     public Iterable<Student> getAllStudents(){
 
         Iterable<Student> students = studentService.getAllStudents();
-        Iterator<Student> studentIterator = students.iterator();
-        while(studentIterator.hasNext()){
-            System.out.println(studentIterator.next().getGroup().getId() );
-        }
+//        Iterable<Student> parse_student;
+//        Iterator<Student> studentIterator = students.iterator();
+//        List<Student> studentList = new ArrayList<>();
+//
+//        while(studentIterator.hasNext()){
+//            studentList.add(studentIterator.next());
+//        }
+//
+//        for(int i = 0; i < studentList.size(); i++){
+//            System.out.println(studentList.get(i).getGroup() + "  " +
+//                    studentList.get(i).getGroup().getName());
+//        }
 
 
         return students;
@@ -55,7 +63,6 @@ public class StudentController {
     public Iterable<Student> getStudentsNotGroup(){
         return studentService.getAllStudentsNotGroup();
     }
-
 
 
     //test connection
@@ -95,7 +102,7 @@ public class StudentController {
         Student student = new Student();
 
         for(int i = 0; i < studentList.size(); i++){
-            if(studentList.get(i).getIdstudents().equals(id)){
+            if(studentList.get(i).getIdstudent().equals(id)){
                 student = studentList.get(i);
                 break;
             }

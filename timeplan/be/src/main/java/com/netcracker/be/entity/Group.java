@@ -14,12 +14,9 @@ public class Group {
     @Column(name = "idgroup")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(name="name")
     private String name;
-
-    //    @JsonIgnore
-    @OneToMany(mappedBy = "group",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "group",cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Student> students;
 

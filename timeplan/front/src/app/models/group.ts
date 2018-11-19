@@ -4,7 +4,7 @@ export class Group{
 
    id:number;
    name:string;
-   students:Student[];
+   student_list:Student[] = [];
 
    constructor(){}
 }

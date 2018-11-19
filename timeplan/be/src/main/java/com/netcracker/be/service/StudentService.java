@@ -26,7 +26,6 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-
     public Iterable<Student> getAllStudentsNotGroup(){
 
         Iterable<Student> studentModels = studentRepository.findAll() ;
@@ -34,27 +33,15 @@ public class StudentService {
         List<Student> studentModelList = new ArrayList<Student>();
 
         while(iterator.hasNext()){
-            Student studentModel = iterator.next();
-//            if(studentModel.getNg().equals(null)){
-//                studentModelList.add(studentModel);
-//            }
+            Student student = iterator.next();
+            if(student.getGroup() == null){
+                studentModelList.add(student);
+            }
         }
         return studentModelList;
     }
 
-
     public void deleteStudent(Long id){
         studentRepository.deleteById(id);
-    }
-
-    public Student updateStudentAccount(Student student){
-
-        Optional<Student> studentModel = studentRepository.findById(student.getIdstudents());
-        if(studentModel.isPresent()){
-            Student ss = studentModel.get();
-            ss = student;
-
-        }
-        return  student;
     }
 }
