@@ -27,6 +27,7 @@ public class TeacherService {
         return restTemplate.postForEntity(backendServerUrl + "/api/teacher/", teacher, Teacher.class).getBody();
     }
 
+
     public void deleteTeacherAccount(Long id){
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.delete(backendServerUrl + "/api/teacher/"+id);

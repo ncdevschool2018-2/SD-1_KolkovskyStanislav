@@ -33,7 +33,8 @@
           <td scope="col">{{teacher.email}}</td>
           <td scope="col">{{teacher.password}}</td>
           <td scope="col">{{teacher.level}}</td>
-          <td scope="col" >{{teacher.subject == null ? "Не выбранно" : teacher.subject.name}}</td>
+          <!--<td scope="col" >{{teacher.subject == null ? "Не выбранно" : teacher.subject.name}}</td>-->
+          <td>{{"Hello"}}</td>
           <td><button class="btn btn-secondary" type="button" (click)="updateTeacher(createTeacher,teacher)">Изменить</button></td>
           <td><button class="btn btn-danger" type="button" (click)="deleteTeacher(teacher.idteachers)">Удалить</button></td>
         </tr>
@@ -154,10 +155,11 @@
 
     <div class="form-group">
       <label>Дисциплина</label>
-      <select class="form-control" [(ngModel)]="choose_subject" name="subject" required>
-        <option>Не выбранно</option>
-        <option *ngFor="let subject of subjects">{{subject.name}}</option>
-      </select>
+      <!--<select class="form-control" [(ngModel)]="choose_subject" name="subject" required>-->
+        <!--<option>Не выбранно</option>-->
+        <!--<option *ngFor="let subject of subjects">{{subject.name}}</option>-->
+      <!--</select>-->
+      <ss-multiselect-dropdown [options]="myOptions" [(ngModel)]="optionsModel" (ngModelChange)="onChange($event)">juh</ss-multiselect-dropdown>
     </div>
 
     <div class="form-group">

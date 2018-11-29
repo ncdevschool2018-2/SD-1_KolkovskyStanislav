@@ -4,9 +4,13 @@ import {Student} from "../../../models/student";
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import {group} from "@angular/animations";
-import {UsersService} from "../../../services/users.service";
 import {GroupService} from "../../../services/group.service";
-import { FormsModule } from '@angular/forms'; // <--- JavaScript import from Angular
+import { FormsModule } from '@angular/forms';
+import {Teacher} from "../../../models/teacher"; // <--- JavaScript import from Angular
+import { StudentService } from "src/app/services/student.service";
+import { TeacherService } from "src/app/services/teacher.service";
+import {SubjectService} from "../../../services/subject.service";
+import {Subject} from "../../../models/subject";
 
 
 @Component({
@@ -19,27 +23,35 @@ export class GroupsComponent implements OnInit{
 
 
   count_choose_student: number = 0;
-  choose_group:boolean = false;
+  count_choose_subject: number = 0;
   modalRef: BsModalRef;
   selectedGroup:string;
 
+
   group:Group = new Group();
+  subject_in_group:Subject[];
+  student_in_group:Student[];
   student_not_group:Student[];
+  subject_not_group:Subject[];
   student_list:Student[];
   group_list:Group[];
-  new_group:Student[];
 
-  constructor(private modalService: BsModalService, private userService: UsersService,
-              private groupService: GroupService) {}
+  idgroup:number;
 
+  choosen_name_group:string;
+  choose_id_group:number;
+
+  constructor(private modalService: BsModalService, private studentService:StudentService,
+              private groupService: GroupService,private teacherService:TeacherService,
+              private subjectService:SubjectService) {}
 
   ngOnInit(){
 
-    this.userService.getAllStudents().subscribe(students =>{
+    this.studentService.getAllStudents().subscribe(students =>{
       this.student_list = students as Student[];
     })
 
-    this.userService.getAllStudentsNotGroup().subscribe(students=>{
+    this.studentService.getAllStudentsNotGroup().subscribe(students=>{
       this.student_not_group = students as Student[];
 
     })
@@ -49,62 +61,153 @@ export class GroupsComponent implements OnInit{
     })
   }
 
-  public openModal(template: TemplateRef<any>):void {
-    this.modalRef = this.modalService.show(template);
+
+
+  public openStudentModal(template: TemplateRef<any>,idgroup:number):void {
+    this.modalRef = this.modalService.show(template, {class: 'modal-lg'});
+    if(idgroup != null){
+      this.showStudentByGroupID(idgroup);
+    }
   }
 
-  public onChange(event, value):void{
-    this.selectedGroup = value;
-    console.log(value)
+  public openAddingStudentModal(template: TemplateRef<any>, idgroup:number, name:string){
+    this.modalRef = this.modalService.show(template, {class: 'modal-lg'});
+    this.choosen_name_group = name;
+    this.choose_id_group = idgroup;
+    this.studentService.getAllStudentsNotGroup().subscribe( students => {
+      this.student_not_group = students as Student[];
+      console.log("Baby!)")
+    })
   }
 
+  public openSubjectModal(template: TemplateRef<any>,idgroup:number):void{
+    this.modalRef = this.modalService.show(template, {class: 'modal-lg'});
+    if(idgroup != null){
+      this.idgroup = idgroup;
+      this.showSubjectByGroupId(idgroup);
+    }
+  }
 
-  public showGroup:boolean = false;
-  public create_mode:boolean = false;
+  public openAddingSubjectModal(template:TemplateRef<any>,idgroup:number){
+    this.modalRef = this.modalService.show(template, {class: 'modal-lg'});
+    this.choose_id_group = idgroup;
+    this.subjectService.getSubjectsNotAttachedByGroup(idgroup).subscribe( subjects =>{
+      this.subject_not_group = subjects as Subject[];
+      console.log("Hek");
+    })
+  }
+
+  public closeModal():void{
+    this.modalRef.hide();
+  }
 
 
   //Buisness logic of creating group of STUDENTS
   public addStudent(student:Student):void{
-    console.log(this.selectedGroup);
+    console.log(student);
     let indexStudent = this.student_not_group.indexOf(student);
     console.log(" index: " + indexStudent + " id:" + student.idstudent);
     this.student_not_group[indexStudent].choosen = true;
     this.count_choose_student++;
   }
-
   public removeStudent(student:Student):void{
     this.count_choose_student--;
     let indexStudent = this.student_not_group.indexOf(student);
     this.student_not_group[indexStudent].choosen = false;
   }
-
-  public create_group():void {
-    this.group.name = this.selectedGroup;
+  public create_group(template:any):void {
+    let students: Student[] = [];
     for (let i = 0; i < this.student_not_group.length; i++) {
       if (this.student_not_group[i].choosen == true) {
-        this.group.student_list.push(this.student_not_group[i]);
-        // this.student_not_group[i].group = this.group;
-        // this.userService.addStudent(this.student_not_group[i]).subscribe(()=>{
-        //   console.log(this.student_list[i]);
-        // })
+        students.push(this.student_not_group[i]);
       }
     }
-
-    for(let i = 0; i < this.group.student_list.length;i++){
-      console.log(this.group.student_list[i]);
-    }
-
-    this.groupService.createGroup(this.group).subscribe(()=>{
+    this.group.name = this.selectedGroup;
+    this.groupService.createGroup(this.selectedGroup, students).subscribe(group=>{
+      this.group = group as Group;
       console.log(this.group);
     })
-    this.updateListStudent();
+    this.groupService.getAllGroups().subscribe(groups =>{
+      this.group_list = groups as Group[];
+    })
+  }
+
+  public addStudentsInGroup(){
+    let students: Student[] = [];
+    for (let i = 0; i < this.student_not_group.length; i++) {
+      if (this.student_not_group[i].choosen == true) {
+        students.push(this.student_not_group[i]);
+      }
+    }
+    this.studentService.addStudentsGroup(this.choose_id_group,students).subscribe(()=>{
+      console.log("Good adding!");
+    })
+    this.modalRef.hide();
+  }
+
+  public addSubjectsInGroup(subject:Subject){
+    console.log(subject);
+    let indexSubject = this.subject_not_group.indexOf(subject);
+    console.log(" index: " + indexSubject + " id:" + subject.idsubjects);
+    this.subject_not_group[indexSubject].choosen = true;
+    this.count_choose_subject++;
+  }
+
+  public removeSubjectsInGroup(subject:Subject){
+    this.count_choose_subject--;
+    let indexSubject = this.subject_not_group.indexOf(subject);
+    this.subject_not_group[indexSubject].choosen = false;
+  }
+
+  public attachedSubjectByGroup():void{
+    let subjects: Subject[] = [];
+    for (let i = 0; i < this.subject_not_group.length; i++) {
+      if (this.subject_not_group[i].choosen == true) {
+        subjects.push(this.subject_not_group[i]);
+      }
+    }
+    this.groupService.addSubject(this.choose_id_group, subjects).subscribe( group =>{
+      console.log("good!");
+    })
+    this.groupService.getAllGroups().subscribe(groups =>{
+      this.group_list = groups as Group[];
+    })
+
+    this.modalRef.hide();
+  }
+
+
+  public showSubjectsNotAttachedByGroup(idgroup):void{
 
   }
 
-  private updateListStudent():void {
-    this.userService.getAllStudents().subscribe(students =>{
-      this.student_list = students as Student [];
+  //************************************************//
+  public showStudentByGroupID(idgroup:number):void{
+    this.studentService.getStudentsByGroupId(idgroup).subscribe(students =>{
+      this.student_in_group = students as Student[];
     })
+  }
+
+  public showSubjectByGroupId(idgroup:number):void{
+    this.subjectService.getSubjectsByGroupId(idgroup).subscribe(subjects => {
+      this.subject_in_group = subjects as Subject[];
+    })
+  }
+
+  public removeStudentFromGroup(id:number):void{
+    this.studentService.removeStudent(id).subscribe(student=>{
+      console.log(student);
+    })
+    this.studentService.getAllStudentsNotGroup().subscribe(students=>{
+      this.student_not_group = students as Student[];
+    })
+    this.closeModal();
+  }
+
+  public removeSubjectFromGroup(id:number):void{
+      this.groupService.removeSubjectFromGroup(this.idgroup, id).subscribe(()=>{
+        console.log("Good jod!");
+      })
   }
 
   public deleteGroup(id:number):void{

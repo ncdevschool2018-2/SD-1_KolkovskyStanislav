@@ -2,6 +2,8 @@ package com.netcracker.fapi.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.List;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Teacher {
     private Long idteachers;
@@ -10,7 +12,7 @@ public class Teacher {
     private String email;
     private String password;
     private String level;
-    private Subject subject;
+    private List<Subject> subjects;
 
     public Teacher() {
     }
@@ -63,11 +65,11 @@ public class Teacher {
         this.level = level;
     }
 
-    public Subject getSubject() {
-        return subject;
+    public List<Subject> getSubjects() {
+        return subjects;
     }
 
-    public void setSubject(Subject subject) {
-        this.subject = subject;
+    public void setSubjects(List<Subject> subjects) {
+        this.subjects = subjects;
     }
 }

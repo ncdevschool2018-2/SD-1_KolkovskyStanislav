@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "subjects")
@@ -15,12 +16,15 @@ public class Subject {
     private Long idsubjects;
     private String name;
 
-    @OneToMany(mappedBy = "subject", cascade = CascadeType.REFRESH,fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,CascadeType.MERGE}, mappedBy = "subjects")
     @JsonIgnore
-    private List<Teacher> teacherList;
+    private List<Teacher> teachers;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,CascadeType.MERGE}, mappedBy = "subjects")
+    @JsonIgnore
+    private List<Group> groups;
 
     public Subject(){}
-
 
     public Long getIdsubjects() {
         return idsubjects;
@@ -38,11 +42,19 @@ public class Subject {
         this.name = name;
     }
 
-    public List<Teacher> getTeacherList() {
-        return teacherList;
+    public List<Teacher> getTeachers() {
+        return teachers;
     }
 
-    public void setTeacherList(List<Teacher> teacherList) {
-        this.teacherList = teacherList;
+    public void setTeachers(List<Teacher> teachers) {
+        this.teachers = teachers;
+    }
+
+    public List<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<Group> groups) {
+        this.groups = groups;
     }
 }

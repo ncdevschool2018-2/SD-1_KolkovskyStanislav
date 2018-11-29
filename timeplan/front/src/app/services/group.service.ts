@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Group} from "../models/group";
 import {Student} from "../models/student";
+import {Subject} from "../models/subject";
 
 
 @Injectable({
@@ -12,9 +13,17 @@ import {Student} from "../models/student";
 export class GroupService{
 
   constructor(private http: HttpClient){}
-  
-  createGroup(group:Group):Observable<Group>{
-    return this.http.post<Group>('/api/gp/creategp',group);
+
+  createGroup(name:string, students: Student[]):Observable<Group>{
+    return this.http.post<Group>('/api/gp/create/'+name, students);
+  }
+
+  addSubject(idgroup:number, subjects: Subject[]):Observable<Group>{
+    return this.http.post<Group>('/api/gp/addsub/'+idgroup, subjects);
+  }
+
+  removeSubjectFromGroup(idgroup:number, idsub:number):Observable<Group>{
+    return this.http.get<Group>('/api/gp/remove/'+idgroup+"/"+idsub);
   }
 
   getAllGroups():Observable<Group[]>{

@@ -5,6 +5,8 @@ import com.netcracker.be.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class TeacherService {
 
@@ -25,5 +27,9 @@ public class TeacherService {
 
     public void deleteTeacher(Long id){
         teacherRepository.deleteById(id);
+    }
+
+    public Optional<Teacher> getTeacherById(Long id){
+        return teacherRepository.findById(id);
     }
 }

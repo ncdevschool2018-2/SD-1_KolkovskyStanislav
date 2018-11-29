@@ -40,10 +40,22 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getAllStudentsNotGroup());
     }
 
-    @RequestMapping(value = "/add_into_group/{id}/{idgroup}",method = RequestMethod.GET)
-    public ResponseEntity<Student> addStudentIntoGroup(@PathVariable(name="id") String id,
-                                                       @PathVariable(name="idgroup") String idroup){
+    @RequestMapping(value = "/getst/{id}", method = RequestMethod.GET)
+    public ResponseEntity<List<Student>> getStudentsByGroupId(@PathVariable(name="id")String id){
+        return ResponseEntity.ok(studentService.getStudentByGroupId(Long.valueOf(id)));
+    }
 
-        return ResponseEntity.ok(studentService.addingIntoGroup(Long.valueOf(id), Long.valueOf(idroup)));
+
+    @RequestMapping(value="/gp/remove/{id}",method = RequestMethod.GET)
+    public ResponseEntity<Student> removeGroup(@PathVariable(name="id")String id){
+        return ResponseEntity.ok(studentService.removeGroup(Long.valueOf(id)));
+    }
+
+    @RequestMapping(value="/adding_group/{idgroup}",method = RequestMethod.POST)
+    public ResponseEntity<List<Student>> addingStudentInGroup(@PathVariable(name="idgroup")String idgroup,@RequestBody Student[] students){
+        if(students != null){
+            return ResponseEntity.ok(studentService.addingInGroup(Long.valueOf(idgroup),students));
+        }
+        return null;
     }
 }

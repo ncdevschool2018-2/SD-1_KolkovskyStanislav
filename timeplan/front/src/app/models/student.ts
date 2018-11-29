@@ -3,8 +3,6 @@ import {Group} from "./group";
 export class Student{
 
   choosen:boolean = false;
-  // private adding_in_group:boolean = true;
-  // private removing_from_group:boolean = false;
   idstudent:number;
   fname: string;
   lname:string;

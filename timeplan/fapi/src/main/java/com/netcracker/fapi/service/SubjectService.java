@@ -26,9 +26,21 @@ public class SubjectService {
     }
 
 
+    public List<Subject> getSubjectIdGroup(Long id){
+        RestTemplate restTemplate = new RestTemplate();
+        Subject [] subjects = restTemplate.getForObject(backendServerUrl + "/api/subject/get/"+id,Subject[].class);
+        return  Arrays.asList(subjects);
+    }
+
     public void deleteSubject(Long id){
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.delete(backendServerUrl + "/api/subject/"+ id);
     }
 
+
+    public List<Subject> getSubjectsNotAttachedByGroup(Long id){
+        RestTemplate restTemplate = new RestTemplate();
+        Subject[] subjects = restTemplate.getForObject(backendServerUrl + "/api/subject/get/not_attached/"+id,Subject[].class);
+        return  Arrays.asList(subjects);
+    }
 }

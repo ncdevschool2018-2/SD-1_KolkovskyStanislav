@@ -4,6 +4,8 @@ package com.netcracker.be.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "teachers")
@@ -16,9 +18,17 @@ public class Teacher {
     private String email;
     private String password;
     private String level;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idsubjects")
-    private Subject subject;
+
+//    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+//    @JoinColumn(name = "idsubjects")
+//    private Subject subject;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "teachers_subjects",
+                joinColumns = {@JoinColumn(name="teacher_id")},
+                inverseJoinColumns = {@JoinColumn(name = "subject_id")})
+    private List<Subject> subjects;
+
 
     public Long getIdteachers() {
         return idteachers;
@@ -68,11 +78,15 @@ public class Teacher {
         this.level = level;
     }
 
-    public Subject getSubject() {
-        return subject;
+    public List<Subject> getSubjects() {
+        return subjects;
     }
 
-    public void setSubject(Subject subject) {
-        this.subject = subject;
+    public void setSubjects(List<Subject> subjects) {
+        this.subjects = subjects;
+    }
+
+    public void addSubject(Subject subject){
+        this.subjects.add(subject);
     }
 }

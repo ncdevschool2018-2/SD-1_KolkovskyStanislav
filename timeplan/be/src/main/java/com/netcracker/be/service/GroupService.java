@@ -5,6 +5,8 @@ import com.netcracker.be.repository.GroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class GroupService {
 
@@ -24,5 +26,9 @@ public class GroupService {
     }
     public Iterable<Group> getGroups(){
         return  groupRepository.findAll();
+    }
+
+    public Optional<Group> getGroupById(Long id){
+        return groupRepository.findById(id);
     }
 }

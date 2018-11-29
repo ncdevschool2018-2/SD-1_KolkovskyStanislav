@@ -12,12 +12,9 @@ public class Student {
     private String lname;
     private String email;
     private String password;
-
     private Group group;
 
-    public Student() {
-    }
-
+    public Student() { }
 
     public Long getIdstudent() {
         return idstudent;

@@ -20,12 +20,10 @@ public class Student {
     private String email;
     @Column(name="password")
     private String password;
-
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idgroup")
     //@JsonIgnore
     private Group group;
-
 
     public Long getIdstudent() {
         return idstudent;
@@ -74,6 +72,4 @@ public class Student {
     public void setGroup(Group group) {
         this.group = group;
     }
-
-
 }

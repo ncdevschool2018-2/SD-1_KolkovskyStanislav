@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -16,21 +17,21 @@ public class Group {
     private Long id;
     @Column(name="name")
     private String name;
-    @OneToMany(mappedBy = "group",cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+
+    @OneToMany(mappedBy = "group",cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Student> students;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "student_group_subjects",
+            joinColumns = {@JoinColumn(name="group_id")},
+            inverseJoinColumns = {@JoinColumn(name = "subject_id")})
+    @JsonIgnore
+    private List<Subject> subjects;
 
     public Group() { }
 
     public Group(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
         this.name = name;
     }
 
@@ -42,6 +43,14 @@ public class Group {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public List<Student> getStudents() {
         return students;
     }
@@ -50,5 +59,23 @@ public class Group {
         this.students = students;
     }
 
+    public List<Subject> getSubjects() {
+        return subjects;
+    }
 
+    public void setSubjects(List<Subject> subjects) {
+        this.subjects = subjects;
+    }
+
+    public void addSubject(Subject subject){
+        this.subjects.add(subject);
+    }
+
+    public void addSubjects(Collection<Subject> collection){
+        this.subjects.addAll(collection);
+    }
+
+    public void removeSubject(Subject subject){
+        this.subjects.remove(subject);
+    }
 }

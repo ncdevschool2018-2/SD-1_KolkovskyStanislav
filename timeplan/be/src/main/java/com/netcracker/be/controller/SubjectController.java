@@ -1,26 +1,28 @@
 package com.netcracker.be.controller;
 
+import com.netcracker.be.entity.Group;
 import com.netcracker.be.entity.Subject;
 import com.netcracker.be.entity.Teacher;
+import com.netcracker.be.service.GroupService;
 import com.netcracker.be.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/subject")
 public class SubjectController {
 
 
-    @Autowired
+    private GroupService groupService;
     private SubjectService subjectService;
 
-
-    public SubjectController(SubjectService service){
-        this.subjectService = service;
+    @Autowired
+    public SubjectController(SubjectService subjectService, GroupService groupService){
+        this.subjectService = subjectService;
+        this.groupService = groupService;
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -30,9 +32,9 @@ public class SubjectController {
 
     @RequestMapping(value = "",method = RequestMethod.GET)
     public Iterable<Subject> getSubjects(){
-        return subjectService.getSubjects();
+        Iterable<Subject> subjectIterable = subjectService.getSubjects();
+        return  subjectIterable;
     }
-
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Subject> deleteSubject(@PathVariable(name = "id") Long id){
@@ -41,25 +43,28 @@ public class SubjectController {
     }
 
     //Testing this method
-    @RequestMapping(value="/create", method = RequestMethod.GET)
-    public Subject addSubject(){
-
+    @RequestMapping(value="/create/{name}", method = RequestMethod.GET)
+    public Subject addSubject(@RequestParam(name = "name", required = false, defaultValue = "Subject_name") String name){
         Subject subject = new Subject();
-        subject.setName("Математика");
-
-        List<Teacher> teacherList = new ArrayList<>();
-        Teacher teacher = new Teacher();
-        teacher.setFname("fname");
-        teacher.setLname("lname");
-        teacher.setEmail("email");
-        teacher.setPassword("password");
-        teacher.setLevel("level");
-        teacher.setSubject(subject);
-
-        teacherList.add(teacher);
-
-        subject.setTeacherList(teacherList);
+        subject.setName(name);
         return subjectService.createSubject(subject);
+    }
 
+    @RequestMapping(value="/get/{idgroup}",method = RequestMethod.GET)
+    public Iterable<Subject> getSubjectsByGroup(@PathVariable(name="idgroup")Long id){
+        Optional<Group> groupOptional = groupService.getGroupById(id);
+        Group group = new Group();
+        if(groupOptional.isPresent()){
+            group = groupOptional.get();
+            return group.getSubjects();
+        }else{
+            return new ArrayList<Subject>();
+        }
+    }
+
+
+    @RequestMapping(value="/get/not_attached/{idgroup}",method = RequestMethod.GET)
+    public Iterable<Subject> getSubjectsNotAttachedByGroup(@PathVariable(name="idgroup") Long idgroup){
+        return subjectService.getSubjectsNotAttachedByGroup(idgroup);
     }
 }

@@ -1,32 +1,31 @@
 import {Component, OnInit, TemplateRef} from "@angular/core";
 import {Student} from "../../../models/student";
 import {Teacher} from "../../../models/teacher";
-import {UsersService} from "../../../services/users.service";
 import {BsModalRef, BsModalService} from "ngx-bootstrap";
 import {Template} from "@angular/compiler/src/render3/r3_ast";
 import {SubjectService} from "../../../services/subject.service";
 import {Subject} from "../../../models/subject";
-
+import { StudentService } from "src/app/services/student.service";
+import { TeacherService } from "src/app/services/teacher.service";
+import {FormControl} from "@angular/forms";
+import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 
 @Component({
   selector:'users',
   templateUrl:"./users.component.html",
-  styleUrls:["./users.component.css"],
-  providers:[]
+  styleUrls:["./users.component.css"]
 })
 
 export class UsersComponent implements OnInit{
 
   public editMode:boolean =false;
-  public students: Student[];
-  public teachers: Teacher[];
-  public subjects: Subject[];
+  public students:Student[];
+  public teachers:Teacher[];
+  public subjects:Subject[];
+  public choosing_subject:Subject[];
   public modalRef:BsModalRef;
   public create_student:Student = new Student();
   public create_teacher:Teacher = new Teacher();
-
-
-
 
   showAll:boolean = true;
   showStundets:boolean = true;
@@ -35,30 +34,46 @@ export class UsersComponent implements OnInit{
 
   readonly level_list: string[] = ["Научный сотрудник", "Ассистент", "Доцент", "Профессор"];
 
+  optionsModel: number[];
+  myOptions: IMultiSelectOption[];
+
   constructor(
-              private usersService: UsersService,
+              private studentService:StudentService,
+              private teacherService:TeacherService,
               private modalService:BsModalService,
               private subjectService:SubjectService){}
 
+
+
+
   ngOnInit(){
-    this.usersService.getAllTeachers().subscribe(teachers =>{
+    this.teacherService.getAllTeachers().subscribe(teachers =>{
       this.teachers = teachers as Teacher[];
     })
 
-    this.usersService.getAllStudents().subscribe(students =>{
+    this.studentService.getAllStudents().subscribe(students =>{
       this.students = students as Student[];
     });
 
     this.subjectService.getSubjects().subscribe(subjects =>{
       this.subjects = subjects as Subject[];
     })
+
+    this.myOptions = [
+      { id: 1, name: 'Option 1' },
+      { id: 2, name: 'Option 2' },
+    ];
+
   }
 
+  onChange() {
+    console.log(this.optionsModel);
+  }
   openModal(template: TemplateRef<any>){
     this.modalRef = this.modalService.show(template);
   }
 
-  updateStudent(template: TemplateRef<any>,student: Student):void{
+  public updateStudent(template: TemplateRef<any>,student: Student):void{
     this.create_student = Student.cloneStudent(student);
     this.editMode = true;
     this.modalRef = this.modalService.show(template);
@@ -81,7 +96,7 @@ export class UsersComponent implements OnInit{
 
      // this.create_student.idstudents = this.calculateIdStudent(this.students.length);
      this.create_student.group = null;
-      this.usersService.addStudent(this.create_student).subscribe( ()=>{
+      this.studentService.addStudent(this.create_student).subscribe( ()=>{
         console.log(this.create_student);
         this.updateListStudent();
       })
@@ -107,28 +122,27 @@ export class UsersComponent implements OnInit{
   }
 
   public deleteStudent(id_student:number):void{
-    this.usersService.deleteStudent(id_student).subscribe(()=>{
+    this.studentService.deleteStudent(id_student).subscribe(()=>{
       this.updateListStudent();
     })
   }
 
   private updateListStudent():void {
-      this.usersService.getAllStudents().subscribe(students =>{
+      this.studentService.getAllStudents().subscribe(students =>{
         this.students = students as Student [];
     })
   }
 
   public addTeacher(teacher?:Teacher):void{
-
      // this.create_teacher.id = this.calculateIdTeacher(this.teachers.length);
       for(let i =0; i < this.subjects.length; i++){
         if(this.subjects[i].name == this.choose_subject){
-          this.create_teacher.subject = this.subjects[i];
+          //this.create_teacher.subject = this.subjects[i];
           break;
         }
       }
       //console.log(this.create_teacher);
-      this.usersService.addTeacher(this.create_teacher).subscribe(()=>{
+      this.teacherService.addTeacher(this.create_teacher).subscribe(()=>{
         console.log(this.create_teacher);
         this.updateListTeacher();
       })
@@ -143,31 +157,31 @@ export class UsersComponent implements OnInit{
   }
 
   private updateListTeacher():void{
-    this.usersService.getAllTeachers().subscribe(teachers =>{
+    this.teacherService.getAllTeachers().subscribe(teachers =>{
       this.teachers = teachers as Teacher[];
       // this.dataService.changeTeacher(this.teachers);
     })
   }
 
   public deleteTeacher(id_teacher: number){
-    this.usersService.deleteTeacher(id_teacher).subscribe(()=>{
+    this.teacherService.deleteTeacher(id_teacher).subscribe(()=>{
       this.updateListTeacher();
     })
   }
 
-  public updateComponent():void{
-    this.usersService.getAllTeachers().subscribe(teachers =>{
-      this.teachers = teachers as Teacher[];
-    })
+  // public updateComponent():void{
+  //   this.usersService.getAllTeachers().subscribe(teachers =>{
+  //     this.teachers = teachers as Teacher[];
+  //   })
 
-    this.usersService.getAllStudents().subscribe(students =>{
-      this.students = students as Student[];
-    });
+  //   this.usersService.getAllStudents().subscribe(students =>{
+  //     this.students = students as Student[];
+  //   });
 
-    this.subjectService.getSubjects().subscribe(subjects =>{
-      this.subjects = subjects as Subject[];
-    })
-  }
+  //   this.subjectService.getSubjects().subscribe(subjects =>{
+  //     this.subjects = subjects as Subject[];
+  //   })
+  // }
 
   display(value){
     //console.log(value);
@@ -183,6 +197,7 @@ export class UsersComponent implements OnInit{
       this.showTeacher = true;
     }
   }
+
 
 
 }

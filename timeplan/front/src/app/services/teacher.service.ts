@@ -9,39 +9,21 @@ import {Teacher} from "../models/teacher";
   providedIn: 'root'
 })
 
-export class UsersService{
+export class TeacherService{
 
+  constructor(private http:HttpClient){}
 
-  constructor(private http: HttpClient){}
-
-  //Ajax request
-  addStudent(student: Student):Observable<Student>{
-    return this.http.post<Student>('/api/st/createst', student);
-  }
 
   addTeacher(teacher:Teacher):Observable<Teacher>{
     return this.http.post<Teacher>('api/tr/createtr',teacher);
-  }
-
-  getAllStudentsNotGroup():Observable<Student[]>{
-    return this.http.get<Student[]>("api/st/notgroup");
-  }
-
-  getAllStudents():Observable<Student[]>{
-    return this.http.get<Student[]>('api/st/getst')
   }
 
   getAllTeachers():Observable<Teacher[]>{
     return this.http.get<Teacher[]>('api/tr/gettr');
   }
 
-  deleteStudent(studentId: number):Observable<void>{
-    return this.http.delete<void>('api/st/delete/'+ studentId);
-  }
-
   deleteTeacher(teacherId: number):Observable<void>{
     return this.http.delete<void>('api/tr/delete/'+teacherId);
   }
-
 
 }

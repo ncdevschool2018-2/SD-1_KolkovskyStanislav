@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.html.HTMLDocument;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -34,26 +35,17 @@ public class StudentController {
 
     @RequestMapping(value = "/getall", method = RequestMethod.GET)
     public Iterable<Student> getAllStudents(){
-
         Iterable<Student> students = studentService.getAllStudents();
-//        Iterable<Student> parse_student;
-//        Iterator<Student> studentIterator = students.iterator();
-//        List<Student> studentList = new ArrayList<>();
-//
-//        while(studentIterator.hasNext()){
-//            studentList.add(studentIterator.next());
-//        }
-//
-//        for(int i = 0; i < studentList.size(); i++){
-//            System.out.println(studentList.get(i).getGroup() + "  " +
-//                    studentList.get(i).getGroup().getName());
-//        }
-
-
         return students;
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value="/getall/{id}",method = RequestMethod.GET)
+    public Iterable<Student> getStudentsByGroupId(@PathVariable(name ="id")Long id){
+        Iterable<Student> students = studentService.getAllStudentsByGroupId(id);
+        return  students;
+    }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Student> deleteStudent(@PathVariable(name ="id") Long id){
         studentService.deleteStudent(id);
         return ResponseEntity.noContent().build();
@@ -119,4 +111,18 @@ public class StudentController {
     }
 
 
+
+    @RequestMapping(value = "/group/remove/{id}",method = RequestMethod.GET)
+    public Student removeStudent(@PathVariable(name="id")Long id){
+        return studentService.removeGroup(id);
+    }
+
+    @RequestMapping(value="/addinggroup", method = RequestMethod.POST)
+    public Iterable<Student> addingStudentsInGroup(@RequestBody HashMap<Long, List<Student>> hashMap){
+        if(hashMap != null){
+            return studentService.addStudentInGroup(hashMap);
+        }else{
+            return null;
+        }
+    }
 }

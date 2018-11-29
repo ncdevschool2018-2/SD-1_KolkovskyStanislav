@@ -1,6 +1,5 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
-
 import {AdminPageComponent} from "./admin-page.component";
 import {GroupsComponent} from "./groups/groups.component";
 import {FormsModule} from "@angular/forms";
@@ -11,13 +10,15 @@ import {TabsModule } from 'ngx-bootstrap/tabs';
 import {ButtonsModule} from 'ngx-bootstrap';
 import {ModalModule} from "ngx-bootstrap";
 import {HttpClientModule} from "@angular/common/http";
-import {UsersService} from "../../services/users.service";
 import {SubjectsComponent} from "./subjects/subjects.component";
 import {SubjectService} from "../../services/subject.service";
 import {MainComponent} from "./main/main.component";
 import {RouterModule} from "@angular/router";
-
-
+import {StudentService} from "src/app/services/student.service";
+import {TeacherService} from "src/app/services/teacher.service";
+import {GroupService} from "src/app/services/group.service";
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 
 
 @NgModule({
@@ -39,11 +40,15 @@ import {RouterModule} from "@angular/router";
             {path :'groups',component: GroupsComponent},
             {path :'subjects',component: SubjectsComponent},
             {path : 'home', component: MainComponent}
-            ]),
-          HttpClientModule],
+          ]),
+          HttpClientModule,
+          NgMultiSelectDropDownModule.forRoot(),
+    MultiselectDropdownModule],
   exports:[AdminPageComponent],
-  providers:[UsersService,
-            SubjectService]
+  providers:[TeacherService,
+            SubjectService,
+            StudentService,
+            GroupService]
 })
 
 export class AdminPageModule{

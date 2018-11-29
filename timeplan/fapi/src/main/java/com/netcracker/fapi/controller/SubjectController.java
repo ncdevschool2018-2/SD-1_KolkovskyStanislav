@@ -29,8 +29,18 @@ public class SubjectController {
             return  null;
     }
 
+    @RequestMapping(value="/get/{idgroup}", method = RequestMethod.GET)
+    public ResponseEntity<List<Subject>> getSubjectsByIdGroup(@PathVariable(name="idgroup") String idgroup){
+        return ResponseEntity.ok(subjectService.getSubjectIdGroup(Long.valueOf(idgroup)));
+    }
+
     @RequestMapping(value = "/delete/{id}",method = RequestMethod.DELETE)
     public void deleteSubject(@PathVariable String id){
         subjectService.deleteSubject(Long.valueOf(id));
+    }
+
+    @RequestMapping(value = "/get/not_attached/{idgroup}",method=RequestMethod.GET)
+    public ResponseEntity<List<Subject>> getSubjectsNotAttachedByGroup(@PathVariable(name="idgroup") String idgroup){
+        return ResponseEntity.ok(subjectService.getSubjectsNotAttachedByGroup(Long.valueOf(idgroup)));
     }
 }

@@ -1,10 +1,10 @@
 import {Component, OnInit, TemplateRef, Input} from "@angular/core";
 import {Subject} from "../../../models/subject";
 import {SubjectService} from "../../../services/subject.service";
-import {UsersService} from "../../../services/users.service";
 import {Teacher} from "../../../models/teacher";
 import {Form} from "@angular/forms";
 import {Alert} from "selenium-webdriver";
+import {TeacherService} from "../../../services/teacher.service";
 
 
 
@@ -39,9 +39,8 @@ export class SubjectsComponent implements OnInit{
     })
   }
 
-  constructor(
-              private subjectService: SubjectService,
-              private teacherService: UsersService){}
+  constructor(private subjectService: SubjectService,
+              private teacherService: TeacherService){}
 
   public createSubject():void{
     let newSubject: Subject = new Subject();
@@ -81,18 +80,22 @@ export class SubjectsComponent implements OnInit{
       })
     }
 
+    // this.subjectService.deleteSubject(idsubject).subscribe(()=>{
+    //   this.updateListSubjects();
+    // })
+
 
   }
 
   private validateDelete(idsubjects:number):boolean{
     for(let i = 0 ; i < this.teachers.length; i++){
-      if(this.teachers[i].subject == null){
-          return false;
-      }else{
-        if(this.teachers[i].subject.idsubjects == idsubjects){
-          return true;
-        }
-      }
+      // if(this.teachers[i].subject == null){
+      //     return false;
+      // }else{
+      //   if(this.teachers[i].subject.idsubjects == idsubjects){
+      //     return true;
+      //   }
+      // }
     }
     return false;
   }

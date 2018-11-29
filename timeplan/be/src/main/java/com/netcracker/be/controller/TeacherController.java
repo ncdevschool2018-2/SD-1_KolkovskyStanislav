@@ -75,10 +75,12 @@ public class TeacherController {
 
         List<Teacher> teacherList = new ArrayList<>();
         List<Subject> subjectList = new ArrayList<>();
+        List<Subject> subjects = new ArrayList<>();
 
         while(subjectIterator.hasNext()){
             subjectList.add(subjectIterator.next());
         }
+
         while(teacherIterator.hasNext()){
             teacherList.add(teacherIterator.next());
         }
@@ -92,9 +94,16 @@ public class TeacherController {
             }
         }
 
+//        for(int i = 0; i < subjectList.size(); i++){
+//            if(subjectList.get(i).getIdsubjects().equals(idsub)){
+//                teacher.setSubject(subjectList.get(i));
+//                break;
+//            }
+//        }
+
         for(int i = 0; i < subjectList.size(); i++){
             if(subjectList.get(i).getIdsubjects().equals(idsub)){
-                teacher.setSubject(subjectList.get(i));
+                teacher.addSubject(subjectList.get(i));
                 break;
             }
         }

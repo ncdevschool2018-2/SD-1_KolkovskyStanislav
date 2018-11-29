@@ -20,6 +20,14 @@ export class SubjectService{
     return this.http.get<Subject[]>('/api/sb/getsb');
   }
 
+  getSubjectsByGroupId(idgroup:number):Observable<Subject[]>{
+    return this.http.get<Subject[]>('/api/sb/get/'+idgroup);
+  }
+
+  getSubjectsNotAttachedByGroup(idgroup:number):Observable<Subject[]>{
+    return this.http.get<Subject[]>('/api/sb/get/not_attached/'+idgroup);
+  }
+
   deleteSubject(idsubject:number):Observable<void>{
     return this.http.delete<void>('/api/sb/delete/'+idsubject);
   }

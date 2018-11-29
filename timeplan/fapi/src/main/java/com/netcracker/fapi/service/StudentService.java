@@ -7,6 +7,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -22,6 +23,11 @@ public class StudentService {
         return students  == null ? Collections.emptyList() :Arrays.asList(students);
     }
 
+    public Student removeGroup(Long id){
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForObject(backendServerUrl +"/api/student/group/remove/"+id,Student.class);
+    }
+
     public Student getStudentAccount(int id) {
         return null;
     }
@@ -33,20 +39,28 @@ public class StudentService {
 
     public void deleteStudentAccount(Long id) {
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.delete(backendServerUrl + "/api/student/"+id);
+        restTemplate.delete(backendServerUrl + "/api/student/delete/"+id);
     }
-
 
     public List<Student> getAllStudentsNotGroup(){
         RestTemplate restTemplate = new RestTemplate();
         Student[] students = restTemplate.getForObject(backendServerUrl + "/api/student/notgroup", Student[].class);
-        return  Arrays.asList(students);
+        return  students == null ? Collections.emptyList() : Arrays.asList(students);
     }
 
-
-    public Student addingIntoGroup(Long id, Long idgroup){
+    public List<Student> getStudentByGroupId(Long id){
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject(backendServerUrl + "/api/student/addinggroup/"+ id + "/" + idgroup,Student.class);
+        Student[] students = restTemplate.getForObject(backendServerUrl + "/api/student/getall/" + id, Student[].class);
+        return students == null ? Collections.emptyList() : Arrays.asList(students);
     }
+
+    public List<Student> addingInGroup(Long idgroup,Student[] students){
+        HashMap<Long,List<Student>> hashMap = new HashMap<>();
+        hashMap.put(idgroup, Arrays.asList(students));
+        RestTemplate restTemplate = new RestTemplate();
+        Student[] students1 =  restTemplate.postForEntity(backendServerUrl + "/api/student/addinggroup/",hashMap,Student[].class).getBody();
+        return students1  == null ? Collections.emptyList() :Arrays.asList(students1);
+    }
+
 
 }

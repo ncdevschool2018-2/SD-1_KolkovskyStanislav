@@ -12,6 +12,8 @@ public class Subject {
     private String name;
     @JsonIgnore
     private List<Teacher> teacherList;
+    @JsonIgnore
+    private List<Group> groups;
 
     public Subject() {
     }
@@ -39,6 +41,13 @@ public class Subject {
         this.teacherList = teacherList;
     }
 
+    public List<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<Group> groups) {
+        this.groups = groups;
+    }
 
     public String getName() {
         return name;
