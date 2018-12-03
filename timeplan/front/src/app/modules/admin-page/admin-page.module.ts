@@ -19,6 +19,8 @@ import {TeacherService} from "src/app/services/teacher.service";
 import {GroupService} from "src/app/services/group.service";
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
+import {TimetableComponent} from "./schedule/timetable.component";
+import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 
 
 @NgModule({
@@ -27,7 +29,8 @@ import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
     GroupsComponent,
     UsersComponent,
     SubjectsComponent,
-    MainComponent],
+    MainComponent,
+    TimetableComponent],
   imports:[CommonModule,
           FormsModule,
           BrowserModule,
@@ -39,7 +42,8 @@ import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
             {path :'users',component: UsersComponent},
             {path :'groups',component: GroupsComponent},
             {path :'subjects',component: SubjectsComponent},
-            {path : 'home', component: MainComponent}
+            {path : 'home', component: MainComponent},
+            {path : 'timetable', component: TimetableComponent}
           ]),
           HttpClientModule,
           NgMultiSelectDropDownModule.forRoot(),

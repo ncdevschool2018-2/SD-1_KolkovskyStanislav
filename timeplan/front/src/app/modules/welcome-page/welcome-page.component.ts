@@ -1,5 +1,9 @@
 import {Component, HostBinding} from "@angular/core";
 import {Router} from "@angular/router";
+import {HttpClient} from "@angular/common/http";
+import {LoginService} from "../../services/login.service";
+// import 'rxjs/add/operator/finally';
+
 
 @Component({
   selector:"welcome-page",
@@ -12,16 +16,16 @@ export class WelcomePageComponent {
   //@HostBinding('class.welcome-page') private readonly hostClass = true;
 
 
-  constructor(private router:Router){}
-
-  login_email:string;
-  login_password:string;
-
-  login(){
-    if(this.login_email == 'admin' && this.login_password == 'admin'){
-      this.router.navigate(['admin-page']);
-    }
-
+  constructor(private app: LoginService, private http: HttpClient, private router: Router) {
+    this.app.authenticate(undefined, undefined);
   }
+
+  logout() {
+    this.http.post('logout', {}).subscribe( () => {
+      this.app.authenticated = false;
+      this.router.navigateByUrl('/login');
+    });
+  }
+
 
 }

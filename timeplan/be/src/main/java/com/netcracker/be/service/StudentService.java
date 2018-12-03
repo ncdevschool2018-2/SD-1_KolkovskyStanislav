@@ -96,4 +96,11 @@ public class StudentService {
         student.setGroup(null);
         return studentRepository.save(student);
     }
+
+
+
+    public List<Student> getStudentByLname(String string){
+        List<Student> list = studentRepository.findAllByLname(string);
+        return  list;
+    }
 }

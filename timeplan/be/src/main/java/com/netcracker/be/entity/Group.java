@@ -29,6 +29,10 @@ public class Group {
     @JsonIgnore
     private List<Subject> subjects;
 
+    @OneToMany(mappedBy = "group",cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Task> tasks;
+
     public Group() { }
 
     public Group(String name) {
@@ -77,5 +81,14 @@ public class Group {
 
     public void removeSubject(Subject subject){
         this.subjects.remove(subject);
+    }
+
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 }

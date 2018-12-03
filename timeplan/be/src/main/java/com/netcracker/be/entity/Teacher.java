@@ -30,6 +30,10 @@ public class Teacher {
     private List<Subject> subjects;
 
 
+    @OneToMany(mappedBy = "teacher",cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Task> taskList;
+
     public Long getIdteachers() {
         return idteachers;
     }
@@ -88,5 +92,13 @@ public class Teacher {
 
     public void addSubject(Subject subject){
         this.subjects.add(subject);
+    }
+
+    public List<Task> getTaskList() {
+        return taskList;
+    }
+
+    public void setTaskList(List<Task> taskList) {
+        this.taskList = taskList;
     }
 }

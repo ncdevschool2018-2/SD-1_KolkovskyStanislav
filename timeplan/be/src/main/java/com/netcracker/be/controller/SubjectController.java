@@ -42,13 +42,13 @@ public class SubjectController {
         return  ResponseEntity.noContent().build();
     }
 
-    //Testing this method
-    @RequestMapping(value="/create/{name}", method = RequestMethod.GET)
-    public Subject addSubject(@RequestParam(name = "name", required = false, defaultValue = "Subject_name") String name){
-        Subject subject = new Subject();
-        subject.setName(name);
-        return subjectService.createSubject(subject);
-    }
+//    //Testing this method
+//    @RequestMapping(value="/create/{name}", method = RequestMethod.GET)
+//    public Subject addSubject(@RequestParam(name = "name", required = false, defaultValue = "Subject_name") String name){
+//        Subject subject = new Subject();
+//        subject.setName(name);
+//        return subjectService.createSubject(subject);
+//    }
 
     @RequestMapping(value="/get/{idgroup}",method = RequestMethod.GET)
     public Iterable<Subject> getSubjectsByGroup(@PathVariable(name="idgroup")Long id){
@@ -62,9 +62,9 @@ public class SubjectController {
         }
     }
 
-
     @RequestMapping(value="/get/not_attached/{idgroup}",method = RequestMethod.GET)
     public Iterable<Subject> getSubjectsNotAttachedByGroup(@PathVariable(name="idgroup") Long idgroup){
         return subjectService.getSubjectsNotAttachedByGroup(idgroup);
     }
+
 }

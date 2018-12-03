@@ -24,6 +24,10 @@ public class Subject {
     @JsonIgnore
     private List<Group> groups;
 
+    @OneToMany(mappedBy = "subject", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Task> tasks;
+
     public Subject(){}
 
     public Long getIdsubjects() {
@@ -56,5 +60,13 @@ public class Subject {
 
     public void setGroups(List<Group> groups) {
         this.groups = groups;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 }

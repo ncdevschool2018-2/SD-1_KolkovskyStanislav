@@ -125,4 +125,10 @@ public class StudentController {
             return null;
         }
     }
+
+
+    @RequestMapping(value = "/getbylname/{lname}", method = RequestMethod.GET)
+    public List<Student> getByLnameStudent(@PathVariable(name ="lname") String lname){
+        return studentService.getStudentByLname(lname);
+    }
 }

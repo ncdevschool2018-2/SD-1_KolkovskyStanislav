@@ -43,13 +43,13 @@ public class TeacherController {
     }
 
 
-    //Test code baby!
+//    //Test code baby!
     @RequestMapping(value="/create",method = RequestMethod.GET)
-    public Teacher createTeacher(@RequestParam(name = "fname", required = false, defaultValue = "Teacher") String fname,
-                                 @RequestParam(name = "lname", required = false, defaultValue =  "Teacher") String lname,
-                                 @RequestParam(name = "email", required = false, defaultValue = "Student@gmail.com") String email,
-                                 @RequestParam(name = "password", required = false, defaultValue = "password") String password,
-                                 @RequestParam(name = "level", required = false, defaultValue = "dcotor") String level){
+    public Teacher createTeacher(@RequestParam(name = "fname", required = false, defaultValue = "Alex") String fname,
+                                 @RequestParam(name = "lname", required = false, defaultValue =  "Levkov") String lname,
+                                 @RequestParam(name = "email", required = false, defaultValue = "Levkov@gmail.com") String email,
+                                 @RequestParam(name = "password", required = false, defaultValue = "alexbest") String password,
+                                 @RequestParam(name = "level", required = false, defaultValue = "doctor") String level){
         Teacher teacher = new Teacher();
         teacher.setFname(fname);
         teacher.setLname(lname);
@@ -75,7 +75,6 @@ public class TeacherController {
 
         List<Teacher> teacherList = new ArrayList<>();
         List<Subject> subjectList = new ArrayList<>();
-        List<Subject> subjects = new ArrayList<>();
 
         while(subjectIterator.hasNext()){
             subjectList.add(subjectIterator.next());
@@ -94,22 +93,41 @@ public class TeacherController {
             }
         }
 
-//        for(int i = 0; i < subjectList.size(); i++){
-//            if(subjectList.get(i).getIdsubjects().equals(idsub)){
-//                teacher.setSubject(subjectList.get(i));
-//                break;
-//            }
-//        }
-
         for(int i = 0; i < subjectList.size(); i++){
             if(subjectList.get(i).getIdsubjects().equals(idsub)){
                 teacher.addSubject(subjectList.get(i));
                 break;
             }
         }
-
-
         return teacherService.saveTeacherAccount(teacher);
 
+    }
+
+
+
+//    @RequestMapping(value="/handcreate/{fname}/{lname}/{email}/{password}/{level}", method = RequestMethod.GET)
+//    public Teacher handcreateTeacher(@PathVariable(name = "fname")String fname,
+//                                     @PathVariable(name = "lname")String lname,
+//                                     @PathVariable(name = "email")String email,
+//                                     @PathVariable(name = "passowrd")String password,
+//                                     @PathVariable(name = "level") String level){
+//        Teacher teacher = new Teacher();
+//        teacher.setFname(fname);
+//        teacher.setLname(lname);
+//        teacher.setEmail(email);
+//        teacher.setPassword(password);
+//        teacher.setLevel(level);
+//
+//        return teacherService.saveTeacherAccount(teacher);
+//
+//    }
+
+    @RequestMapping(value="/get/{idsubject}", method = RequestMethod.GET)
+    public Iterable<Teacher> getTeacherByIdSubject(@PathVariable(name ="idsubject") Long id){
+        if(id != null){
+            return teacherService.getTeacherByIdSubject(id);
+        }else{
+            return null;
+        }
     }
 }

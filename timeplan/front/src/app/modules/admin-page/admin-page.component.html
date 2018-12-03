@@ -5,7 +5,6 @@
 
   <button class="navbar-toggler" type="button" (click)="toggleNavbar()"><span class="navbar-toggler-icon"></span></button>
 
-
   <div class="collapse navbar-collapse" [ngClass]="{ 'show': navbarOpen }">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
@@ -18,7 +17,7 @@
         <a class="nav-link" routerLink="/groups">Группы</a>
       </li>
       <li>
-        <a class="nav-link" href="#">Расписание</a>
+        <a class="nav-link" href="/timetable">Расписание</a>
       </li>
       <li>
         <a class="nav-link" routerLink="/subjects">Дисциплины</a>

@@ -1,16 +1,15 @@
-<div class="container-fluid pt-3">
-
-  <div class="row">
-      <button class="btn btn-primary mr-2" type="button" [disabled]="!showStundets" (click)="display(student.textContent)" #student>Показать студентов</button>
-      <button class="btn btn-primary mr-2" type="button" [disabled]="!showTeacher" (click)="display(teacher.textContent)" #teacher>Показать преподавателей</button>
-      <button class="btn btn-dark mr-2" type="button" (click)="openModal(createStudent)">Создать студента</button>
-      <button class="btn btn-dark mr-2" type="button" (click)="openModal(createTeacher)">Создать преподавателя</button>
-      <!--<button class="btn btn-dark" type="button" (click)="updateComponent()">Обновить</button>-->
+<div class="card" style="width: 1000px;">
+  <div class="card-header">
+    <button class="btn btn-primary mr-2" type="button" [disabled]="!showStundets" (click)="display(student.textContent)" #student>Показать студентов</button>
+    <button class="btn btn-primary mr-2" type="button" [disabled]="!showTeacher" (click)="display(teacher.textContent)" #teacher>Показать преподавателей</button>
+    <button class="btn btn-dark mr-2" type="button" (click)="openModal(createStudent)">Создать студента</button>
+    <button class="btn btn-dark mr-2" type="button" (click)="openModal(createTeacher)">Создать преподавателя</button>
+    <!--<button class="btn btn-dark" type="button" (click)="updateComponent()">Обновить</button>-->
   </div>
-
-
+  <div class="card-body">
     <!--Table of teacher-->
-    <div class="row pt-3" *ngIf="!showTeacher ">
+    <div class="row pt-2" *ngIf="!showTeacher ">
+      <label><h1>Teacher List</h1></label>
       <table class="table table-hover ">
         <thead class="thead-dark">
         <tr>
@@ -43,7 +42,8 @@
     </div>
 
     <!--Table of student-->
-    <div class="row pt-3" *ngIf="!showStundets">
+    <div class="row pt-2" *ngIf="!showStundets">
+      <label><h1>Student List</h1></label>
       <table class="table table-hover">
         <thead class="thead-dark">
         <tr>
@@ -71,7 +71,10 @@
         </tbody>
       </table>
     </div>
+  </div>
 </div>
+
+
 
 
 <!--Create new Student-->
@@ -85,14 +88,14 @@
   <div class="modal-body">
     <div class="form-group">
       <label>Имя</label>
-      <input class="form-control" name="fname" [(ngModel)]="create_student.fname" #fname="ngModel"  required/>
+      <input class="form-control" name="fname" [(ngModel)]="create_student.fname" #fname="ngModel"/>
       <!--<div [hidden]="username.valid || username.untouched" class="alert alert-danger">-->
         <!--Пожалуйста введите имя &lt;!&ndash;Easy way to create client validation&ndash;&gt;-->
       <!--</div>-->
     </div>
     <div class="form-group">
       <label>Фамилия</label>
-      <input class="form-control" name="lname" [(ngModel)]="create_student.lname" #lname="ngModel" required/>
+      <input class="form-control" name="lname" [(ngModel)]="create_student.lname" #lname="ngModel"/>
       <!--<div [hidden]="lname.valid || lname.untouched" class="alert alert-danger">-->
         <!--Пожалуйста введите фамилию-->
       <!--</div>-->
@@ -100,18 +103,14 @@
 
     <div class="form-group">
       <label>E-mail</label>
-      <input class="form-control" name="email" [(ngModel)]="create_student.email" #email="ngModel"
-             required pattern="[a-zA-Z0-9_]+@[a-zA-Z_]+?\.[a-zA-Z]{2,4}"/>
+      <input class="form-control" name="email" [(ngModel)]="create_student.email" #email="ngModel"/>
       <!--<div [hidden]="email.valid || email.untouched" class="alert alert-danger">-->
         <!--Email введен некоректно-->
       <!--</div>-->
     </div>
     <div class="form-group">
       <label>Пароль</label>
-      <input class="form-control" name="password" [(ngModel)]="create_student.password" #password="ngModel" type="password" required/>
-      <!--<div [hidden]="password.valid || password.untouched" class="alert alert-danger">-->
-        <!--Password введен некоректно-->
-      <!--</div>-->
+      <input class="form-control" name="password" [(ngModel)]="create_student.password" #password="ngModel" type="password"/>
     </div>
   </div>
 
@@ -133,14 +132,14 @@
   <div class="modal-body">
     <div class="form-group">
       <label>Имя</label>
-      <input class="form-control" name="fnamet" [(ngModel)]="create_teacher.fname" #fnamet="ngModel" required/>
+      <input class="form-control" name="fnamet" [(ngModel)]="create_teacher.fname" #fnamet="ngModel"/>
       <!--<div [hidden]="username.valid || username.untouched" class="alert alert-danger">-->
       <!--Пожалуйста введите имя &lt;!&ndash;Easy way to create client validation&ndash;&gt;-->
       <!--</div>-->
     </div>
     <div class="form-group">
       <label>Фамилия</label>
-      <input class="form-control" name="lnamet" [(ngModel)]="create_teacher.lname" #lnamet="ngModel" required/>
+      <input class="form-control" name="lnamet" [(ngModel)]="create_teacher.lname" #lnamet="ngModel"/>
       <!--<div [hidden]="lname.valid || lname.untouched" class="alert alert-danger">-->
       <!--Пожалуйста введите фамилию-->
       <!--</div>-->
@@ -148,31 +147,32 @@
 
     <div class="form-group">
       <label>Степень</label>
-      <select id="inputLevel" class="form-control" [(ngModel)] = "create_teacher.level" name="level_teacher" required>
+      <select id="inputLevel" class="form-control" [(ngModel)] = "create_teacher.level" name="level_teacher" >
         <option *ngFor="let level of level_list" [value]="level">{{level}}</option>
       </select>
+
     </div>
 
     <div class="form-group">
-      <label>Дисциплина</label>
-      <!--<select class="form-control" [(ngModel)]="choose_subject" name="subject" required>-->
+      <label>Дисциплина</label><br>
+      <!--<select class="form-control" [(ngModel)]="choose_subject" name="subject">-->
         <!--<option>Не выбранно</option>-->
         <!--<option *ngFor="let subject of subjects">{{subject.name}}</option>-->
       <!--</select>-->
-      <ss-multiselect-dropdown [options]="myOptions" [(ngModel)]="optionsModel" (ngModelChange)="onChange($event)">juh</ss-multiselect-dropdown>
+      <ss-multiselect-dropdown [options]="myOptions" [texts]="myTexts" [settings]="mySettings" [(ngModel)]="optionsModel"></ss-multiselect-dropdown>
     </div>
 
     <div class="form-group">
       <label>E-mail</label>
       <input class="form-control" name="emailt" [(ngModel)]="create_teacher.email" #emailt="ngModel"
-             required pattern="[a-zA-Z0-9_]+@[a-zA-Z_]+?\.[a-zA-Z]{2,4}"/>
+           />
       <!--<div [hidden]="email.valid || email.untouched" class="alert alert-danger">-->
       <!--Email введен некоректно-->
       <!--</div>-->
     </div>
     <div class="form-group">
       <label>Пароль</label>
-      <input class="form-control" name="passwordt" [(ngModel)]="create_teacher.password" #passwordt="ngModel" type="password" required/>
+      <input class="form-control" name="passwordt" [(ngModel)]="create_teacher.password" #passwordt="ngModel" type="password" />
       <!--<div [hidden]="password.valid || password.untouched" class="alert alert-danger">-->
       <!--Password введен некоректно-->
       <!--</div>-->

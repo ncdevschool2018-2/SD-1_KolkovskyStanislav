@@ -33,4 +33,10 @@ public class TeacherService {
         restTemplate.delete(backendServerUrl + "/api/teacher/"+id);
     }
 
+    public List<Teacher> getTeacherByIdSubject(Long id){
+        RestTemplate restTemplate = new RestTemplate();
+        Teacher[] teachers = restTemplate.getForObject(backendServerUrl + "/api/teacher/get/" + id, Teacher[].class);
+        return teachers == null ? Collections.emptyList() : Arrays.asList(teachers);
+    }
+
 }

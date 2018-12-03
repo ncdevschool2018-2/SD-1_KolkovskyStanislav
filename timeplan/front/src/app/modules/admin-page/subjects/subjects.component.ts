@@ -104,14 +104,9 @@ export class SubjectsComponent implements OnInit{
     this.subjectService.getSubjects().subscribe(subjects =>{
       this.subjects = subjects as Subject[];
     });
-    // this.dataService.changeSubject(this.subjects);
   }
 
   public updateComponent():void{
-    // this.subjectService.getSubjects().subscribe(subjects =>{
-    //   this.subjects = subjects as Subject[];
-    // })
-
     this.teacherService.getAllTeachers().subscribe(teachers =>{
       this.teachers = teachers as Teacher [];
     })

@@ -8,7 +8,8 @@ import {Subject} from "../../../models/subject";
 import { StudentService } from "src/app/services/student.service";
 import { TeacherService } from "src/app/services/teacher.service";
 import {FormControl} from "@angular/forms";
-import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
+import {IMultiSelectOption, IMultiSelectSettings} from 'angular-2-dropdown-multiselect';
+import {IMultiSelectTexts} from "angular-4-dropdown-multiselect";
 
 @Component({
   selector:'users',
@@ -36,14 +37,13 @@ export class UsersComponent implements OnInit{
 
   optionsModel: number[];
   myOptions: IMultiSelectOption[];
-
+  mySettings: IMultiSelectSettings;
+  myTexts: IMultiSelectTexts;
   constructor(
               private studentService:StudentService,
               private teacherService:TeacherService,
               private modalService:BsModalService,
               private subjectService:SubjectService){}
-
-
 
 
   ngOnInit(){
@@ -58,17 +58,43 @@ export class UsersComponent implements OnInit{
     this.subjectService.getSubjects().subscribe(subjects =>{
       this.subjects = subjects as Subject[];
     })
+    // Settings configuration
+    this.mySettings = {
+      //enableSearch: true,
+      checkedStyle: 'checkboxes',
+      buttonClasses: 'btn  btn-block',
+      dynamicTitleMaxItems: 3,
+      displayAllSelectedText: true
+    };
 
+// Text configuration
+    this.myTexts = {
+      checkAll: 'Select all',
+      uncheckAll: 'Unselect all',
+      checked: 'item selected',
+      checkedPlural: 'items selected',
+      //searchPlaceholder: 'Find',
+      //searchEmptyResult: 'Nothing found...',
+      //searchNoRenderText: 'Type in search box to see results...',
+      defaultTitle: 'Select',
+      allSelected: 'All selected',
+    };
+
+// Labels / Parents
     this.myOptions = [
-      { id: 1, name: 'Option 1' },
-      { id: 2, name: 'Option 2' },
+      { id: 1, name: 'Car brands'},
+      { id: 2, name: 'Volvo' },
+      { id: 3, name: 'Honda' },
+      { id: 4, name: 'BMW'}
     ];
-
   }
+
+
 
   onChange() {
     console.log(this.optionsModel);
   }
+
   openModal(template: TemplateRef<any>){
     this.modalRef = this.modalService.show(template);
   }

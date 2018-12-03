@@ -1,0 +1,183 @@
+
+
+
+
+  <div class="card" style="width: 1000px;">
+    <h5 class="card-header"> <div class="row">
+      <button class="btn btn-primary mr-2" type="button" (click)="openModal(addtask)">Add lesson for Group</button>
+      <button class="btn btn-dark mr-2" type="button" (click)="showTeacher()">Show Teacher time</button>
+      <button class="btn btn-dark mr-2" type="button" (click)="showGroup()">Show Student time</button>
+    </div></h5>
+    <div class="card-body">
+
+
+      <div class="row mt-3" *ngIf="display_show">
+        <label>Group name</label>
+        <select class="form-control">
+          <option *ngFor="let group of groups" (click)="getTaskByGroup(group.id)">{{group.name}}</option>
+        </select>
+      </div>
+
+      <div class="row mt-3" *ngIf="display_show1">
+        <label>Teacher name</label>
+        <select class="form-control">
+          <option *ngFor="let teacher of list_teacher" (click)="getTaskByTeacher(teacher.idteachers)">{{teacher.fname +  " " + teacher.lname}}</option>
+        </select>
+      </div>
+
+
+      <!--Timetable Group-->
+      <div class="row mt-3" *ngIf="choose_display_group">
+        <label>Timetable</label>
+        <table class="table table-hover ">
+          <thead class="thead-dark">
+          <tr>
+            <th scope="col" class="fnt">Day</th>
+            <th scope="col" class="lnt">Time</th>
+            <th scope="col" class="emailt">Subject</th>
+            <th scope="col" class="pssw">Teacher</th>
+            <th>Изменить</th>
+            <th>Удалить</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let task of timetable">
+            <td scope="col">{{days[task.day]}}</td>
+            <td scope="col">{{times[task.time]}}</td>
+            <td scope="col">{{task.subject.name}}</td>
+            <td scope="col">{{task.teacher.fname + " " + task.teacher.lname}}</td>
+            <td><button class="btn btn-secondary" type="button" (click)="openEditModal(edittask,task)" >Изменить</button></td>
+            <td><button class="btn btn-danger" type="button" (click) ="deleteTaskById(task.id)">Удалить</button></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!--Timetable Teacher-->
+      <div class="row mt-3" *ngIf="choose_display_teacher">
+        <label>Timetable</label>
+        <table class="table table-hover ">
+          <thead class="thead-dark">
+          <tr>
+            <th scope="col" class="fnt">Day</th>
+            <th scope="col" class="lnt">Time</th>
+            <th scope="col" class="emailt">Subject</th>
+            <th scope="col" class="pssw">Group</th>
+            <th>Изменить</th>
+            <th>Удалить</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let task of timetable">
+            <td scope="col">{{days[task.day]}}</td>
+            <td scope="col">{{times[task.time]}}</td>
+            <td scope="col">{{task.subject.name}}</td>
+            <td scope="col">{{task.group.name}}</td>
+            <td><button class="btn btn-secondary" type="button">Изменить</button></td>
+            <td><button class="btn btn-danger" type="button" (click) ="deleteTaskById(task.id)">Удалить</button></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+
+<ng-template #addtask>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Adding Lesson</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label>Name group</label>
+      <select class="form-control" [(ngModel)]="choose_group">
+        <option *ngFor="let group of groups" >{{group.name}}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Choose Day</label>
+      <select class="form-control" [(ngModel)]="choose_day">
+        <option *ngFor="let day of days">{{day}}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Choose Time</label>
+      <select class="form-control" [(ngModel)]="choose_time">
+        <option *ngFor="let time of times">{{time}}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Choose subject</label>
+      <select class="form-control" (focus)="getListSubject()" [(ngModel)]="choose_subject">
+        <option *ngFor="let subject of subjects">{{subject.name}}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Choose teacher</label>
+      <select class="form-control" (focus)="getListTeacher()" [(ngModel)]="choose_teacher">
+          <option *ngFor="let teacher of teachers">{{teacher.fname + " " + teacher.lname}}</option>
+      </select>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" (click)="addTask()">Добавить Занятие</button>
+  </div>
+</ng-template>
+
+
+<ng-template #edittask>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Adding Lesson</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label>Name group</label>
+      <select class="form-control" [(ngModel)]="choose_group">
+        <option *ngFor="let group of groups" >{{group.name}}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Choose Day</label>
+      <select class="form-control" [(ngModel)]="choose_day">
+        <option *ngFor="let day of days">{{day}}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Choose Time</label>
+      <select class="form-control" [(ngModel)]="choose_time">
+        <option *ngFor="let time of times">{{time}}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Choose subject</label>
+      <select class="form-control"  [(ngModel)]="choose_subject">
+        <option *ngFor="let subject of subjects">{{subject.name}}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Choose teacher</label>
+      <select class="form-control"  [(ngModel)]="choose_teacher">
+        <option *ngFor="let teacher of teachers">{{teacher.fname + " " + teacher.lname}}</option>
+      </select>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" (click)="addTask()">Добавить Занятие</button>
+  </div>
+</ng-template>
+

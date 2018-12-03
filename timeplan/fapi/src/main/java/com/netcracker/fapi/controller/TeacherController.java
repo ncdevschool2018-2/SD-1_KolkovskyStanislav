@@ -34,4 +34,8 @@ public class TeacherController {
         teacherService.deleteTeacherAccount(Long.valueOf(id));
     }
 
+    @RequestMapping(value="/get/{idsubject}", method = RequestMethod.GET)
+    public ResponseEntity<List<Teacher>> getTeacherByIdSubject(@PathVariable String idsubject){
+        return  ResponseEntity.ok(teacherService.getTeacherByIdSubject(Long.valueOf(idsubject)));
+    }
 }

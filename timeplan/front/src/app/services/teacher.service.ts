@@ -26,4 +26,8 @@ export class TeacherService{
     return this.http.delete<void>('api/tr/delete/'+teacherId);
   }
 
+  getTeacherByIdSubject(subjectId: number):Observable<Teacher[]>{
+    return this.http.get<Teacher[]>('api/tr/get/'+ subjectId);
+  }
+
 }
