@@ -13,7 +13,6 @@ export class TeacherService{
 
   constructor(private http:HttpClient){}
 
-
   addTeacher(teacher:Teacher):Observable<Teacher>{
     return this.http.post<Teacher>('api/tr/createtr',teacher);
   }

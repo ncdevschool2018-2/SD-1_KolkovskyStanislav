@@ -7,8 +7,7 @@ import com.netcracker.be.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class TeacherService {
@@ -23,7 +22,17 @@ public class TeacherService {
     }
 
     public Teacher saveTeacherAccount(Teacher teacher){
-        return teacherRepository.save(teacher);
+        List<Subject> subjects = teacher.getSubjects();
+        List<Subject> addSubjects = new ArrayList<>();
+        teacher.setSubjects(Collections.emptyList());
+        Teacher teacher1 = teacherRepository.save(teacher);
+
+        for(int i = 0; i < subjects.size(); i++){
+            Optional<Subject> subjectOptional = subjectRepository.findById(subjects.get(i).getIdsubjects());
+            addSubjects.add(subjectOptional.get());
+        }
+        teacher1.setSubjects(addSubjects);
+        return teacherRepository.save(teacher1);
     }
 
     public Iterable<Teacher> getAllTeachers() {
@@ -37,7 +46,6 @@ public class TeacherService {
     public Optional<Teacher> getTeacherById(Long id){
         return teacherRepository.findById(id);
     }
-
 
     public Iterable<Teacher> getTeacherByIdSubject(Long id) {
         Optional<Subject> subjectOptional = subjectRepository.findById(id);

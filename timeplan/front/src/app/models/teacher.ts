@@ -7,7 +7,7 @@ export class Teacher{
   email:string;
   password:string;
   level:string;
-  list_subjects: Subject[];
+  subjects: Subject[]=[];
 
   constructor(){}
 
@@ -20,7 +20,7 @@ export class Teacher{
    copyTeacher.level = teacher.level;
    copyTeacher.email = teacher.email;
    copyTeacher.password =teacher.password;
-   copyTeacher.list_subjects = teacher.list_subjects;
+   copyTeacher.subjects = teacher.subjects;
    return copyTeacher;
   }
 

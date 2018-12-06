@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -53,6 +54,7 @@ public class Subject {
     public void setTeachers(List<Teacher> teachers) {
         this.teachers = teachers;
     }
+    public void addTeacher(Teacher teacher) { this.teachers.add(teacher);}
 
     public List<Group> getGroups() {
         return groups;
@@ -68,5 +70,19 @@ public class Subject {
 
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Subject)) return false;
+        Subject subject = (Subject) o;
+        return Objects.equals(getIdsubjects(), subject.getIdsubjects()) &&
+                Objects.equals(getName(), subject.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getIdsubjects(), getName());
     }
 }

@@ -28,7 +28,8 @@ public class TeacherController {
 
     @RequestMapping(method = RequestMethod.POST)
     public Teacher addTeacher(@RequestBody Teacher teacher){
-        return  teacherService.saveTeacherAccount(teacher);
+        Teacher newTeacher = teacherService.saveTeacherAccount(teacher);
+        return  newTeacher;
     }
 
     @RequestMapping(value = "/getall", method = RequestMethod.GET)

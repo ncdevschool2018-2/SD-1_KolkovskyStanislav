@@ -8,8 +8,6 @@ import {Subject} from "../../../models/subject";
 import { StudentService } from "src/app/services/student.service";
 import { TeacherService } from "src/app/services/teacher.service";
 import {FormControl} from "@angular/forms";
-import {IMultiSelectOption, IMultiSelectSettings} from 'angular-2-dropdown-multiselect';
-import {IMultiSelectTexts} from "angular-4-dropdown-multiselect";
 
 @Component({
   selector:'users',
@@ -23,7 +21,7 @@ export class UsersComponent implements OnInit{
   public students:Student[];
   public teachers:Teacher[];
   public subjects:Subject[];
-  public choosing_subject:Subject[];
+  public choosing_subject:string[];
   public modalRef:BsModalRef;
   public create_student:Student = new Student();
   public create_teacher:Teacher = new Teacher();
@@ -35,10 +33,6 @@ export class UsersComponent implements OnInit{
 
   readonly level_list: string[] = ["Научный сотрудник", "Ассистент", "Доцент", "Профессор"];
 
-  optionsModel: number[];
-  myOptions: IMultiSelectOption[];
-  mySettings: IMultiSelectSettings;
-  myTexts: IMultiSelectTexts;
   constructor(
               private studentService:StudentService,
               private teacherService:TeacherService,
@@ -57,42 +51,8 @@ export class UsersComponent implements OnInit{
 
     this.subjectService.getSubjects().subscribe(subjects =>{
       this.subjects = subjects as Subject[];
+      console.log("Helllllll");
     })
-    // Settings configuration
-    this.mySettings = {
-      //enableSearch: true,
-      checkedStyle: 'checkboxes',
-      buttonClasses: 'btn  btn-block',
-      dynamicTitleMaxItems: 3,
-      displayAllSelectedText: true
-    };
-
-// Text configuration
-    this.myTexts = {
-      checkAll: 'Select all',
-      uncheckAll: 'Unselect all',
-      checked: 'item selected',
-      checkedPlural: 'items selected',
-      //searchPlaceholder: 'Find',
-      //searchEmptyResult: 'Nothing found...',
-      //searchNoRenderText: 'Type in search box to see results...',
-      defaultTitle: 'Select',
-      allSelected: 'All selected',
-    };
-
-// Labels / Parents
-    this.myOptions = [
-      { id: 1, name: 'Car brands'},
-      { id: 2, name: 'Volvo' },
-      { id: 3, name: 'Honda' },
-      { id: 4, name: 'BMW'}
-    ];
-  }
-
-
-
-  onChange() {
-    console.log(this.optionsModel);
   }
 
   openModal(template: TemplateRef<any>){
@@ -118,6 +78,10 @@ export class UsersComponent implements OnInit{
     this.create_teacher = new Teacher();
   }
 
+  public dis():void{
+    console.log(this.choosing_subject);
+  }
+
   public addStudent(student_account?:Student):void{
 
      // this.create_student.idstudents = this.calculateIdStudent(this.students.length);
@@ -126,13 +90,6 @@ export class UsersComponent implements OnInit{
         console.log(this.create_student);
         this.updateListStudent();
       })
-
-      // this.create_student.idstudent = student_account.idstudent;
-      // this.create_student.group = student_account.group;
-      // this.usersService.addStudent(this.create_student).subscribe( ()=>{
-      //   console.log(this.create_student);
-      //   this.updateListStudent();
-      // })
 
     this.modalRef.hide();
   }
@@ -159,19 +116,24 @@ export class UsersComponent implements OnInit{
     })
   }
 
+
+
+
   public addTeacher(teacher?:Teacher):void{
-     // this.create_teacher.id = this.calculateIdTeacher(this.teachers.length);
-      for(let i =0; i < this.subjects.length; i++){
-        if(this.subjects[i].name == this.choose_subject){
-          //this.create_teacher.subject = this.subjects[i];
-          break;
+
+    for(let i = 0; i < this.subjects.length; i++){
+      for(let j =0; j < this.choosing_subject.length; j++){
+        if(this.subjects[i].name == this.choosing_subject[j]){
+          this.create_teacher.subjects.push(this.subjects[i]);
         }
       }
-      //console.log(this.create_teacher);
-      this.teacherService.addTeacher(this.create_teacher).subscribe(()=>{
-        console.log(this.create_teacher);
-        this.updateListTeacher();
-      })
+    }
+
+    console.log(this.create_teacher);
+
+    this.teacherService.addTeacher(this.create_teacher).subscribe(()=>{
+      this.updateListTeacher();
+    })
 
       // this.create_teacher.idteachers = teacher.idteachers;
       // this.usersService.addTeacher(this.create_teacher).subscribe(()=>{
@@ -194,20 +156,6 @@ export class UsersComponent implements OnInit{
       this.updateListTeacher();
     })
   }
-
-  // public updateComponent():void{
-  //   this.usersService.getAllTeachers().subscribe(teachers =>{
-  //     this.teachers = teachers as Teacher[];
-  //   })
-
-  //   this.usersService.getAllStudents().subscribe(students =>{
-  //     this.students = students as Student[];
-  //   });
-
-  //   this.subjectService.getSubjects().subscribe(subjects =>{
-  //     this.subjects = subjects as Subject[];
-  //   })
-  // }
 
   display(value){
     //console.log(value);

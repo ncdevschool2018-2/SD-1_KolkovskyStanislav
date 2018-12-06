@@ -17,10 +17,8 @@ import {RouterModule} from "@angular/router";
 import {StudentService} from "src/app/services/student.service";
 import {TeacherService} from "src/app/services/teacher.service";
 import {GroupService} from "src/app/services/group.service";
-import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
-import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import {TimetableComponent} from "./schedule/timetable.component";
-import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
+
 
 
 @NgModule({
@@ -45,9 +43,7 @@ import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
             {path : 'home', component: MainComponent},
             {path : 'timetable', component: TimetableComponent}
           ]),
-          HttpClientModule,
-          NgMultiSelectDropDownModule.forRoot(),
-    MultiselectDropdownModule],
+          HttpClientModule],
   exports:[AdminPageComponent],
   providers:[TeacherService,
             SubjectService,

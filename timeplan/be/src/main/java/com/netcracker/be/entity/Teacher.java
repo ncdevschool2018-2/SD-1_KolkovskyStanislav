@@ -4,6 +4,7 @@ package com.netcracker.be.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -93,6 +94,10 @@ public class Teacher {
     public void addSubject(Subject subject){
         this.subjects.add(subject);
     }
+
+//    public void addSubjects(Collection<Subject> subject){
+//        this.subjects.addAll(subject);
+//    }
 
     public List<Task> getTaskList() {
         return taskList;
