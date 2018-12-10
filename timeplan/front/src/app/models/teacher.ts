@@ -24,5 +24,13 @@ export class Teacher{
    return copyTeacher;
   }
 
+  toString():string{
+    let str:string = "";
+    for(let i = 0 ; i < this.subjects.length ; i++){
+        str = str + this.subjects[i].name + " ";
+    }
+    return str;
+  }
+
 }
 

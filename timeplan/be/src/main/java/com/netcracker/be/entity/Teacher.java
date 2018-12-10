@@ -31,7 +31,7 @@ public class Teacher {
     private List<Subject> subjects;
 
 
-    @OneToMany(mappedBy = "teacher",cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "teacher",cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Task> taskList;
 

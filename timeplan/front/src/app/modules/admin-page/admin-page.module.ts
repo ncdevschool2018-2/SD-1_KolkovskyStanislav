@@ -18,8 +18,7 @@ import {StudentService} from "src/app/services/student.service";
 import {TeacherService} from "src/app/services/teacher.service";
 import {GroupService} from "src/app/services/group.service";
 import {TimetableComponent} from "./schedule/timetable.component";
-
-
+import {Ng4LoadingSpinnerModule, Ng4LoadingSpinnerService} from "ng4-loading-spinner";
 
 @NgModule({
   declarations:[
@@ -43,6 +42,7 @@ import {TimetableComponent} from "./schedule/timetable.component";
             {path : 'home', component: MainComponent},
             {path : 'timetable', component: TimetableComponent}
           ]),
+          Ng4LoadingSpinnerModule.forRoot(),
           HttpClientModule],
   exports:[AdminPageComponent],
   providers:[TeacherService,

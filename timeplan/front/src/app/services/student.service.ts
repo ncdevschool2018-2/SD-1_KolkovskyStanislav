@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Student} from "../models/student";
 import {Teacher} from "../models/teacher";
+import {Hashmap} from "../models/hashmap";
 
 
 @Injectable({
@@ -13,6 +14,14 @@ export class StudentService{
 
 
   constructor(private http: HttpClient){}
+
+  getStudents(page:number):Observable<Student[]>{
+    return this.http.get<Student[]>("api/st/list/"+page);
+  }
+
+  getPages():Observable<number>{
+    return this.http.get<number>('api/st/pages');
+  }
 
   //Ajax request
   addStudent(student: Student):Observable<Student>{

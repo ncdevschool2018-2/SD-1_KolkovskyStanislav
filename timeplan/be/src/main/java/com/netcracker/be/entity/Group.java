@@ -18,7 +18,7 @@ public class Group {
     @Column(name="name")
     private String name;
 
-    @OneToMany(mappedBy = "group",cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "group",cascade = {CascadeType.DETACH, CascadeType.REMOVE}, fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Student> students;
 
@@ -29,7 +29,7 @@ public class Group {
     @JsonIgnore
     private List<Subject> subjects;
 
-    @OneToMany(mappedBy = "group",cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "group",cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Task> tasks;
 

@@ -24,8 +24,8 @@ export class TimetableComponent implements OnInit {
   public groups:Group[];
   public students:Student[];
   public subjects:Subject[];
-  public teachers:Teacher[];
-  public list_teacher:Teacher[];
+  public teachers:Teacher[] = [];
+  public list_teacher:Teacher[] = [];
   public timetable:Task[];
 
   public task:Task = new Task() ;
@@ -46,6 +46,8 @@ export class TimetableComponent implements OnInit {
   public display_show:boolean = false;
   public display_show1:boolean = false;
 
+
+  public show_alert:boolean = false;
   constructor(private taskService: TaskService,
               private studentService: StudentService,
               private teacherService: TeacherService,
@@ -107,10 +109,16 @@ export class TimetableComponent implements OnInit {
   }
 
 
-
-  public testNgModel(){
-    console.log(this.choose_group);
+  public alertModal(template: TemplateRef<any>){
+    this.modalRef = this.modalService.show(template);
   }
+
+
+  // public checkSubjctInGroup(template: TemplateRef<any>){
+  //
+  //   this.getListSubject(template);
+  //
+  // }
 
   public getListGroup():void{
 
@@ -123,8 +131,8 @@ export class TimetableComponent implements OnInit {
         this.subjectService.getSubjectsByGroupId(this.groups[i].id).subscribe(subject =>{
           this.subjects = subject as Subject[];
           console.log("Yes")
+
         });
-        break;
       }
     }
   }
@@ -142,7 +150,7 @@ export class TimetableComponent implements OnInit {
     }
   }
 
-  public addTask():void{
+  public addTask(template: TemplateRef<any>):void{
     console.log(this.choose_teacher.split(" ")[0] + "  " +this.choose_teacher.split(" ")[1]);
     for(let i = 0; i < this.teachers.length; i++){
       if(this.teachers[i].fname == this.choose_teacher.split(" ")[0]
@@ -151,7 +159,6 @@ export class TimetableComponent implements OnInit {
           break;
       }
     }
-
     this.task.day = this.days.indexOf(this.choose_day);
     this.task.time = this.times.indexOf(this.choose_time);
     this.taskService.addTask(this.task).subscribe(task =>{
@@ -159,6 +166,9 @@ export class TimetableComponent implements OnInit {
       let taskfromserver:Task = task as Task;
       if(taskfromserver.id == null){
         console.log("You can't add task")
+        this.show_alert = true;
+        this.task = new Task();
+        this.alertModal(template);
       }else{
         console.log("Task added!)");
       }

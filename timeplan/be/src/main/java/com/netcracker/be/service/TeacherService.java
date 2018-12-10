@@ -1,10 +1,13 @@
 package com.netcracker.be.service;
 
+import com.netcracker.be.entity.Student;
 import com.netcracker.be.entity.Subject;
 import com.netcracker.be.entity.Teacher;
 import com.netcracker.be.repository.SubjectRepository;
 import com.netcracker.be.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -20,6 +23,23 @@ public class TeacherService {
         this.teacherRepository = teacherRepository;
         this.subjectRepository = subjectRepository;
     }
+
+
+    public List<Teacher> getTeacherPage(int page){
+        Page<Teacher> teacherPage =  teacherRepository.findAll(new PageRequest(page,5));
+        Iterator<Teacher> iterator = teacherPage.iterator();
+        List<Teacher> teacherList = new ArrayList<>();
+        while(iterator.hasNext()){
+            teacherList.add(iterator.next());
+        }
+        return teacherList;
+    }
+
+    public Integer getNumberPage(){
+        Page<Teacher> teacherPage =  teacherRepository.findAll(new PageRequest(0,5));
+        return teacherPage.getTotalPages();
+    }
+
 
     public Teacher saveTeacherAccount(Teacher teacher){
         List<Subject> subjects = teacher.getSubjects();

@@ -1,15 +1,13 @@
-<div class="card" style="width: 1000px;">
-  <div class="card-header">
+
+
     <button class="btn btn-primary mr-2" type="button" [disabled]="!showStundets" (click)="display(student.textContent)" #student>Показать студентов</button>
     <button class="btn btn-primary mr-2" type="button" [disabled]="!showTeacher" (click)="display(teacher.textContent)" #teacher>Показать преподавателей</button>
     <button class="btn btn-dark mr-2" type="button" (click)="openModal(createStudent)">Создать студента</button>
     <button class="btn btn-dark mr-2" type="button" (click)="openModal(createTeacher)">Создать преподавателя</button>
     <!--<button class="btn btn-dark" type="button" (click)="updateComponent()">Обновить</button>-->
-  </div>
-  <div class="card-body">
     <!--Table of teacher-->
-    <div class="row pt-2" *ngIf="!showTeacher ">
-      <label><h1>Teacher List</h1></label>
+    <div class="row pt-4" *ngIf="!showTeacher ">
+      <label style="text-align: center"><h2>Teacher List</h2></label>
       <table class="table table-hover ">
         <thead class="thead-dark">
         <tr>
@@ -17,7 +15,7 @@
           <th scope="col" class="fnt">Имя</th>
           <th scope="col" class="lnt">Фамилия</th>
           <th scope="col" class="emailt">Почта</th>
-          <th scope="col" class="pssw">Пароль</th>
+          <!--<th scope="col" class="pssw">Пароль</th>-->
           <th scope="col" class="level">Степень</th>
           <th scope="col" class="subject">Дисциплина</th>
           <th>Изменить</th>
@@ -30,20 +28,27 @@
           <td scope="col">{{teacher.fname}}</td>
           <td scope="col">{{teacher.lname}}</td>
           <td scope="col">{{teacher.email}}</td>
-          <td scope="col">{{teacher.password}}</td>
+          <!--<td scope="col">{{teacher.password}}</td>-->
           <td scope="col">{{teacher.level}}</td>
-          <!--<td scope="col" >{{teacher.subject == null ? "Не выбранно" : teacher.subject.name}}</td>-->
-          <td>{{"Hello"}}</td>
+          <td scope="col" (click)="openModalSubjectTeacher(show,teacher)"><a>Show subjects</a></td>
+          <!--<td>{{"Hello"}}</td>-->
           <td><button class="btn btn-secondary" type="button" (click)="updateTeacher(createTeacher,teacher)">Изменить</button></td>
           <td><button class="btn btn-danger" type="button" (click)="deleteTeacher(teacher.idteachers)">Удалить</button></td>
         </tr>
         </tbody>
       </table>
     </div>
+    <div class="row mt-3" *ngIf="!showTeacher">
+      <ul class="nav nav-pills ">
+        <li class="nav-item" *ngFor="let p of pages1">
+          <a class="nav-link" (click)="setPage1(p)"  [ngClass]="{'active': p == page1}" >{{p+1}}</a>
+        </li>
+      </ul>
+    </div>
 
     <!--Table of student-->
-    <div class="row pt-2" *ngIf="!showStundets">
-      <label><h1>Student List</h1></label>
+    <div class="row pt-4" *ngIf="!showStundets">
+      <label><h2>Student List</h2></label>
       <table class="table table-hover">
         <thead class="thead-dark">
         <tr>
@@ -51,7 +56,7 @@
           <th scope="col" class="fns">Имя</th>
           <th scope="col" class="lns">Фамилия</th>
           <th scope="col" class="email">Почта</th>
-          <th scope="col" class="pssw">Пароль</th>
+          <!--<th scope="col" class="pssw">Пароль</th>-->
           <th scope="col" class="group">Группа</th>
           <th>Изменить</th>
           <th>Удалить</th>
@@ -63,7 +68,7 @@
           <td scope="col">{{student.fname}}</td>
           <td scope="col">{{student.lname}}</td>
           <td scope="col">{{student.email}}</td>
-          <td scope="col">{{student.password}}</td>
+          <!--<td scope="col">{{student.password}}</td>-->
           <td>{{student.group == null ? "Неопределена" : student.group.name}}</td>
           <td><button class="btn btn-secondary" type="button" (click)="updateStudent(createStudent, student)">Изменить</button></td>
           <td><button class="btn btn-danger" type="button" (click)="deleteStudent(student.idstudent)">Удалить</button></td>
@@ -71,9 +76,40 @@
         </tbody>
       </table>
     </div>
-  </div>
-</div>
+    <div class="row mt-3" *ngIf="!showStundets">
+      <ul class="nav nav-pills ">
+        <li class="nav-item" *ngFor="let p of pages">
+          <a class="nav-link" (click)="setPage(p)"  [ngClass]="{'active': p == page}" >{{p+1}}</a>
+        </li>
+      </ul>
+    </div>
 
+
+    <!--Create new Teacher-->
+
+    <ng-template #show>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Дисциплины</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <table>
+            <thead>
+            <tr>
+              <th>Название дисциплин</th>
+            </tr>
+
+            </thead>
+            <tbody>
+              <tr *ngFor="let subject of subject_teacher">
+                <td>{{subject.name}}</td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+    </ng-template>
 
 
 

@@ -29,12 +29,12 @@ export class GroupsComponent implements OnInit{
 
 
   group:Group = new Group();
-  subject_in_group:Subject[];
-  student_in_group:Student[];
-  student_not_group:Student[];
-  subject_not_group:Subject[];
-  student_list:Student[];
-  group_list:Group[];
+  subject_in_group:Subject[] = [];
+  student_in_group:Student[] = [];
+  student_not_group:Student[] = [];
+  subject_not_group:Subject[] = [];
+  student_list:Student[] = [];
+  group_list:Group[] = [];
 
   idgroup:number;
 
@@ -63,8 +63,15 @@ export class GroupsComponent implements OnInit{
 
 
 
-  public openStudentModal(template: TemplateRef<any>,idgroup:number):void {
+  public openModalCreate(template: TemplateRef<any>){
     this.modalRef = this.modalService.show(template, {class: 'modal-lg'});
+
+  }
+
+
+  public openStudentModal(template: TemplateRef<any>,idgroup:number, group_name:string):void {
+    this.modalRef = this.modalService.show(template);
+    this.choosen_name_group = group_name;
     if(idgroup != null){
       this.showStudentByGroupID(idgroup);
     }
@@ -80,8 +87,9 @@ export class GroupsComponent implements OnInit{
     })
   }
 
-  public openSubjectModal(template: TemplateRef<any>,idgroup:number):void{
-    this.modalRef = this.modalService.show(template, {class: 'modal-lg'});
+  public openSubjectModal(template: TemplateRef<any>,idgroup:number, name:string):void{
+    this.modalRef = this.modalService.show(template);
+    this.choosen_name_group = name;
     if(idgroup != null){
       this.idgroup = idgroup;
       this.showSubjectByGroupId(idgroup);
@@ -115,7 +123,7 @@ export class GroupsComponent implements OnInit{
     let indexStudent = this.student_not_group.indexOf(student);
     this.student_not_group[indexStudent].choosen = false;
   }
-  public create_group(template:any):void {
+  public create_group():void {
     let students: Student[] = [];
     for (let i = 0; i < this.student_not_group.length; i++) {
       if (this.student_not_group[i].choosen == true) {
@@ -126,10 +134,13 @@ export class GroupsComponent implements OnInit{
     this.groupService.createGroup(this.selectedGroup, students).subscribe(group=>{
       this.group = group as Group;
       console.log(this.group);
+      this.ngOnInit();
     })
-    this.groupService.getAllGroups().subscribe(groups =>{
-      this.group_list = groups as Group[];
-    })
+    this.modalRef.hide();
+    // this.groupService.getAllGroups().subscribe(groups =>{
+    //   this.group_list = groups as Group[];
+    // })
+
   }
 
   public addStudentsInGroup(){
@@ -139,10 +150,16 @@ export class GroupsComponent implements OnInit{
         students.push(this.student_not_group[i]);
       }
     }
-    this.studentService.addStudentsGroup(this.choose_id_group,students).subscribe(()=>{
-      console.log("Good adding!");
-    })
-    this.modalRef.hide();
+    if(students.length == 0){
+      console.log("choose subject");
+      return;
+    }else{
+      this.studentService.addStudentsGroup(this.choose_id_group,students).subscribe(()=>{
+        console.log("Good adding!");
+      })
+      this.modalRef.hide();
+    }
+
   }
 
   public addSubjectsInGroup(subject:Subject){
@@ -197,10 +214,11 @@ export class GroupsComponent implements OnInit{
   public removeStudentFromGroup(id:number):void{
     this.studentService.removeStudent(id).subscribe(student=>{
       console.log(student);
-    })
+    });
     this.studentService.getAllStudentsNotGroup().subscribe(students=>{
       this.student_not_group = students as Student[];
     })
+
     this.closeModal();
   }
 

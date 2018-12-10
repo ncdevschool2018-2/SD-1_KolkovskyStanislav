@@ -30,22 +30,14 @@ public class GroupController {
     @RequestMapping(value="/create",method = RequestMethod.POST)
     public Group createGroup(@RequestBody HashMap<String, List<Student>> hashMap) {
 
-        Group group = new Group();
-        List<Student> studentList = new ArrayList<>();
 
-        //get data from Hashmap
-        for(Map.Entry<String, List<Student>> entry : hashMap.entrySet()){
-            group.setName(entry.getKey());
-            studentList = entry.getValue();
+        if(!hashMap.equals(null)){
+            return groupService.createGroup(hashMap);
+        }
+        else{
+            return null;
         }
 
-        Group group1 = groupService.createGroup(group);
-        for(Student student: studentList){
-            student.setGroup(group1);
-        }
-
-        studentService.saveAllStudents(studentList);
-        return group1;
     }
 
     @RequestMapping(value="/delete/{id}", method = RequestMethod.DELETE)
@@ -54,95 +46,28 @@ public class GroupController {
         return ResponseEntity.noContent().build();
     }
 
-    @RequestMapping(value="/creategroup", method = RequestMethod.GET)
-    public Group createGroup(){
-
-        Group group = new Group();
-        List<Student> studentList = new ArrayList<Student>();
-        Student student = new Student();
-        group.setName("group");
-        student.setFname("kolia");
-        student.setLname("kolia");
-        student.setEmail("email");
-        student.setPassword("password");
-        student.setGroup(group);
-        studentList.add(student);
-        group.setStudents(studentList);
-
-        return  groupService.createGroup(group);
-    }
-
     @RequestMapping(value = "/getgroups", method = RequestMethod.GET)
     public Iterable<Group> getGroups(){
-        Iterable<Group> groups = groupService.getGroups();
-//        Iterator<Group> groupIterator = groups.iterator();
-//        while(groupIterator.hasNext()){
-//            System.out.println(groupIterator.next().getStudents());
-//        }
-        return groups;
+       return groupService.getGroups();
     }
 
-
-    @RequestMapping(value="/adding_subkects", method = RequestMethod.GET)
-    public Group addSubject(@PathVariable(name="id")Long id,
-                            @PathVariable(name="idsub")Long idsub){
-        Iterable<Group> groupIterable = groupService.getGroups();
-        Iterable<Subject> subjectIterable = subjectService.getSubjects();
-
-        Iterator<Group> groupIterator = groupIterable.iterator();
-        Iterator<Subject> subjectIterator = subjectIterable.iterator();
-
-        Group group = new Group();
-        Subject subject = new Subject();
-
-        while(groupIterator.hasNext()){
-            group = groupIterator.next();
-            if(group.getId().equals(id)){
-                break;
-            }
-        }
-
-        while(subjectIterator.hasNext()){
-            subject = subjectIterator.next();
-            if(subject.getIdsubjects().equals(idsub)){
-                break;
-            }
-        }
-
-        group.addSubject(subject);
-        return groupService.createGroup(group);
-    }
 
 
     @RequestMapping(value="/addsubjects",method = RequestMethod.POST)
     public Group addSubjects(@RequestBody HashMap<Long,List<Subject>> hashMap){
-        Long idgroup = null;
-        List<Subject> subjectList = new ArrayList<>();
 
-        //get data from Hashmap
-        for(Map.Entry<Long, List<Subject>> entry : hashMap.entrySet()){
-            idgroup = entry.getKey();
-            subjectList = entry.getValue();
-        }
-
-        Optional<Group> groupOptional = groupService.getGroupById(idgroup);
-        Group group = groupOptional.isPresent() ? groupOptional.get() : new Group();
-        if(group.getSubjects().isEmpty()){
-            group.setSubjects(subjectList);
+        if(!hashMap.equals(null)){
+            return groupService.addSubjectsIntoGroup(hashMap);
         }else{
-            group.addSubjects(subjectList);
+            return null;
         }
-        return groupService.createGroup(group);
+
     }
 
     @RequestMapping(value="/remove/{idgroup}/{idsub}", method = RequestMethod.GET)
     public ResponseEntity<Group> removeSubjectFromGroup(@PathVariable(name = "idgroup") Long idgroup,
                                                         @PathVariable(name = "idsub") Long idsub){
-        Optional<Group> groupOptional = groupService.getGroupById(idgroup);
-        Group group = groupOptional.isPresent() ? groupOptional.get() : new Group();
-        Subject subject = subjectService.getSubject(idsub).get();
-        group.removeSubject(subject);
-        groupService.createGroup(group);
+        groupService.removeSubjectFromGroup(idgroup,idsub);
         return ResponseEntity.noContent().build();
     }
 }

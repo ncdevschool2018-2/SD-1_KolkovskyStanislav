@@ -1,14 +1,17 @@
 package com.netcracker.fapi.service;
 
 import com.netcracker.fapi.model.Student;
+import jdk.internal.org.objectweb.asm.TypeReference;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+
+import static java.util.Arrays.asList;
 
 @Service
 public class StudentService {
@@ -17,10 +20,23 @@ public class StudentService {
     @Value("${backend.server.url}")
     private String backendServerUrl;
 
+
+    public List<Student> getStudentPage(int page){
+        RestTemplate restTemplate = new RestTemplate();
+        Student[] students =  restTemplate.getForObject(backendServerUrl +"/api/student/list?page="+page, Student[].class);
+        return Arrays.asList(students);
+    }
+
+    public Integer getPages(){
+        RestTemplate restTemplate = new RestTemplate();
+        return  restTemplate.getForObject(backendServerUrl + "/api/student/pages",Integer.class);
+    }
+
+
     public List<Student> getAllStudent() {
         RestTemplate restTemplate = new RestTemplate();
         Student[] students = restTemplate.getForObject(backendServerUrl + "/api/student/getall",Student[].class);
-        return students  == null ? Collections.emptyList() :Arrays.asList(students);
+        return students  == null ? Collections.emptyList() : asList(students);
     }
 
     public Student removeGroup(Long id){
@@ -45,21 +61,21 @@ public class StudentService {
     public List<Student> getAllStudentsNotGroup(){
         RestTemplate restTemplate = new RestTemplate();
         Student[] students = restTemplate.getForObject(backendServerUrl + "/api/student/notgroup", Student[].class);
-        return  students == null ? Collections.emptyList() : Arrays.asList(students);
+        return  students == null ? Collections.emptyList() : asList(students);
     }
 
     public List<Student> getStudentByGroupId(Long id){
         RestTemplate restTemplate = new RestTemplate();
         Student[] students = restTemplate.getForObject(backendServerUrl + "/api/student/getall/" + id, Student[].class);
-        return students == null ? Collections.emptyList() : Arrays.asList(students);
+        return students == null ? Collections.emptyList() : asList(students);
     }
 
     public List<Student> addingInGroup(Long idgroup,Student[] students){
         HashMap<Long,List<Student>> hashMap = new HashMap<>();
-        hashMap.put(idgroup, Arrays.asList(students));
+        hashMap.put(idgroup, asList(students));
         RestTemplate restTemplate = new RestTemplate();
         Student[] students1 =  restTemplate.postForEntity(backendServerUrl + "/api/student/addinggroup/",hashMap,Student[].class).getBody();
-        return students1  == null ? Collections.emptyList() :Arrays.asList(students1);
+        return students1  == null ? Collections.emptyList() : asList(students1);
     }
 
 

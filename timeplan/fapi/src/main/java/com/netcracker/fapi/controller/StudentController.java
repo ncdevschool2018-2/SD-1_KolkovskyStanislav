@@ -1,12 +1,15 @@
 package com.netcracker.fapi.controller;
 
+import com.netcracker.fapi.model.CustomPage;
 import com.netcracker.fapi.model.Student;
 import com.netcracker.fapi.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.xml.ws.Response;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -15,6 +18,18 @@ public class StudentController {
 
     @Autowired
     private StudentService studentService;
+
+
+
+    @RequestMapping(value="/list/{page}",method = RequestMethod.GET)
+    public ResponseEntity<List<Student>> getStudentPage(@PathVariable(name="page") String page){
+       return ResponseEntity.ok(studentService.getStudentPage(Integer.valueOf(page)));
+    }
+
+    @RequestMapping(value="/pages",method = RequestMethod.GET)
+    public ResponseEntity<Integer> getPages(){
+        return ResponseEntity.ok(studentService.getPages());
+    }
 
     @RequestMapping(value = "/createst",method = RequestMethod.POST)
     public ResponseEntity<Student> addStudent(@RequestBody Student student){

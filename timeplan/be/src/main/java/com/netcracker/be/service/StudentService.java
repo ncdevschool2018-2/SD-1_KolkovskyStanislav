@@ -6,6 +6,8 @@ import com.netcracker.be.repository.GroupRepository;
 import com.netcracker.be.repository.StudentRepository;
 import com.netcracker.be.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -22,6 +24,21 @@ public class StudentService {
         this.groupRepository = groupRepository;
     }
 
+    public List<Student> getStudentPage(int page){
+        Page<Student> studentPage =  studentRepository.findAll(new PageRequest(page,5));
+        Iterator<Student> iterator = studentPage.iterator();
+        List<Student> studentList = new ArrayList<>();
+        while(iterator.hasNext()){
+            studentList.add(iterator.next());
+        }
+        return studentList;
+    }
+
+    public Integer getNumberPage(){
+        Page<Student> studentPage =  studentRepository.findAll(new PageRequest(0,5));
+        return studentPage.getTotalPages();
+    }
+
     public Student saveStudentAccount(Student studentModel){
         return  studentRepository.save(studentModel);
     }
@@ -31,6 +48,7 @@ public class StudentService {
     }
 
     public Iterable<Student> addStudentInGroup(HashMap<Long , List<Student>> hashMap){
+
         Long id = null;
         List<Student> studentList = new ArrayList<>();
 

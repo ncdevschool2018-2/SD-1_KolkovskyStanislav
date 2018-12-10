@@ -1,6 +1,7 @@
 package com.netcracker.be.controller;
 
 
+import com.netcracker.be.entity.Student;
 import com.netcracker.be.entity.Subject;
 import com.netcracker.be.entity.Teacher;
 import com.netcracker.be.service.SubjectService;
@@ -26,6 +27,16 @@ public class TeacherController {
         this.subjectService = subjectService;
     }
 
+    @RequestMapping(value = "/list",method = RequestMethod.GET)
+    public  List<Teacher> showPage(@RequestParam(defaultValue = "0") int page){
+        return  teacherService.getTeacherPage(page);
+    }
+
+    @RequestMapping(value = "/pages",method = RequestMethod.GET)
+    public Integer getPages(){
+        return teacherService.getNumberPage();
+    }
+
     @RequestMapping(method = RequestMethod.POST)
     public Teacher addTeacher(@RequestBody Teacher teacher){
         Teacher newTeacher = teacherService.saveTeacherAccount(teacher);
@@ -41,24 +52,6 @@ public class TeacherController {
     public ResponseEntity<Teacher> deleteTeacher(@PathVariable(name = "id") Long id){
         teacherService.deleteTeacher(id);
         return ResponseEntity.noContent().build();
-    }
-
-
-//    //Test code baby!
-    @RequestMapping(value="/create",method = RequestMethod.GET)
-    public Teacher createTeacher(@RequestParam(name = "fname", required = false, defaultValue = "Alex") String fname,
-                                 @RequestParam(name = "lname", required = false, defaultValue =  "Levkov") String lname,
-                                 @RequestParam(name = "email", required = false, defaultValue = "Levkov@gmail.com") String email,
-                                 @RequestParam(name = "password", required = false, defaultValue = "alexbest") String password,
-                                 @RequestParam(name = "level", required = false, defaultValue = "doctor") String level){
-        Teacher teacher = new Teacher();
-        teacher.setFname(fname);
-        teacher.setLname(lname);
-        teacher.setEmail(email);
-        teacher.setPassword(password);
-        teacher.setLevel(level);
-
-        return teacherService.saveTeacherAccount(teacher);
     }
 
 
@@ -105,23 +98,6 @@ public class TeacherController {
     }
 
 
-
-//    @RequestMapping(value="/handcreate/{fname}/{lname}/{email}/{password}/{level}", method = RequestMethod.GET)
-//    public Teacher handcreateTeacher(@PathVariable(name = "fname")String fname,
-//                                     @PathVariable(name = "lname")String lname,
-//                                     @PathVariable(name = "email")String email,
-//                                     @PathVariable(name = "passowrd")String password,
-//                                     @PathVariable(name = "level") String level){
-//        Teacher teacher = new Teacher();
-//        teacher.setFname(fname);
-//        teacher.setLname(lname);
-//        teacher.setEmail(email);
-//        teacher.setPassword(password);
-//        teacher.setLevel(level);
-//
-//        return teacherService.saveTeacherAccount(teacher);
-//
-//    }
 
     @RequestMapping(value="/get/{idsubject}", method = RequestMethod.GET)
     public Iterable<Teacher> getTeacherByIdSubject(@PathVariable(name ="idsubject") Long id){

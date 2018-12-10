@@ -1,35 +1,29 @@
 
-
-
-
-  <div class="card" style="width: 1000px;">
-    <h5 class="card-header"> <div class="row">
+    <div class="row">
       <button class="btn btn-primary mr-2" type="button" (click)="openModal(addtask)">Add lesson for Group</button>
       <button class="btn btn-dark mr-2" type="button" (click)="showTeacher()">Show Teacher time</button>
       <button class="btn btn-dark mr-2" type="button" (click)="showGroup()">Show Student time</button>
-    </div></h5>
-    <div class="card-body">
+    </div>
 
-
-      <div class="row mt-3" *ngIf="display_show">
+    <div class="row mt-3" *ngIf="display_show">
         <label>Group name</label>
         <select class="form-control">
           <option *ngFor="let group of groups" (click)="getTaskByGroup(group.id)">{{group.name}}</option>
         </select>
-      </div>
+    </div>
 
-      <div class="row mt-3" *ngIf="display_show1">
+    <div class="row mt-3" *ngIf="display_show1">
         <label>Teacher name</label>
         <select class="form-control">
           <option *ngFor="let teacher of list_teacher" (click)="getTaskByTeacher(teacher.idteachers)">{{teacher.fname +  " " + teacher.lname}}</option>
         </select>
-      </div>
+    </div>
 
 
       <!--Timetable Group-->
       <div class="row mt-3" *ngIf="choose_display_group">
-        <label>Timetable</label>
-        <table class="table table-hover ">
+        <h3 *ngIf="timetable.length == 0 ">У данной группы отсуствует расписание</h3>
+        <table class="table table-hover" *ngIf="timetable.length != 0" >
           <thead class="thead-dark">
           <tr>
             <th scope="col" class="fnt">Day</th>
@@ -55,8 +49,9 @@
 
       <!--Timetable Teacher-->
       <div class="row mt-3" *ngIf="choose_display_teacher">
-        <label>Timetable</label>
-        <table class="table table-hover ">
+
+        <h3 *ngIf="timetable.length == 0">У данного преподавателя отсутствует расписание</h3>
+        <table class="table table-hover " *ngIf="timetable.length != 0">
           <thead class="thead-dark">
           <tr>
             <th scope="col" class="fnt">Day</th>
@@ -79,15 +74,30 @@
           </tbody>
         </table>
       </div>
-    </div>
-  </div>
 
+
+
+<ng-template #showError>
+  <div class="modal-body text-center">
+    <p>It's time exsist! Try another day or time!</p>
+    <button type="button" class="btn btn-default" (click)="modalRef.hide()" >Ок</button>
+  </div>
+</ng-template>
+
+
+
+    <ng-template #showAlert>
+      <div class="modal-body text-center">
+        <p>Добавьте предметы группе</p>
+        <button type="button" class="btn btn-default" (click)="modalRef.hide()" >Ок</button>
+      </div>
+    </ng-template>
 
 
 <ng-template #addtask>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Adding Lesson</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -128,7 +138,7 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" (click)="addTask()">Добавить Занятие</button>
+    <button class="btn btn-primary" (click)="addTask(showError)">Добавить Занятие</button>
   </div>
 </ng-template>
 

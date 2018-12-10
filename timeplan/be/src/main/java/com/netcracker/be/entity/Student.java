@@ -20,7 +20,7 @@ public class Student {
     private String email;
     @Column(name="password")
     private String password;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "idgroup")
     //@JsonIgnore
     private Group group;

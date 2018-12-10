@@ -1,5 +1,6 @@
 package com.netcracker.fapi.controller;
 
+import com.netcracker.fapi.model.Student;
 import com.netcracker.fapi.model.Teacher;
 import com.netcracker.fapi.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,17 @@ public class TeacherController {
 
     @Autowired
     private TeacherService teacherService;
+
+
+    @RequestMapping(value="/list/{page}",method = RequestMethod.GET)
+    public ResponseEntity<List<Teacher>> getStudentPage(@PathVariable(name="page") String page){
+        return ResponseEntity.ok(teacherService.getTeacherPage(Integer.valueOf(page)));
+    }
+
+    @RequestMapping(value="/pages",method = RequestMethod.GET)
+    public ResponseEntity<Integer> getPages(){
+        return ResponseEntity.ok(teacherService.getPages());
+    }
 
     @RequestMapping(value = "/createtr",method = RequestMethod.POST)
     public ResponseEntity<Teacher> addTeacher(@RequestBody Teacher teacher){

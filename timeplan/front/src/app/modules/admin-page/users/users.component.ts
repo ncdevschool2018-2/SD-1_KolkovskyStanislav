@@ -8,6 +8,7 @@ import {Subject} from "../../../models/subject";
 import { StudentService } from "src/app/services/student.service";
 import { TeacherService } from "src/app/services/teacher.service";
 import {FormControl} from "@angular/forms";
+import {Ng4LoadingSpinnerService} from "ng4-loading-spinner";
 
 @Component({
   selector:'users',
@@ -27,13 +28,24 @@ export class UsersComponent implements OnInit{
   public create_teacher:Teacher = new Teacher();
 
   showAll:boolean = true;
-  showStundets:boolean = true;
+  showStundets:boolean = false;
   showTeacher:boolean = true;
   choose_subject:string;
 
+  subject_teacher:Subject[]= [];
+
   readonly level_list: string[] = ["Научный сотрудник", "Ассистент", "Доцент", "Профессор"];
 
-  constructor(
+  public page:number = 0;
+  public pages:Array<number> = new Array<number>();
+  public countpage:number = 0;
+
+
+  public page1:number = 0;
+  public pages1:Array<number> = new Array<number>();
+  public countpage1:number = 0;
+
+  constructor(private loadingService:Ng4LoadingSpinnerService,
               private studentService:StudentService,
               private teacherService:TeacherService,
               private modalService:BsModalService,
@@ -41,18 +53,73 @@ export class UsersComponent implements OnInit{
 
 
   ngOnInit(){
-    this.teacherService.getAllTeachers().subscribe(teachers =>{
-      this.teachers = teachers as Teacher[];
-    })
 
-    this.studentService.getAllStudents().subscribe(students =>{
-      this.students = students as Student[];
-    });
+
+    this.getPagesSt();
+    this.getStudentPage();
+    this.getPageTr();
+    this.getTeacherPage();
 
     this.subjectService.getSubjects().subscribe(subjects =>{
       this.subjects = subjects as Subject[];
       console.log("Helllllll");
     })
+  }
+
+  setPage(i){
+    this.page = i;
+    this.getStudentPage();
+  }
+
+  setPage1(i){
+    this.page1 = i;
+    this.getTeacherPage();
+  }
+
+
+  public getPagesSt(){
+    this.studentService.getPages().subscribe(pages =>{
+      this.countpage = pages as number;
+      console.log("gg1");
+      this.pages = new Array<number>();
+      for(let i = 0; i < this.countpage; i++){
+        this.pages.push(i);
+      }
+    })
+  }
+  public getPageTr(){
+    this.teacherService.getPages().subscribe(pages =>{
+      this.countpage1 = pages as number;
+      this.pages1 = new Array<number>();
+      console.log("gg1");
+      for(let i = 0; i < this.countpage1; i++){
+        this.pages1.push(i);
+      }
+    })
+  }
+  public getTeacherPage(){
+    this.teacherService.getTeachers(this.page1).subscribe(
+      teachers => {
+        this.teachers = teachers as Teacher[];
+        console.log(this.teachers);
+      }
+    )
+  }
+  public getStudentPage(){
+    this.studentService.getStudents(this.page).subscribe(
+      hash =>{
+       this.students = hash as Student[];
+      }
+
+    )
+  }
+
+  openModalSubjectTeacher(template: TemplateRef<any>, teacher:Teacher){
+
+    this.modalRef = this.modalService.show(template);
+    for(let i =0; i< teacher.subjects.length;i++){
+      this.subject_teacher.push(teacher.subjects[i]);
+    }
   }
 
   openModal(template: TemplateRef<any>){
@@ -78,82 +145,75 @@ export class UsersComponent implements OnInit{
     this.create_teacher = new Teacher();
   }
 
-  public dis():void{
-    console.log(this.choosing_subject);
-  }
 
   public addStudent(student_account?:Student):void{
 
+    this.loadingService.show();
      // this.create_student.idstudents = this.calculateIdStudent(this.students.length);
      this.create_student.group = null;
       this.studentService.addStudent(this.create_student).subscribe( ()=>{
         console.log(this.create_student);
-        this.updateListStudent();
+        //this.updateListStudent();
+        this.getStudentPage();
+        this.getPagesSt();
+        this.loadingService.hide();
       })
-
     this.modalRef.hide();
+
   }
 
   public editStudent():void{
-    this.addStudent();
+    this.studentService.addStudent(this.create_student).subscribe( ()=>{
+      console.log(this.create_student);
+      //this.updateListStudent();
+      this.getStudentPage();
+      this.getPagesSt();
+      this.loadingService.hide();
+      this.create_student = new Student();
+    })
+
     this.modalRef.hide();
   }
 
   public editTeacher():void{
    this.addTeacher();
+   this.create_teacher = new Teacher();
     this.modalRef.hide();
   }
 
   public deleteStudent(id_student:number):void{
     this.studentService.deleteStudent(id_student).subscribe(()=>{
-      this.updateListStudent();
+     this.getStudentPage();
+     this.getPagesSt();
     })
+
+
   }
-
-  private updateListStudent():void {
-      this.studentService.getAllStudents().subscribe(students =>{
-        this.students = students as Student [];
-    })
-  }
-
-
-
 
   public addTeacher(teacher?:Teacher):void{
-
-    for(let i = 0; i < this.subjects.length; i++){
-      for(let j =0; j < this.choosing_subject.length; j++){
-        if(this.subjects[i].name == this.choosing_subject[j]){
+    this.loadingService.show();
+    for(let i = 0; i < this.subjects.length; i++) {
+      for (let j = 0; j < this.choosing_subject.length; j++) {
+        if (this.subjects[i].name == this.choosing_subject[j]) {
           this.create_teacher.subjects.push(this.subjects[i]);
         }
       }
     }
-
-    console.log(this.create_teacher);
-
     this.teacherService.addTeacher(this.create_teacher).subscribe(()=>{
-      this.updateListTeacher();
+     this.getPageTr();
+     this.getTeacherPage();
+     this.loadingService.hide();
+     this.create_teacher = new Teacher();
     })
-
-      // this.create_teacher.idteachers = teacher.idteachers;
-      // this.usersService.addTeacher(this.create_teacher).subscribe(()=>{
-      //   console.log(this.create_teacher);
-      //   this.updateListTeacher();
-      // })
 
     this.modalRef.hide();
   }
 
-  private updateListTeacher():void{
-    this.teacherService.getAllTeachers().subscribe(teachers =>{
-      this.teachers = teachers as Teacher[];
-      // this.dataService.changeTeacher(this.teachers);
-    })
-  }
 
   public deleteTeacher(id_teacher: number){
     this.teacherService.deleteTeacher(id_teacher).subscribe(()=>{
-      this.updateListTeacher();
+      this.getPageTr();
+      this.getTeacherPage();
     })
   }
 

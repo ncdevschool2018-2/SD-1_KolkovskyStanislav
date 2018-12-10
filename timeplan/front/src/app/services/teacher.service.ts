@@ -13,6 +13,14 @@ export class TeacherService{
 
   constructor(private http:HttpClient){}
 
+  getTeachers(page:number):Observable<Teacher[]>{
+    return this.http.get<Teacher[]>("api/tr/list/"+page);
+  }
+
+  getPages():Observable<number>{
+    return this.http.get<number>('api/tr/pages');
+  }
+
   addTeacher(teacher:Teacher):Observable<Teacher>{
     return this.http.post<Teacher>('api/tr/createtr',teacher);
   }

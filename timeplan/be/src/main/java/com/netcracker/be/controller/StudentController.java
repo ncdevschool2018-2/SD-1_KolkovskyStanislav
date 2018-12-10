@@ -6,6 +6,7 @@ import com.netcracker.be.service.GroupService;
 import com.netcracker.be.service.StudentService;
 import com.netcracker.be.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +27,16 @@ public class StudentController {
     public StudentController(StudentService studentService, GroupService groupService){
         this.studentService = studentService;
         this.groupService = groupService;
+    }
+
+    @RequestMapping(value = "/list",method = RequestMethod.GET)
+    public  List<Student> showPage(@RequestParam(defaultValue = "0") int page){
+        return  studentService.getStudentPage(page);
+    }
+
+    @RequestMapping(value = "/pages",method = RequestMethod.GET)
+    public Integer getPages(){
+        return studentService.getNumberPage();
     }
 
     @RequestMapping(value ="/save" ,method = RequestMethod.POST)
