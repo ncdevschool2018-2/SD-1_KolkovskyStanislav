@@ -10,7 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.*;
 
 @Service
-public class GroupService {
+public class   GroupService {
 
     @Value("${backend.server.url}")
     private String backendServerUrl;

@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "teachers")
-public class Teacher {
+public class Teacher extends User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idteachers;
@@ -19,10 +19,6 @@ public class Teacher {
     private String email;
     private String password;
     private String level;
-
-//    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-//    @JoinColumn(name = "idsubjects")
-//    private Subject subject;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "teachers_subjects",
@@ -34,6 +30,17 @@ public class Teacher {
     @OneToMany(mappedBy = "teacher",cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Task> taskList;
+    private String role;
+
+    @Override
+    public String getRole() {
+        return role;
+    }
+
+    @Override
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     public Long getIdteachers() {
         return idteachers;

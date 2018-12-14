@@ -20,7 +20,6 @@ public class StudentController {
     private StudentService studentService;
 
 
-
     @RequestMapping(value="/list/{page}",method = RequestMethod.GET)
     public ResponseEntity<List<Student>> getStudentPage(@PathVariable(name="page") String page){
        return ResponseEntity.ok(studentService.getStudentPage(Integer.valueOf(page)));

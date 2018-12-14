@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name ="studenttest")
-public class Student {
+public class Student extends  User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="idstudent")
@@ -24,6 +24,17 @@ public class Student {
     @JoinColumn(name = "idgroup")
     //@JsonIgnore
     private Group group;
+    private String role;
+
+    @Override
+    public String getRole() {
+        return role;
+    }
+
+    @Override
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     public Long getIdstudent() {
         return idstudent;

@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Student} from "../models/student";
 import {Teacher} from "../models/teacher";
-import {Hashmap} from "../models/hashmap";
+
 
 
 @Injectable({
