@@ -3,7 +3,7 @@ import {Router, ActivatedRoute} from '@angular/router';
 import {AuthLoginInfo} from "../auth/login-info";
 import {TokenStorageService} from "../auth/token-storage.service";
 import {AuthService} from "../auth/auth.service";
-
+import {Ng4LoadingSpinnerService} from "ng4-loading-spinner";
 
 @Component({
   selector: 'login',
@@ -19,9 +19,11 @@ export class LoginComponent {
   private loginInfo: AuthLoginInfo;
   role:string = null;
 
-  constructor(private authService: AuthService, private tokenStorage: TokenStorageService) { }
+  constructor(private authService: AuthService, private tokenStorage: TokenStorageService,
+              private router:Router, private load:Ng4LoadingSpinnerService) { }
 
   ngOnInit() {
+
     if (this.tokenStorage.getToken()) {
       this.isLoggedIn = true;
       this.role = this.tokenStorage.getAuthorities();
@@ -29,8 +31,8 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    console.log(this.form);
-
+    this.load.show();
+    //console.log(this.form);
     this.loginInfo = new AuthLoginInfo(
       this.form.username,
       this.form.password);
@@ -47,17 +49,22 @@ export class LoginComponent {
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.role = this.tokenStorage.getAuthorities();
-        this.reloadPage();
+        this.load.hide()
+        this.router.navigateByUrl("home");
       },
       error => {
         console.log(error);
         this.errorMessage = error.error.message;
         this.isLoginFailed = true;
+        this.load.hide()
       }
+
     );
+
   }
 
   reloadPage() {
     window.location.reload();
+    window.location.replace("localhost:4200/home");
   }
 }

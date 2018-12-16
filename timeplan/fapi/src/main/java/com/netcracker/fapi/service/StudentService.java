@@ -3,6 +3,9 @@ package com.netcracker.fapi.service;
 import com.netcracker.fapi.model.Student;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -16,6 +19,12 @@ public class StudentService {
 
     @Value("${backend.server.url}")
     private String backendServerUrl;
+
+
+    @Bean
+    PasswordEncoder getEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
 
     public List<Student> getStudentPage(int page){
@@ -47,6 +56,7 @@ public class StudentService {
 
     public Student saveStudentAccount(Student student) {
         RestTemplate restTemplate = new RestTemplate();
+        student.setPassword(getEncoder().encode(student.getPassword()));
         return restTemplate.postForEntity(backendServerUrl + "/api/student/save", student, Student.class).getBody();
     }
 

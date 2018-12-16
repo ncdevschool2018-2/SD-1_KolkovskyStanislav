@@ -20,7 +20,7 @@ public class Teacher extends User {
     private String password;
     private String level;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.REMOVE})
     @JoinTable(name = "teachers_subjects",
                 joinColumns = {@JoinColumn(name="teacher_id")},
                 inverseJoinColumns = {@JoinColumn(name = "subject_id")})

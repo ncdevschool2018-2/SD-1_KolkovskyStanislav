@@ -23,6 +23,8 @@ export class StudentService{
     return this.http.get<number>('api/st/pages');
   }
 
+
+
   //Ajax request
   addStudent(student: Student):Observable<Student>{
     return this.http.post<Student>('/api/st/createst', student);

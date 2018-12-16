@@ -33,6 +33,7 @@ public class StudentController {
     @RequestMapping(value = "/createst",method = RequestMethod.POST)
     public ResponseEntity<Student> addStudent(@RequestBody Student student){
         if(student != null){
+            student.setRole("STUDENT");
             return ResponseEntity.ok(studentService.saveStudentAccount(student));
         }
         return null;

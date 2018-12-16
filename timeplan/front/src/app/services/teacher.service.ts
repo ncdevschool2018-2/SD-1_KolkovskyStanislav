@@ -17,6 +17,10 @@ export class TeacherService{
     return this.http.get<Teacher[]>("api/tr/list/"+page);
   }
 
+  getTeacherByEmail(email:string):Observable<Teacher>{
+    return this.http.get<Teacher>("api/tr/email/"+email);
+  }
+
   getPages():Observable<number>{
     return this.http.get<number>('api/tr/pages');
   }

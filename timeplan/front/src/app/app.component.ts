@@ -12,11 +12,11 @@ export class AppComponent {
   @HostBinding('class.app') private readonly hostClass = true;
 
 
-  private roles: string[];
+  //private roles: string[];
   private authority: string;
-
   private role:string;
-  constructor(private tokenStorage: TokenStorageService) { }
+  constructor(private tokenStorage: TokenStorageService,
+              private router:Router) { }
 
   ngOnInit() {
     if (this.tokenStorage.getToken()) {
@@ -24,13 +24,19 @@ export class AppComponent {
         if (this.role === '[ROLE_ADMIN]') {
           this.authority = 'admin';
           return false;
-        } else if (this.role === '[ROLE_PM]') {
-          this.authority = 'pm';
+        } else if (this.role === '[ROLE_TEACHER]') {
+          this.authority = 'teacher';
           return false;
         }
-        this.authority = 'user';
+        this.authority = 'student';
         return true;
     }
+  }
+
+  logout(){
+    window.location.reload();
+    this.tokenStorage.signOut();
+    this.router.navigate(['']);
   }
 
 }

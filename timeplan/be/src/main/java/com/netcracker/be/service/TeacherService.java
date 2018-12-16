@@ -1,6 +1,5 @@
 package com.netcracker.be.service;
 
-import com.netcracker.be.entity.Student;
 import com.netcracker.be.entity.Subject;
 import com.netcracker.be.entity.Teacher;
 import com.netcracker.be.repository.SubjectRepository;
@@ -40,6 +39,9 @@ public class TeacherService {
         return teacherPage.getTotalPages();
     }
 
+    public Teacher getTeacherByEmail(String email){
+        return teacherRepository.findByEmail(email).get();
+    }
 
     public Teacher saveTeacherAccount(Teacher teacher){
         List<Subject> subjects = teacher.getSubjects();

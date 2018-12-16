@@ -1,7 +1,6 @@
 package com.netcracker.be.controller;
 
 
-import com.netcracker.be.entity.Student;
 import com.netcracker.be.entity.Subject;
 import com.netcracker.be.entity.Teacher;
 import com.netcracker.be.service.SubjectService;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/teacher")
@@ -35,6 +35,11 @@ public class TeacherController {
     @RequestMapping(value = "/pages",method = RequestMethod.GET)
     public Integer getPages(){
         return teacherService.getNumberPage();
+    }
+
+    @RequestMapping(value = "/email/{email}",method = RequestMethod.GET)
+    public Teacher getTeacherByEmail(@PathVariable(name ="email") String email){
+        return teacherService.getTeacherByEmail(email);
     }
 
     @RequestMapping(method = RequestMethod.POST)

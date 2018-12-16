@@ -12,9 +12,19 @@ public class Teacher {
     private String email;
     private String password;
     private String level;
+    private String role;
     private List<Subject> subjects;
 
+
     public Teacher() {
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public Long getIdteachers() {

@@ -8,6 +8,7 @@ export class Student{
   lname:string;
   email:string;
   password: string;
+  role:string;
   group:Group;
 
   constructor(){}

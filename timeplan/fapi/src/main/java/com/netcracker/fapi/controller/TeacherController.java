@@ -16,21 +16,30 @@ public class TeacherController {
     @Autowired
     private TeacherService teacherService;
 
-
+    //pagination
     @RequestMapping(value="/list/{page}",method = RequestMethod.GET)
     public ResponseEntity<List<Teacher>> getStudentPage(@PathVariable(name="page") String page){
         return ResponseEntity.ok(teacherService.getTeacherPage(Integer.valueOf(page)));
     }
-
     @RequestMapping(value="/pages",method = RequestMethod.GET)
     public ResponseEntity<Integer> getPages(){
         return ResponseEntity.ok(teacherService.getPages());
     }
 
+
+
+    @RequestMapping(value="/email/{email}",method = RequestMethod.GET)
+    public ResponseEntity<Teacher> getTeacherByEmail(@PathVariable(name = "email") String email ){
+        return ResponseEntity.ok(teacherService.getTeacherByEmail(email));
+    }
+
+
     @RequestMapping(value = "/createtr",method = RequestMethod.POST)
     public ResponseEntity<Teacher> addTeacher(@RequestBody Teacher teacher){
-        if(teacher != null)
+        if(teacher != null){
+            teacher.setRole("TEACHER");
             return  ResponseEntity.ok(teacherService.saveTeacherAccount(teacher));
+        }
         else
             return null;
     }

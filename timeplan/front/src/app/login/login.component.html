@@ -16,9 +16,9 @@
     <!--&lt;!&ndash;<div *ngIf="error" class="alert alert-danger">{{error}}</div>&ndash;&gt;-->
   <!--</form>-->
 <!--</div>-->
-
+<ng4-loading-spinner> </ng4-loading-spinner>
 <div *ngIf="isLoggedIn; else loggedOut">
-  Logged in as {{roles}}.
+  Вы вошли в систему!
 </div>
 
 <ng-template #loggedOut>

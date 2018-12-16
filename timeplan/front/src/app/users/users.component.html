@@ -1,6 +1,7 @@
+<ng4-loading-spinner> </ng4-loading-spinner>
 
 
-    <button class="btn btn-primary mr-2" type="button" [disabled]="!showStundets" (click)="display(student.textContent)" #student>Показать студентов</button>
+<button class="btn btn-primary mr-2" type="button" [disabled]="!showStundets" (click)="display(student.textContent)" #student>Показать студентов</button>
     <button class="btn btn-primary mr-2" type="button" [disabled]="!showTeacher" (click)="display(teacher.textContent)" #teacher>Показать преподавателей</button>
     <button class="btn btn-dark mr-2" type="button" (click)="openModal(createStudent)">Создать студента</button>
     <button class="btn btn-dark mr-2" type="button" (click)="openModal(createTeacher)">Создать преподавателя</button>

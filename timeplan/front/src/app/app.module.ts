@@ -41,6 +41,7 @@ import { httpInterceptorProviders } from './auth/auth-interceptor';
     BrowserModule,
     RouterModule.forRoot(
       [
+        {path: '', redirectTo : 'login', pathMatch: 'full'},
         {path :'users',component: UsersComponent},
         {path :'groups',component: GroupsComponent},
         {path :'subjects',component: SubjectsComponent},

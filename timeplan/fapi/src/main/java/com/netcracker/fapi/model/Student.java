@@ -13,8 +13,17 @@ public class Student {
     private String email;
     private String password;
     private Group group;
+    private String role;
 
     public Student() { }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     public Long getIdstudent() {
         return idstudent;

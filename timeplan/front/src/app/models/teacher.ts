@@ -7,6 +7,7 @@ export class Teacher{
   email:string;
   password:string;
   level:string;
+  string:string;
   subjects: Subject[]=[];
 
   constructor(){}
@@ -22,6 +23,10 @@ export class Teacher{
    copyTeacher.password =teacher.password;
    copyTeacher.subjects = teacher.subjects;
    return copyTeacher;
+  }
+
+  getInfo():string{
+    return this.fname + " " + this.lname
   }
 
   toString():string{

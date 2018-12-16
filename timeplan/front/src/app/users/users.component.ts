@@ -54,7 +54,7 @@ export class UsersComponent implements OnInit{
 
   ngOnInit(){
 
-
+    this.loadingService.show();
     this.getPagesSt();
     this.getStudentPage();
     this.getPageTr();
@@ -63,6 +63,7 @@ export class UsersComponent implements OnInit{
     this.subjectService.getSubjects().subscribe(subjects =>{
       this.subjects = subjects as Subject[];
       console.log("Helllllll");
+      this.loadingService.hide();
     })
   }
 

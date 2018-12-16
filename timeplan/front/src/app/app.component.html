@@ -3,29 +3,30 @@
     TimePlan
   </a>
 
-  <!--<button class="navbar-toggler" type="button" (click)="toggleNavbar()"><span class="navbar-toggler-icon"></span></button>-->
-
   <div class="collapse navbar-collapse" [ngClass]="{ 'show': navbarOpen }">
-    <ul class="nav navbar-nav" routerLinkActive="active">
-      <li class="nav-item">
+    <ul class="nav navbar-nav ml-auto" routerLinkActive="active">
+      <li *ngIf="authority === 'admin' ||authority === 'teacher' || authority === 'student'" class="nav-item">
         <a class="nav-link" routerLink="home">Home</a>
       </li>
-      <li *ngIf="authority === 'user'" class="nav-item">
+      <li *ngIf="authority === 'student'" class="nav-item">
         <a class="nav-link" routerLink="student">Student</a>
       </li>
       <li *ngIf="authority === 'admin'" class="nav-item">
-        <a class="nav-link" routerLink="admin">Admin</a>
+        <a class="nav-link" routerLink="users">Пользователи</a>
       </li>
-      <li *ngIf="authority === 'pm'" class="nav-item">
+      <li *ngIf="authority === 'admin'" class="nav-item">
+        <a class="nav-link" routerLink="groups">Группы</a>
+      </li>
+      <li *ngIf="authority === 'teacher'" class="nav-item">
         <a class="nav-link" routerLink="teacher">Teacher</a>
       </li>
-      <li *ngIf="!authority" class="nav-item">
-        <a class="nav-link" routerLink="login">Login</a>
+      <li *ngIf="authority === 'admin'" class="nav-item">
+        <a class="nav-link" routerLink="subjects">Предметы</a>
       </li>
     </ul>
 
-    <form class="form-inline ml-2 my-lg-0">
-      <button type="button" class="btn btn-primary  my-2 my-sm-0"  data-target="#singupModal" data-toggle="modal">Logout</button>
+    <form class="form-inline ml-2 my-lg-0" *ngIf="authority">
+      <button type="button" class="btn btn-primary  my-2 my-sm-0"  data-target="#singupModal" data-toggle="modal" (click)="logout()">Выйти</button>
     </form>
   </div>
 </nav>

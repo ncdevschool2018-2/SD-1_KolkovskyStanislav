@@ -4,6 +4,9 @@ package com.netcracker.fapi.service;
 import com.netcracker.fapi.model.Student;
 import com.netcracker.fapi.model.Teacher;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -17,6 +20,11 @@ public class TeacherService {
     @Value("${backend.server.url}")
     private String backendServerUrl;
 
+    @Bean
+    PasswordEncoder getEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
 
     public List<Teacher> getTeacherPage(int page){
         RestTemplate restTemplate = new RestTemplate();
@@ -29,6 +37,12 @@ public class TeacherService {
         return  restTemplate.getForObject(backendServerUrl + "/api/teacher/pages",Integer.class);
     }
 
+    public Teacher getTeacherByEmail(String email){
+        RestTemplate restTemplate = new RestTemplate();
+        return  restTemplate.getForObject(backendServerUrl +"/api/teacher/email/"+email, Teacher.class);
+    }
+
+
     public List<Teacher> getAllTeachers() {
         RestTemplate restTemplate = new RestTemplate();
         Teacher[] teachers = restTemplate.getForObject(backendServerUrl + "/api/teacher/getall", Teacher[].class);
@@ -37,6 +51,7 @@ public class TeacherService {
 
     public Teacher saveTeacherAccount(Teacher teacher){
         RestTemplate restTemplate = new RestTemplate();
+        teacher.setPassword(getEncoder().encode(teacher.getPassword()));
         return restTemplate.postForEntity(backendServerUrl + "/api/teacher/", teacher, Teacher.class).getBody();
     }
 
