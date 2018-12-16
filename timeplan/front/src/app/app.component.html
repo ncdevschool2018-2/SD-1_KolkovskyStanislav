@@ -6,10 +6,10 @@
   <div class="collapse navbar-collapse" [ngClass]="{ 'show': navbarOpen }">
     <ul class="nav navbar-nav ml-auto" routerLinkActive="active">
       <li *ngIf="authority === 'admin' ||authority === 'teacher' || authority === 'student'" class="nav-item">
-        <a class="nav-link" routerLink="home">Home</a>
+        <a class="nav-link" routerLink="home">Главная</a>
       </li>
       <li *ngIf="authority === 'student'" class="nav-item">
-        <a class="nav-link" routerLink="student">Student</a>
+        <a class="nav-link" routerLink="student">Расписание</a>
       </li>
       <li *ngIf="authority === 'admin'" class="nav-item">
         <a class="nav-link" routerLink="users">Пользователи</a>
@@ -18,10 +18,13 @@
         <a class="nav-link" routerLink="groups">Группы</a>
       </li>
       <li *ngIf="authority === 'teacher'" class="nav-item">
-        <a class="nav-link" routerLink="teacher">Teacher</a>
+        <a class="nav-link" routerLink="teacher">Расписание</a>
       </li>
       <li *ngIf="authority === 'admin'" class="nav-item">
         <a class="nav-link" routerLink="subjects">Предметы</a>
+      </li>
+      <li *ngIf="authority === 'admin'" class="nav-item">
+        <a class="nav-link" routerLink="timetable">Расписание</a>
       </li>
     </ul>
 

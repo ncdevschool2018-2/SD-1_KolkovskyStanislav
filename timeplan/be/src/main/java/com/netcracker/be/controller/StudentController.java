@@ -39,6 +39,11 @@ public class StudentController {
         return studentService.getNumberPage();
     }
 
+    @RequestMapping(value ="/email/{email}",method =RequestMethod.GET)
+    public Student getStudentByEmail(@PathVariable(name="email")String email){
+        return studentService.getStudentByEmail(email);
+    }
+
     @RequestMapping(value ="/save" ,method = RequestMethod.POST)
     public Student addStudent(@RequestBody Student account) {
         return studentService.saveStudentAccount(account);

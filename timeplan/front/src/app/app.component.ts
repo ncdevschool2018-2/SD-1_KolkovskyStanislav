@@ -9,7 +9,7 @@ import {TokenStorageService} from "./auth/token-storage.service";
 })
 
 export class AppComponent {
-  @HostBinding('class.app') private readonly hostClass = true;
+ // @HostBinding('class.app') private readonly hostClass = true;
 
 
   //private roles: string[];
@@ -36,7 +36,7 @@ export class AppComponent {
   logout(){
     window.location.reload();
     this.tokenStorage.signOut();
-    this.router.navigate(['']);
+    this.router.navigate(["/login"]);
   }
 
 }

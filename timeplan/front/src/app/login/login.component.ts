@@ -19,11 +19,13 @@ export class LoginComponent {
   private loginInfo: AuthLoginInfo;
   role:string = null;
 
+  public email:string;
+  public password:string;
+
   constructor(private authService: AuthService, private tokenStorage: TokenStorageService,
               private router:Router, private load:Ng4LoadingSpinnerService) { }
 
   ngOnInit() {
-
     if (this.tokenStorage.getToken()) {
       this.isLoggedIn = true;
       this.role = this.tokenStorage.getAuthorities();
@@ -31,17 +33,16 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    this.load.show();
+   // this.load.show();
     //console.log(this.form);
     this.loginInfo = new AuthLoginInfo(
-      this.form.username,
-      this.form.password);
+      this.email,
+      this.password);
 
     this.authService.attemptAuth(this.loginInfo).subscribe(
       data => {
 
         console.log(data);
-
         this.tokenStorage.saveToken(data.token);
         this.tokenStorage.saveUsername(data.username);
         this.tokenStorage.saveAuthorities(data.role);
@@ -49,8 +50,9 @@ export class LoginComponent {
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.role = this.tokenStorage.getAuthorities();
-        this.load.hide()
-        this.router.navigateByUrl("home");
+        //this.load.hide()
+        this.reloadPage();
+        // this.router.navigateByUrl("/home");
       },
       error => {
         console.log(error);
@@ -65,6 +67,6 @@ export class LoginComponent {
 
   reloadPage() {
     window.location.reload();
-    window.location.replace("localhost:4200/home");
+   // window.location.replace("localhost:4200/home");
   }
 }

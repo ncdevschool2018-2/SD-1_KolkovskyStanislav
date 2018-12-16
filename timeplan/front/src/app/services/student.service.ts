@@ -23,7 +23,9 @@ export class StudentService{
     return this.http.get<number>('api/st/pages');
   }
 
-
+  getStudentByEmail(email:string):Observable<Student>{
+    return this.http.get<Student>('api/st/email/'+email);
+  }
 
   //Ajax request
   addStudent(student: Student):Observable<Student>{

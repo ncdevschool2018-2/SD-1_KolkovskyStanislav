@@ -34,6 +34,10 @@ public class StudentService {
         return studentList;
     }
 
+    public Student getStudentByEmail(String email){
+        return studentRepository.findByEmail(email).get();
+    }
+
     public Integer getNumberPage(){
         Page<Student> studentPage =  studentRepository.findAll(new PageRequest(0,5));
         return studentPage.getTotalPages();

@@ -39,6 +39,11 @@ public class StudentController {
         return null;
     }
 
+    @RequestMapping(value="/email/{email}", method = RequestMethod.GET)
+    public ResponseEntity<Student> getStudentByEmail(@PathVariable(name="email")String email){
+        return ResponseEntity.ok(studentService.getStudentByEmail(email));
+    }
+
     @RequestMapping(value="/getst",method = RequestMethod.GET)
     public ResponseEntity<List<Student>> getAllStudents(){
         return ResponseEntity.ok(studentService.getAllStudent());

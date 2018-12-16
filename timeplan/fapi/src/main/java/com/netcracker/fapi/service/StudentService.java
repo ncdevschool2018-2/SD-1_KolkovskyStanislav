@@ -38,6 +38,11 @@ public class StudentService {
         return  restTemplate.getForObject(backendServerUrl + "/api/student/pages",Integer.class);
     }
 
+    public Student getStudentByEmail(String email){
+        RestTemplate restTemplate = new RestTemplate();
+        return  restTemplate.getForObject(backendServerUrl + "/api/student/email/"+email,Student.class);
+    }
+
 
     public List<Student> getAllStudent() {
         RestTemplate restTemplate = new RestTemplate();
