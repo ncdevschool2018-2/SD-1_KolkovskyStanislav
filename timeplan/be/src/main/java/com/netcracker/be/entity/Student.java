@@ -20,7 +20,7 @@ public class Student extends  User{
     private String email;
     @Column(name="password")
     private String password;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.MERGE})
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idgroup")
     //@JsonIgnore
     private Group group;

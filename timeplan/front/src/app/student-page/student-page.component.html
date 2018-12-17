@@ -1,20 +1,26 @@
-<div class="row">
-  <table class="table table-hover" *ngIf="timetable.length != 0" >
-    <thead class="thead-dark">
-    <tr>
-      <th scope="col" class="fnt">Day</th>
-      <th scope="col" class="lnt">Time</th>
-      <th scope="col" class="emailt">Subject</th>
-      <th scope="col" class="pssw">Teacher</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let task of timetable">
-      <td scope="col">{{days[task.day]}}</td>
-      <td scope="col">{{times[task.time]}}</td>
-      <td scope="col">{{task.subject.name}}</td>
-      <td scope="col">{{task.teacher.fname + " " + task.teacher.lname}}</td>
-      </tr>
-    </tbody>
-  </table>
+<ng4-loading-spinner> </ng4-loading-spinner>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">
+    TimePlan
+  </a>
+
+  <div class="collapse navbar-collapse">
+    <ul class="nav navbar-nav ml-auto" routerLinkActive="active">
+      <li class="nav-item">
+        <a class = "nav-link" [routerLink]="['/student',{outlets:{student:'student-profile'}}]">Профиль</a>
+      </li>
+      <li class="nav-item">
+        <a class = "nav-link" [routerLink]="['/student',{outlets:{student:'student-time'}}]">Расписание</a>
+      </li>
+    </ul>
+
+    <form class="form-inline ml-2 my-lg-0" >
+      <button type="button" class="btn btn-primary  my-2 my-sm-0"  data-target="#singupModal" data-toggle="modal" (click)="logout()">Выйти</button>
+    </form>
+  </div>
+</nav>
+
+<div class="container pt-2 pl-5">
+  <router-outlet name="student"></router-outlet>
 </div>

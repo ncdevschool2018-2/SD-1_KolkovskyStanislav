@@ -41,7 +41,7 @@ export class TokenStorageService {
   public getAuthorities(): string {
 
     if (sessionStorage.getItem(TOKEN_KEY)) {
-      console.log(sessionStorage);
+      // console.log(sessionStorage);
       return sessionStorage.getItem(AUTHORITIES_KEY);
     }
     return null;

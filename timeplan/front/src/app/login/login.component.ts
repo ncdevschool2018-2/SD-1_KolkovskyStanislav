@@ -27,13 +27,13 @@ export class LoginComponent {
 
   ngOnInit() {
     if (this.tokenStorage.getToken()) {
-      this.isLoggedIn = true;
-      this.role = this.tokenStorage.getAuthorities();
+      this.logout();
+      console.log(this.tokenStorage.getToken());
     }
   }
 
   onSubmit() {
-   // this.load.show();
+    this.load.show();
     //console.log(this.form);
     this.loginInfo = new AuthLoginInfo(
       this.email,
@@ -50,23 +50,34 @@ export class LoginComponent {
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.role = this.tokenStorage.getAuthorities();
-        //this.load.hide()
-        this.reloadPage();
+
+        //this.reloadPage();
+        if(data.role == "[ROLE_ADMIN]")
+          this.router.navigate([{outlets: {primary: 'admin'}}]);
+        if(data.role == "[ROLE_TEACHER]")
+          this.router.navigate([{outlets: {primary: 'teacher'}}]);
+        if(data.role == "[ROLE_STUDENT]")
+          this.router.navigate([{outlets: {primary: 'student'}}]);
+        this.load.hide()
         // this.router.navigateByUrl("/home");
       },
       error => {
+        alert("Ошибка авторизации");
         console.log(error);
         this.errorMessage = error.error.message;
         this.isLoginFailed = true;
         this.load.hide()
       }
-
     );
-
   }
 
   reloadPage() {
     window.location.reload();
    // window.location.replace("localhost:4200/home");
+  }
+
+  logout(){
+    this.tokenStorage.signOut();
+    this.router.navigate([{outlets: {primary: 'login'}}]);
   }
 }

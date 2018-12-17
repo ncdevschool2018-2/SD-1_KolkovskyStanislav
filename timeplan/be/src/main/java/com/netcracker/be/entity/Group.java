@@ -18,11 +18,11 @@ public class Group {
     @Column(name="name")
     private String name;
 
-    @OneToMany(mappedBy = "group",cascade = {CascadeType.DETACH, CascadeType.REMOVE}, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "group", fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Student> students;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "student_group_subjects",
             joinColumns = {@JoinColumn(name="group_id")},
             inverseJoinColumns = {@JoinColumn(name = "subject_id")})

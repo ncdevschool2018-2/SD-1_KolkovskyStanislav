@@ -73,20 +73,6 @@ public class StudentController {
     }
 
 
-    //test connection
-    @RequestMapping(value ="/create" ,method = RequestMethod.GET)
-    public Student createStudent(@RequestParam(name = "fname", required = false, defaultValue = "Student") String fname,
-                                 @RequestParam(name = "lname", required = false, defaultValue =  "Student") String lname,
-                                 @RequestParam(name = "email", required = false, defaultValue = "Student@gmail.com") String email,
-                                 @RequestParam(name = "password", required = false, defaultValue = "password") String password) {
-
-        Student student = new Student();
-        student.setFname(fname);
-        student.setLname(lname);
-        student.setEmail(email);
-        student.setPassword(password);
-        return studentService.saveStudentAccount(student);
-    }
 
     @RequestMapping(value="/addingroup/{id}/{idgroup}",method = RequestMethod.GET)
     public Student addingGroup(@PathVariable(name ="id") Long id,

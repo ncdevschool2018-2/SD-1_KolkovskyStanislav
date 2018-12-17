@@ -33,10 +33,5 @@ export class AppComponent {
     }
   }
 
-  logout(){
-    window.location.reload();
-    this.tokenStorage.signOut();
-    this.router.navigate(["/login"]);
-  }
 
 }

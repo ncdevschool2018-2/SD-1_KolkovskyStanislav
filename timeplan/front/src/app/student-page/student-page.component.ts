@@ -2,6 +2,8 @@ import {Component, OnInit} from "@angular/core";
 import {Task} from "../models/task";
 import {TaskService} from "../services/task.service";
 import {TokenStorageService} from "../auth/token-storage.service";
+import {Router} from "@angular/router";
+import {Ng4LoadingSpinnerService} from "ng4-loading-spinner";
 
 
 @Component({
@@ -14,19 +16,20 @@ export class StudentPageComponent implements OnInit{
 
 
 
-  public timetable:Task[]= [];
-  public days:string[] =["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
-  public times:string[] =["9:00-10:20", "10:30-11:50", "12:00-13:20", "13:50-15:10", "15:20-16:40", "16:50-18:10"];
+  private authority: string;
+  private role:string;
+  constructor(private tokenStorage: TokenStorageService,
+              private router:Router,
+              private load:Ng4LoadingSpinnerService) { }
 
-  constructor(private taskService:TaskService, private tokenStorage:TokenStorageService){
-
+  ngOnInit() {
+    if (!this.tokenStorage.getToken()) {
+      this.router.navigate([{outlets: {primary: 'login'}}]);
+    }
   }
 
-  ngOnInit(): void {
-    this.getTaskByGroup(this.tokenStorage.getUsername());
-  }
-
-  public getTaskByGroup(username:string):void{
-
+  logout(){
+    this.tokenStorage.signOut();
+    this.router.navigate([{outlets: {primary: 'login'}}]);
   }
 }

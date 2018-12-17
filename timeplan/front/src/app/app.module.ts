@@ -22,6 +22,10 @@ import {AlertModule, ButtonsModule, ModalModule, TabsModule} from "ngx-bootstrap
 import {Ng4LoadingSpinnerModule, Ng4LoadingSpinnerService} from "ng4-loading-spinner";
 import {HttpClientModule} from "@angular/common/http";
 import { httpInterceptorProviders } from './auth/auth-interceptor';
+import { StudentTimeComponent } from './student-time/student-time.component';
+import { TeacherTimeComponent } from './teacher-time/teacher-time.component';
+import { TeacherProfileComponent } from './teacher-profile/teacher-profile.component';
+import { StudentProfileComponent } from './student-profile/student-profile.component';
 
 @NgModule({
   declarations: [
@@ -35,21 +39,33 @@ import { httpInterceptorProviders } from './auth/auth-interceptor';
     GroupsComponent,
     TeacherPageComponent,
     StudentPageComponent,
-    UsersComponent
+    UsersComponent,
+    StudentTimeComponent,
+    TeacherTimeComponent,
+    TeacherProfileComponent,
+    StudentProfileComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(
       [
         {path: '', redirectTo : 'login', pathMatch: 'full'},
-        {path :'users',component: UsersComponent},
-        {path :'groups',component: GroupsComponent},
-        {path :'subjects',component: SubjectsComponent},
-        {path :'home', component: MainComponent},
-        {path :'timetable', component: TimetableComponent},
-        {path :'login',component: LoginComponent },
-        {path :'teacher',component:TeacherPageComponent },
-        {path :'student',component:StudentPageComponent }
+        // {path :'home', component: MainComponent},
+        {path :'login',component: LoginComponent},
+        {path :'teacher',component:TeacherPageComponent , children:[
+            {path: 'teacher-time',component:TeacherPageComponent, outlet:'teacher'},
+            {path: 'teacher-profile', component:TeacherProfileComponent, outlet: 'teacher'}
+          ]},
+        {path :'student',component:StudentPageComponent, children:[
+            {path: 'student-time',component: StudentTimeComponent, outlet:'student'},
+            {path: 'student-profile',component: StudentProfileComponent, outlet:'student'}
+          ] },
+        {path: 'admin',component:AdminPageComponent, children:[
+            {path :'users',component: UsersComponent, outlet:'admin'},
+            {path :'groups',component: GroupsComponent, outlet:'admin'},
+            {path :'subjects',component: SubjectsComponent, outlet:'admin'},
+            {path :'timetable', component: TimetableComponent, outlet:'admin'}
+          ]}
       ]),
     CommonModule,
     FormsModule,

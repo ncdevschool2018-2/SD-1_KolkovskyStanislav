@@ -23,14 +23,14 @@
 
         <td>
           <div class="btn-group">
-            <label btnRadio="A" class="btn btn-dark" tabindex="0" role="button" (click)="openStudentModal(template,group.id,group.name)">Show Student</label>
-            <label btnRadio="B" class="btn btn-info" tabindex="0" role="button" (click)="openAddingStudentModal(ADD_STUDENTS,group.id,group.name)">+Add Students</label>
+            <label btnRadio="A" class="btn btn-dark" tabindex="0" role="button" (click)="openStudentModal(template,group.id,group.name)">Показать Студентов</label>
+            <label btnRadio="B" class="btn btn-info" tabindex="0" role="button" (click)="openAddingStudentModal(ADD_STUDENTS,group.id,group.name)">+Добавить Студентов</label>
           </div>
         </td>
         <td>
           <div class="btn-group">
-            <label btnRadio="ShowSubjects" class="btn btn-dark" tabindex="0" role="button" (click)="openSubjectModal(subjects,group.id,group.name)">Show Subjects</label>
-            <label btnRadio="AddSubjects" class="btn btn-info" tabindex="0" role="buton" (click)="openAddingSubjectModal(ADD_SUBJECTS,group.id)">+Add Subjects</label>
+            <label btnRadio="ShowSubjects" class="btn btn-dark" tabindex="0" role="button" (click)="openSubjectModal(subjects,group.id,group.name)">Показать Предметы</label>
+            <label btnRadio="AddSubjects" class="btn btn-info" tabindex="0" role="buton" (click)="openAddingSubjectModal(ADD_SUBJECTS,group.id)">+Добавить Предметы</label>
           </div>
         </td>
         <td><button class="btn btn-danger" (click)="deleteGroup(group.id)">Удалить</button></td>
@@ -42,7 +42,7 @@
 
 <ng-template #create>
     <div class="modal-header">
-      <h4 id="dialog-sizes-name1" class="modal-title pull-left">Large modal</h4>
+      <h4 id="dialog-sizes-name1" class="modal-title pull-left">Создание группы</h4>
       <button type="button" class="close pull-right" (click)="modalRef.hide()" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>

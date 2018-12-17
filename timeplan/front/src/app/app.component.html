@@ -1,39 +1,38 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">
-    TimePlan
-  </a>
+<!--<nav class="navbar navbar-expand-lg navbar-dark bg-dark">-->
+  <!--<a class="navbar-brand" href="#">-->
+    <!--TimePlan-->
+  <!--</a>-->
 
-  <div class="collapse navbar-collapse" [ngClass]="{ 'show': navbarOpen }">
-    <ul class="nav navbar-nav ml-auto" routerLinkActive="active">
-      <li *ngIf="authority === 'admin' ||authority === 'teacher' || authority === 'student'" class="nav-item">
-        <a class="nav-link" routerLink="home">Главная</a>
-      </li>
-      <li *ngIf="authority === 'student'" class="nav-item">
-        <a class="nav-link" routerLink="student">Расписание</a>
-      </li>
-      <li *ngIf="authority === 'admin'" class="nav-item">
-        <a class="nav-link" routerLink="users">Пользователи</a>
-      </li>
-      <li *ngIf="authority === 'admin'" class="nav-item">
-        <a class="nav-link" routerLink="groups">Группы</a>
-      </li>
-      <li *ngIf="authority === 'teacher'" class="nav-item">
-        <a class="nav-link" routerLink="teacher">Расписание</a>
-      </li>
-      <li *ngIf="authority === 'admin'" class="nav-item">
-        <a class="nav-link" routerLink="subjects">Предметы</a>
-      </li>
-      <li *ngIf="authority === 'admin'" class="nav-item">
-        <a class="nav-link" routerLink="timetable">Расписание</a>
-      </li>
-    </ul>
+  <!--<div class="collapse navbar-collapse" [ngClass]="{ 'show': navbarOpen }">-->
+    <!--<ul class="nav navbar-nav ml-auto" routerLinkActive="active">-->
+      <!--<li *ngIf="authority === 'admin' ||authority === 'teacher' || authority === 'student'" class="nav-item">-->
+        <!--<a class="nav-link" routerLink="home">Главная</a>-->
+      <!--</li>-->
+      <!--<li *ngIf="authority === 'student'" class="nav-item">-->
+        <!--<a class="nav-link" routerLink="student">Расписание</a>-->
+      <!--</li>-->
+      <!--<li *ngIf="authority === 'admin'" class="nav-item">-->
+        <!--<a class="nav-link" routerLink="users">Пользователи</a>-->
+      <!--</li>-->
+      <!--<li *ngIf="authority === 'admin'" class="nav-item">-->
+        <!--<a class="nav-link" routerLink="groups">Группы</a>-->
+      <!--</li>-->
+      <!--<li *ngIf="authority === 'teacher'" class="nav-item">-->
+        <!--<a class="nav-link" routerLink="teacher">Расписание</a>-->
+      <!--</li>-->
+      <!--<li *ngIf="authority === 'admin'" class="nav-item">-->
+        <!--<a class="nav-link" routerLink="subjects">Предметы</a>-->
+      <!--</li>-->
+      <!--<li *ngIf="authority === 'admin'" class="nav-item">-->
+        <!--<a class="nav-link" routerLink="timetable">Расписание</a>-->
+      <!--</li>-->
+    <!--</ul>-->
 
-    <form class="form-inline ml-2 my-lg-0" *ngIf="authority">
-      <button type="button" class="btn btn-primary  my-2 my-sm-0"  data-target="#singupModal" data-toggle="modal" (click)="logout()">Выйти</button>
-    </form>
-  </div>
-</nav>
+    <!--<form class="form-inline ml-2 my-lg-0" *ngIf="authority">-->
+      <!--<button type="button" class="btn btn-primary  my-2 my-sm-0"  data-target="#singupModal" data-toggle="modal" (click)="logout()">Выйти</button>-->
+    <!--</form>-->
+  <!--</div>-->
+<!--</nav>-->
 
-<div class="container pt-2 pl-5">
-    <router-outlet></router-outlet>
-</div>
+<router-outlet></router-outlet>
+

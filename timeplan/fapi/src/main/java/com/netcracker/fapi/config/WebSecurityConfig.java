@@ -62,8 +62,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 
-        //Данная вставка нужна для того, чтобы вызывался сначала фильтр spring security, в противном случае может
-        //вызваться другой и тогда наша архитекртура порушится
         http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
     }
 }

@@ -1,3 +1,26 @@
-<div class="row">
+<ng4-loading-spinner> </ng4-loading-spinner>
 
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">
+    TimePlan
+  </a>
+
+  <div class="collapse navbar-collapse">
+    <ul class="nav navbar-nav ml-auto" routerLinkActive="active">
+      <li class="nav-item">
+        <a class = "nav-link" [routerLink]="['/teacher',{outlets:{teacher:'teacher-profile'}}]">Профиль</a>
+      </li>
+      <li class="nav-item">
+        <a class = "nav-link" [routerLink]="['/teacher',{outlets:{admin:'teacher-time'}}]">Расписание</a>
+      </li>
+    </ul>
+
+    <form class="form-inline ml-2 my-lg-0" >
+      <button type="button" class="btn btn-primary  my-2 my-sm-0"  data-target="#singupModal" data-toggle="modal" (click)="logout()">Выйти</button>
+    </form>
+  </div>
+</nav>
+
+<div class="container pt-2 pl-5">
+  <router-outlet name="teacher"></router-outlet>
 </div>
