@@ -70,7 +70,7 @@ export class SubjectsComponent implements OnInit{
 
   public deleteSubject(idsubject:number):void{
     if(this.validateDelete(idsubject)){
-      this.show_alert_del = true;
+     alert("Предмет нельзя удалить! Есть преподаватель с таким предметом!");
     }else{
       this.show_alert_del = false;
       this.subjectService.deleteSubject(idsubject).subscribe(()=>{
@@ -87,13 +87,11 @@ export class SubjectsComponent implements OnInit{
 
   private validateDelete(idsubjects:number):boolean{
     for(let i = 0 ; i < this.teachers.length; i++){
-      // if(this.teachers[i].subject == null){
-      //     return false;
-      // }else{
-      //   if(this.teachers[i].subject.idsubjects == idsubjects){
-      //     return true;
-      //   }
-      // }
+      for(let j=0; j < this.teachers[i].subjects.length; j++){
+        if(this.teachers[i].subjects[j].idsubjects==idsubjects){
+          return true;
+        }
+      }
     }
     return false;
   }

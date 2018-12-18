@@ -30,7 +30,6 @@
             <th scope="col" class="lnt">Time</th>
             <th scope="col" class="emailt">Subject</th>
             <th scope="col" class="pssw">Teacher</th>
-            <th>Изменить</th>
             <th>Удалить</th>
           </tr>
           </thead>
@@ -40,7 +39,7 @@
             <td scope="col">{{times[task.time]}}</td>
             <td scope="col">{{task.subject.name}}</td>
             <td scope="col">{{task.teacher.fname + " " + task.teacher.lname}}</td>
-            <td><button class="btn btn-danger" type="button" (click) ="deleteTaskById(task.id)">Удалить</button></td>
+            <td><button class="btn btn-danger" type="button" (click) ="deleteTaskById(task.id,task.group.id)">Удалить</button></td>
           </tr>
           </tbody>
         </table>
@@ -57,7 +56,6 @@
             <th scope="col" class="lnt">Time</th>
             <th scope="col" class="emailt">Subject</th>
             <th scope="col" class="pssw">Group</th>
-            <th>Изменить</th>
             <th>Удалить</th>
           </tr>
           </thead>
@@ -67,7 +65,7 @@
             <td scope="col">{{times[task.time]}}</td>
             <td scope="col">{{task.subject.name}}</td>
             <td scope="col">{{task.group.name}}</td>
-            <td><button class="btn btn-danger" type="button" (click) ="deleteTaskById(task.id)">Удалить</button></td>
+            <td><button class="btn btn-danger" type="button" (click) ="deleteTaskById1(task.id,task.teacher.idteachers)">Удалить</button></td>
           </tr>
           </tbody>
         </table>
@@ -81,8 +79,6 @@
     <button type="button" class="btn btn-default" (click)="modalRef.hide()" >Ок</button>
   </div>
 </ng-template>
-
-
 
     <ng-template #showAlert>
       <div class="modal-body text-center">
@@ -98,7 +94,6 @@
         <button type="button" class="btn btn-default" (click)="modalRef.hide()" >Ок</button>
       </div>
     </ng-template>
-
 
 
     <ng-template #addtask>

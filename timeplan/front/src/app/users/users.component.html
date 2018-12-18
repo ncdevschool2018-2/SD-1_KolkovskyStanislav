@@ -19,7 +19,7 @@
           <!--<th scope="col" class="pssw">Пароль</th>-->
           <th scope="col" class="level">Степень</th>
           <th scope="col" class="subject">Дисциплина</th>
-          <th>Изменить</th>
+          <!--<th>Изменить</th>-->
           <th>Удалить</th>
         </tr>
         </thead>
@@ -31,9 +31,9 @@
           <td scope="col">{{teacher.email}}</td>
           <!--<td scope="col">{{teacher.password}}</td>-->
           <td scope="col">{{teacher.level}}</td>
-          <td scope="col" (click)="openModalSubjectTeacher(show,teacher)"><a>Show subjects</a></td>
+          <td scope="col" ><button  type= "button" class=" btn btn-primary" (click)="openModalSubjectTeacher(show,teacher)">Предметы</button></td>
           <!--<td>{{"Hello"}}</td>-->
-          <td><button class="btn btn-secondary" type="button" (click)="updateTeacher(createTeacher,teacher)">Изменить</button></td>
+          <!--<td><button class="btn btn-secondary" type="button" (click)="updateTeacher(createTeacher,teacher)">Изменить</button></td>-->
           <td><button class="btn btn-danger" type="button" (click)="deleteTeacher(teacher.idteachers)">Удалить</button></td>
         </tr>
         </tbody>
@@ -145,7 +145,7 @@
         <!--Email введен некоректно-->
       <!--</div>-->
     </div>
-    <div class="form-group">
+    <div class="form-group" *ngIf="!editMode">
       <label>Пароль</label>
       <input class="form-control" name="password" [(ngModel)]="create_student.password" #password="ngModel" type="password"/>
     </div>
@@ -169,20 +169,18 @@
   <div class="modal-body">
     <div class="form-group">
       <label>Имя</label>
-      <input class="form-control" name="fnamet" [(ngModel)]="create_teacher.fname" #fnamet="ngModel"/>
-      <!--<div [hidden]="username.valid || username.untouched" class="alert alert-danger">-->
-      <!--Пожалуйста введите имя &lt;!&ndash;Easy way to create client validation&ndash;&gt;-->
-      <!--</div>-->
+      <input class="form-control" name="fnamet" [(ngModel)]="create_teacher.fname" #fnamet="ngModel" />
+
     </div>
     <div class="form-group">
       <label>Фамилия</label>
-      <input class="form-control" name="lnamet" [(ngModel)]="create_teacher.lname" #lnamet="ngModel"/>
-
+      <input class="form-control" name="lnamet" [(ngModel)]="create_teacher.lname" #lnamet="ngModel" />
     </div>
+
 
     <div class="form-group">
       <label>Степень</label>
-      <select id="inputLevel" class="form-control" [(ngModel)] = "create_teacher.level" name="level_teacher" >
+      <select id="inputLevel" class="form-control" [(ngModel)] = "create_teacher.level" name="level_teacher" #level="ngModel"  >
         <option *ngFor="let level of level_list" [value]="level">{{level}}</option>
       </select>
 
@@ -190,32 +188,25 @@
 
     <div class="form-group">
       <label>Дисциплина</label><br>
-      <select class="form-control" [(ngModel)]="choosing_subject" name="subject" multiple >
-        <option>Не выбранно</option>
-        <option *ngFor="let subject of subjects">{{subject.name}}</option>
+      <select class="form-control" [(ngModel)]="choosing_subject" name="subject" multiple #subject='ngModel' >
+        <option *ngFor="let subject of subjects" >{{subject.name}}</option>
       </select>
 
     </div>
 
     <div class="form-group">
       <label>E-mail</label>
-      <input class="form-control" name="emailt" [(ngModel)]="create_teacher.email" #emailt="ngModel"
-           />
-      <!--<div [hidden]="email.valid || email.untouched" class="alert alert-danger">-->
-      <!--Email введен некоректно-->
-      <!--</div>-->
+      <input class="form-control" name="emailt" [(ngModel)]="create_teacher.email" #emailt="ngModel"/>
     </div>
-    <div class="form-group">
+    <div class="form-group" *ngIf="!editMode">
       <label>Пароль</label>
       <input class="form-control" name="passwordt" [(ngModel)]="create_teacher.password" #passwordt="ngModel" type="password" />
-      <!--<div [hidden]="password.valid || password.untouched" class="alert alert-danger">-->
-      <!--Password введен некоректно-->
-      <!--</div>-->
+
     </div>
   </div>
 
   <div class="modal-footer">
-    <button type="button" class="btn btn-default" (click)="addTeacher()"  *ngIf="editMode">Изменить</button>
-    <button type="button" class="btn btn-default" (click)="addTeacher()"  *ngIf="!editMode">Создать</button>
+
+    <button type="button" class="btn btn-default" (click)="addTeacher()"  *ngIf="!editMode"  >Создать</button>
   </div>
 </ng-template>

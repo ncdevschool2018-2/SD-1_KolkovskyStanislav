@@ -112,16 +112,6 @@ export class TimetableComponent implements OnInit {
   }
 
 
-  // public checkSubjctInGroup(template: TemplateRef<any>){
-  //
-  //   this.getListSubject(template);
-  //
-  // }
-
-  public getListGroup():void{
-
-  }
-
   public getListSubject():void{
     for(let i = 0; i < this.groups.length; i++){
       if(this.groups[i].name == this.choose_group){
@@ -142,15 +132,17 @@ export class TimetableComponent implements OnInit {
         this.teacherService.getTeacherByIdSubject(this.subjects[i].idsubjects).subscribe( teachers =>{
           this.teachers = teachers as Teacher[];
           console.log("Yes Subject!");
+          if(this.teachers.length == 0){
+            this.closeModal();
+            this.modalRef = this.modalService.show(template);
+          }
         })
       }
     }
-    if(this.teachers.length == 0){
-      this.closeModal();
-      this.modalRef = this.modalService.show(template);
-    }
 
   }
+
+
 
   public addTask(template: TemplateRef<any>):void{
     console.log(this.choose_teacher.split(" ")[0] + "  " +this.choose_teacher.split(" ")[1]);
@@ -172,9 +164,16 @@ export class TimetableComponent implements OnInit {
         this.task = new Task();
         this.alertModal(template);
       }else{
+        if(this.choose_teacher){
+          this.getTaskByTeacher(taskfromserver.teacher.idteachers);
+        }else{
+          this.getTaskByGroup(taskfromserver.group.id);
+        }
         console.log("Task added!)");
+        this.task = new Task();
       }
     });
+
     this.closeModal();
   }
 
@@ -195,10 +194,17 @@ export class TimetableComponent implements OnInit {
     })
   }
 
-
-  public deleteTaskById(idtask:number):void{
+  public deleteTaskById(idtask:number,id:number):void{
     this.taskService.deleteTaskById(idtask).subscribe(()=>{
       console.log("Delete succsess!");
+      this.getTaskByGroup(id);
+    })
+  }
+
+  public deleteTaskById1(idtask:number,id:number):void{
+    this.taskService.deleteTaskById(idtask).subscribe(()=>{
+      console.log("Delete succsess!");
+      this.getTaskByTeacher(id);
     })
   }
 

@@ -235,10 +235,13 @@ export class GroupsComponent implements OnInit{
   }
 
   public deleteGroup(id:number):void{
-    this.groupService.deleteById(id).subscribe(()=>{
-      console.log("Succsess delete!")
-      this.ngOnInit();
-    })
+    let answeer = confirm("Удаляя группу, удалятся все студенты находящиейся в ней. Удалить группу?")
+    if(answeer == true) {
+      this.groupService.deleteById(id).subscribe(() => {
+        console.log("Succsess delete!")
+        this.ngOnInit();
+      })
+    }
   }
 
 }

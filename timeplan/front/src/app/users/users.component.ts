@@ -123,6 +123,7 @@ export class UsersComponent implements OnInit{
   }
 
   openModal(template: TemplateRef<any>){
+    console.log(this.create_teacher);
     this.modalRef = this.modalService.show(template);
   }
 
@@ -173,8 +174,13 @@ export class UsersComponent implements OnInit{
   }
 
   public editTeacher():void{
-   this.addTeacher();
-   this.create_teacher = new Teacher();
+    this.loadingService.show();
+    this.teacherService.addTeacher(this.create_teacher).subscribe(()=>{
+      this.getPageTr();
+      this.getTeacherPage();
+      this.loadingService.hide();
+      this.create_teacher = new Teacher();
+    })
     this.modalRef.hide();
   }
 
@@ -185,6 +191,9 @@ export class UsersComponent implements OnInit{
     })
   }
 
+  edit
+
+
   public addTeacher(teacher?:Teacher):void{
     this.loadingService.show();
     for(let i = 0; i < this.subjects.length; i++) {
@@ -194,6 +203,7 @@ export class UsersComponent implements OnInit{
         }
       }
     }
+    console.log(this.create_teacher);
     this.teacherService.addTeacher(this.create_teacher).subscribe(()=>{
      this.getPageTr();
      this.getTeacherPage();

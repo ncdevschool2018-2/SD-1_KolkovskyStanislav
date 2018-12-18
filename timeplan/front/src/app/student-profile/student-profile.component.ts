@@ -32,9 +32,6 @@ export class StudentProfileComponent implements OnInit {
         //this.choose_display_group = true;
       })
     })
-
-
-
   }
 
 }
