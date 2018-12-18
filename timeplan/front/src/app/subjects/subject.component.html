@@ -7,7 +7,7 @@
     <alert *ngIf="show_alert_del" class="alert-danger" (onClosed)="closeAlert()">Нельзя удалить этот предмет, так как есть преподаватель(и) с этим предметом</alert>
 
     <div class="form-group">
-      <input type="text" class="form-control" placeholder="Введите название предмета" [(ngModel)]="inputString" name="inputString" required  #nameSubject>
+      <input type="text" class="form-control" placeholder="Введите название предмета" [(ngModel)]="inputString" name="inputString"   #nameSubject>
     </div>
    <div class="col-4">
      <button class="btn btn-primary"  style="width: 12rem;" (click)="createSubject()">Создать предмет</button>

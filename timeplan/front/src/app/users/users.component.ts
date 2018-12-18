@@ -148,15 +148,21 @@ export class UsersComponent implements OnInit{
 
 
   public addStudent(student_account?:Student):void{
-    this.loadingService.show();
+    //this.loadingService.show();
      this.create_student.group = null;
-      this.studentService.addStudent(this.create_student).subscribe( ()=>{
-        console.log(this.create_student);
-        this.getStudentPage();
-        this.getPagesSt();
-        this.loadingService.hide();
-      })
-    this.modalRef.hide();
+     if(this.create_student.email == null || this.create_student.password == null || this.create_student.fname == null || this.create_student.lname == null){
+       alert("Заполните все поля");
+     }else {
+       this.studentService.addStudent(this.create_student).subscribe(() => {
+        // console.log(this.create_student);
+         this.getStudentPage();
+         this.getPagesSt();
+         this.loadingService.hide();
+         this.create_student = new Student();
+       })
+       this.modalRef.hide();
+     }
+
 
   }
 
@@ -195,23 +201,32 @@ export class UsersComponent implements OnInit{
 
 
   public addTeacher(teacher?:Teacher):void{
-    this.loadingService.show();
-    for(let i = 0; i < this.subjects.length; i++) {
-      for (let j = 0; j < this.choosing_subject.length; j++) {
-        if (this.subjects[i].name == this.choosing_subject[j]) {
-          this.create_teacher.subjects.push(this.subjects[i]);
+   // this.loadingService.show();
+
+    if(this.create_teacher.email == null ||
+      this.create_teacher.password == null ||
+      this.create_teacher.lname==null ||
+      this.create_teacher.fname == null ||
+    this.create_teacher.level == null){
+      alert("Не все поля заполнены")
+    }else{
+      for(let i = 0; i < this.subjects.length; i++) {
+        for (let j = 0; j < this.choosing_subject.length; j++) {
+          if (this.subjects[i].name == this.choosing_subject[j]) {
+            this.create_teacher.subjects.push(this.subjects[i]);
+          }
         }
       }
+     //console.log(this.create_teacher);
+      this.teacherService.addTeacher(this.create_teacher).subscribe(()=>{
+        this.getPageTr();
+        this.getTeacherPage();
+       // this.loadingService.hide();
+        this.create_teacher = new Teacher();
+      })
+      this.modalRef.hide();
     }
-    console.log(this.create_teacher);
-    this.teacherService.addTeacher(this.create_teacher).subscribe(()=>{
-     this.getPageTr();
-     this.getTeacherPage();
-     this.loadingService.hide();
-     this.create_teacher = new Teacher();
-    })
 
-    this.modalRef.hide();
   }
 
 
