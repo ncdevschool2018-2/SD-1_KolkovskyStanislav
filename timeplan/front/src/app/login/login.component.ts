@@ -34,7 +34,6 @@ export class LoginComponent {
 
   onSubmit() {
     this.load.show();
-    //console.log(this.form);
     this.loginInfo = new AuthLoginInfo(
       this.email,
       this.password);
@@ -51,7 +50,6 @@ export class LoginComponent {
         this.isLoggedIn = true;
         this.role = this.tokenStorage.getAuthorities();
 
-        //this.reloadPage();
         if(data.role == "[ROLE_ADMIN]")
           this.router.navigate([{outlets: {primary: 'admin'}}]);
         if(data.role == "[ROLE_TEACHER]")
@@ -59,7 +57,6 @@ export class LoginComponent {
         if(data.role == "[ROLE_STUDENT]")
           this.router.navigate([{outlets: {primary: 'student'}}]);
         this.load.hide()
-        // this.router.navigateByUrl("/home");
       },
       error => {
         alert("Ошибка авторизации");
@@ -73,7 +70,6 @@ export class LoginComponent {
 
   reloadPage() {
     window.location.reload();
-   // window.location.replace("localhost:4200/home");
   }
 
   logout(){

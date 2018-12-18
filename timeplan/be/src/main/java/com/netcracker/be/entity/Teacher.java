@@ -20,14 +20,14 @@ public class Teacher extends User {
     private String password;
     private String level;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.REMOVE})
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "teachers_subjects",
                 joinColumns = {@JoinColumn(name="teacher_id")},
                 inverseJoinColumns = {@JoinColumn(name = "subject_id")})
     private List<Subject> subjects;
 
 
-    @OneToMany(mappedBy = "teacher",cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "teacher", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Task> taskList;
     private String role;

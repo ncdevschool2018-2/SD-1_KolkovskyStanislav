@@ -40,7 +40,6 @@
             <td scope="col">{{times[task.time]}}</td>
             <td scope="col">{{task.subject.name}}</td>
             <td scope="col">{{task.teacher.fname + " " + task.teacher.lname}}</td>
-            <td><button class="btn btn-secondary" type="button" (click)="openEditModal(edittask,task)" [disabled]="true" >Изменить</button></td>
             <td><button class="btn btn-danger" type="button" (click) ="deleteTaskById(task.id)">Удалить</button></td>
           </tr>
           </tbody>
@@ -68,7 +67,6 @@
             <td scope="col">{{times[task.time]}}</td>
             <td scope="col">{{task.subject.name}}</td>
             <td scope="col">{{task.group.name}}</td>
-            <td><button class="btn btn-secondary" type="button">Изменить</button></td>
             <td><button class="btn btn-danger" type="button" (click) ="deleteTaskById(task.id)">Удалить</button></td>
           </tr>
           </tbody>

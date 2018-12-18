@@ -14,6 +14,24 @@
     </div>
   </div>
   <div class="col-8">
-
+      <h3 *ngIf="timetable.length == 0 ">У данной группы отсуствует расписание</h3>
+      <table class="table table-hover rounded-top rounded-bottom"  *ngIf="timetable.length != 0" >
+        <thead class="thead" >
+        <tr>
+          <th scope="col" class="fnt">День</th>
+          <th scope="col" class="lnt">Время</th>
+          <th scope="col" class="emailt">Предмет</th>
+          <th scope="col" class="pssw">Преподаватель</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let task of timetable">
+          <td scope="col">{{days[task.day]}}</td>
+          <td scope="col">{{times[task.time]}}</td>
+          <td scope="col">{{task.subject.name}}</td>
+          <td scope="col">{{task.teacher.fname + " " + task.teacher.lname}}</td>
+        </tr>
+        </tbody>
+      </table>
   </div>
 </div>

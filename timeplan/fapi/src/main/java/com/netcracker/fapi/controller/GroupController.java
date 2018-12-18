@@ -6,6 +6,7 @@ import com.netcracker.fapi.model.Subject;
 import com.netcracker.fapi.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class GroupController {
     private GroupService groupService;
 
     @RequestMapping(value="/create/{name}",method = RequestMethod.POST)
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Group> createGroup(@PathVariable(name="name")String name, @RequestBody Student[] students){
         if(students != null){
             return ResponseEntity.ok( groupService.createGroup(name,students));
@@ -29,17 +31,20 @@ public class GroupController {
     }
 
     @RequestMapping(value ="/getgp",method = RequestMethod.GET)
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<Group>> getAllGroups(){
          return  ResponseEntity.ok(groupService.getAllGroups());
     }
 
     @RequestMapping(value="/delete/{id}",method = RequestMethod.DELETE)
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteGroup(@PathVariable(name ="id") String id){
         groupService.deleteGroupById(Long.valueOf(id));
     }
 
 
     @RequestMapping(value="/addsub/{idgroup}",method = RequestMethod.POST)
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Group> addSubjects(@PathVariable(name="idgroup") String idgroup, @RequestBody Subject[] subjects){
         if(subjects != null){
             return ResponseEntity.ok(groupService.addSubjects(Long.valueOf(idgroup),subjects));

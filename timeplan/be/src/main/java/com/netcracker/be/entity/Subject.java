@@ -17,11 +17,11 @@ public class Subject {
     private Long idsubjects;
     private String name;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,CascadeType.MERGE}, mappedBy = "subjects")
+    @ManyToMany(fetch = FetchType.LAZY,  mappedBy = "subjects")
     @JsonIgnore
     private List<Teacher> teachers;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,CascadeType.MERGE}, mappedBy = "subjects")
+    @ManyToMany(fetch = FetchType.LAZY,  mappedBy = "subjects")
     @JsonIgnore
     private List<Group> groups;
 

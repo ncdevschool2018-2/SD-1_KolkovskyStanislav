@@ -5,6 +5,7 @@ import com.netcracker.fapi.model.Task;
 import com.netcracker.fapi.service.TaskSerice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.xml.ws.Response;
@@ -13,7 +14,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/ts")
 public class TaskController {
-
 
     @Autowired
     private TaskSerice taskService;
@@ -26,13 +26,14 @@ public class TaskController {
             return ResponseEntity.ok(null);
     }
 
-
     @RequestMapping(value = "/get/{idgroup}", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('ADMIN') or hasRole('STUDENT')")
     public ResponseEntity<List<Task>> getTaskByIdGroup(@PathVariable(name = "idgroup")String id){
         return ResponseEntity.ok(taskService.getTaskByIdGroup(Long.valueOf(id)));
     }
 
     @RequestMapping(value ="/get/teacher/{idteacher}",method = RequestMethod.GET)
+    @PreAuthorize("hasRole('ADMIN') or hasRole('TEACHER')")
     public ResponseEntity<List<Task>> getTaskByIdTeacher(@PathVariable(name = "idteacher") String id){
         if(id != null){
             return  ResponseEntity.ok(taskService.getTaskByIdTeacher(Long.valueOf(id)));
@@ -40,7 +41,6 @@ public class TaskController {
             return null;
         }
     }
-
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public void deleteTaskById(@PathVariable(name = "id") String id){

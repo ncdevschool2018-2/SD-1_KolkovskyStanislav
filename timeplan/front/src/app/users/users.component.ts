@@ -111,7 +111,6 @@ export class UsersComponent implements OnInit{
       hash =>{
        this.students = hash as Student[];
       }
-
     )
   }
 
@@ -148,13 +147,10 @@ export class UsersComponent implements OnInit{
 
 
   public addStudent(student_account?:Student):void{
-
     this.loadingService.show();
-     // this.create_student.idstudents = this.calculateIdStudent(this.students.length);
      this.create_student.group = null;
       this.studentService.addStudent(this.create_student).subscribe( ()=>{
         console.log(this.create_student);
-        //this.updateListStudent();
         this.getStudentPage();
         this.getPagesSt();
         this.loadingService.hide();
@@ -187,8 +183,6 @@ export class UsersComponent implements OnInit{
      this.getStudentPage();
      this.getPagesSt();
     })
-
-
   }
 
   public addTeacher(teacher?:Teacher):void{

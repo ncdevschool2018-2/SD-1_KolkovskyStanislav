@@ -29,7 +29,7 @@ public class Group {
     @JsonIgnore
     private List<Subject> subjects;
 
-    @OneToMany(mappedBy = "group",cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "group", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Task> tasks;
 

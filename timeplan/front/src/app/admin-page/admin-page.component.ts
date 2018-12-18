@@ -23,24 +23,9 @@ export class AdminPageComponent implements OnInit{
               private load:Ng4LoadingSpinnerService) { }
 
   ngOnInit() {
-
-    if (this.tokenStorage.getToken()) {
-      this.role = this.tokenStorage.getAuthorities();
-      if (this.role === '[ROLE_ADMIN]') {
-        this.authority = 'admin';
-        return false;
-      } else if (this.role === '[ROLE_TEACHER]') {
-        this.authority = 'teacher';
-        return false;
-      }
-
-      this.authority = 'student';
-      return true;
-    }
-    else{
+    if (this.tokenStorage.getAuthorities()!= '[ROLE_ADMIN]') {
       this.router.navigate([{outlets: {primary: 'login'}}]);
     }
-    //this.load.hide();
   }
   logout(){
     this.tokenStorage.signOut();

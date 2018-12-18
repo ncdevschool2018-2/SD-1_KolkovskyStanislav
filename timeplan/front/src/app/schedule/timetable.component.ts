@@ -36,17 +36,16 @@ export class TimetableComponent implements OnInit {
   public choose_time:string;
   public choose_teacher:string;
 
-  public days:string[] =["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+  public days:string[] =["Понедельник","Вторник","Среда","Четверг","Пятница","Суббота","Воскресенье"];
   public times:string[] =["9:00-10:20", "10:30-11:50", "12:00-13:20", "13:50-15:10", "15:20-16:40", "16:50-18:10"];
-
 
   public choose_display_group:boolean = false;
   public choose_display_teacher:boolean = false;
   public display_show:boolean = false;
   public display_show1:boolean = false;
-
-
   public show_alert:boolean = false;
+
+
   constructor(private taskService: TaskService,
               private studentService: StudentService,
               private teacherService: TeacherService,
