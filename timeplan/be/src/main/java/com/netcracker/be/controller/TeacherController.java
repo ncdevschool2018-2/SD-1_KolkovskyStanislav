@@ -93,7 +93,7 @@ public class TeacherController {
         }
 
         for(int i = 0; i < subjectList.size(); i++){
-            if(subjectList.get(i).getIdsubjects().equals(idsub)){
+            if(subjectList.get(i).getIdsubject().equals(idsub)){
                 teacher.addSubject(subjectList.get(i));
                 break;
             }

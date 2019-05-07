@@ -7,11 +7,9 @@ import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Subject {
-
-    private Long idsubjects;
+    private Long idsubject;
     private String name;
-    @JsonIgnore
-    private List<Teacher> teacherList;
+    private List<Teacher> teachers;
     @JsonIgnore
     private List<Group> groups;
 
@@ -19,26 +17,26 @@ public class Subject {
     }
 
 
-    public Subject(Long idsubjects, String name, List<Teacher> teacherList) {
-        this.idsubjects = idsubjects;
+    public Subject(Long idsubject, String name, List<Teacher> teachers) {
+        this.idsubject = idsubject;
         this.name = name;
-        this.teacherList = teacherList;
+        this.teachers = teachers;
     }
 
-    public Long getIdsubjects() {
-        return idsubjects;
+    public Long getIdsubject() {
+        return idsubject;
     }
 
-    public void setIdsubjects(Long idsubjects) {
-        this.idsubjects = idsubjects;
+    public void setIdsubject(Long idsubject) {
+        this.idsubject = idsubject;
     }
 
-    public List<Teacher> getTeacherList() {
-        return teacherList;
+    public List<Teacher> getTeachers() {
+        return teachers;
     }
 
-    public void setTeacherList(List<Teacher> teacherList) {
-        this.teacherList = teacherList;
+    public void setTeachers(List<Teacher> teachers) {
+        this.teachers = teachers;
     }
 
     public List<Group> getGroups() {

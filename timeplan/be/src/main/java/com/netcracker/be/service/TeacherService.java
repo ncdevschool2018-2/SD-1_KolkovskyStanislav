@@ -50,7 +50,7 @@ public class TeacherService {
         Teacher teacher1 = teacherRepository.save(teacher);
 
         for(int i = 0; i < subjects.size(); i++){
-            Optional<Subject> subjectOptional = subjectRepository.findById(subjects.get(i).getIdsubjects());
+            Optional<Subject> subjectOptional = subjectRepository.findById(subjects.get(i).getIdsubject());
             addSubjects.add(subjectOptional.get());
         }
         teacher1.setSubjects(addSubjects);

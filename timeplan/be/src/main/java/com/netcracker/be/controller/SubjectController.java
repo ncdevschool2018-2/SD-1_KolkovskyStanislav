@@ -15,7 +15,6 @@ import java.util.*;
 @RequestMapping("/api/subject")
 public class SubjectController {
 
-
     private GroupService groupService;
     private SubjectService subjectService;
 

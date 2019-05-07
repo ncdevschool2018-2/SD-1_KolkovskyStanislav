@@ -1,10 +1,5 @@
-import {Teacher} from "./teacher";
-
-export class Subject{
-
-  choosen:boolean=false;
-  idsubjects:number;
-  name:string;
-
-  constructor(){}
+export class Subject {
+  idsubject: number;
+  choosen: boolean = false;
+  name: string;
 }

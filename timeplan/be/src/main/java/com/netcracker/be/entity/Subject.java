@@ -14,7 +14,7 @@ public class Subject {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idsubjects;
+    private Long idsubject;
     private String name;
 
     @ManyToMany(fetch = FetchType.LAZY,  mappedBy = "subjects")
@@ -31,12 +31,12 @@ public class Subject {
 
     public Subject(){}
 
-    public Long getIdsubjects() {
-        return idsubjects;
+    public Long getIdsubject() {
+        return idsubject;
     }
 
-    public void setIdsubjects(Long idsubjects) {
-        this.idsubjects = idsubjects;
+    public void setIdsubjects(Long idsubject) {
+        this.idsubject = idsubject;
     }
 
     public String getName() {
@@ -77,12 +77,12 @@ public class Subject {
         if (this == o) return true;
         if (!(o instanceof Subject)) return false;
         Subject subject = (Subject) o;
-        return Objects.equals(getIdsubjects(), subject.getIdsubjects()) &&
+        return Objects.equals(getIdsubject(), subject.getIdsubject()) &&
                 Objects.equals(getName(), subject.getName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getIdsubjects(), getName());
+        return Objects.hash(getIdsubject(), getName());
     }
 }

@@ -3,108 +3,103 @@ import {Teacher} from "../models/teacher";
 import {Subject} from "../models/subject";
 import {SubjectService} from "../services/subject.service";
 import {TeacherService} from "../services/teacher.service";
-
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 
 @Component({
-  selector:'subjects',
-  templateUrl:"./subject.component.html",
-  styleUrls:["./subject.component.css"]
+  selector: 'subjects',
+  templateUrl: "./subject.component.html",
+  styleUrls: ["./subject.component.css"]
 })
 
-export class SubjectsComponent implements OnInit{
+export class SubjectsComponent implements OnInit {
 
-  teachers:Teacher[];
-  subjects: Subject[] = [];
-  inputString:string;
-  show_alert_add:boolean = false;
-  show_alert_del:boolean = false;
+  public subjectForm: FormGroup;
+  public teachers: Teacher[];
+  public subjects: Subject[];
+  public show_alert_add: boolean = false;
+  public show_alert_del: boolean = false;
+  public show_alert_suc: boolean = false;
+
+  public warning_message: string = "Такой предмет уже есть!";
+  public danger_message: string = "Нельзя удалить этот предмет, так как есть преподаватель(и) с этим предметом";
+  public succes_message: string = "Предмет успешно удален!";
+
+  constructor(private subjectService: SubjectService,
+              private teacherService: TeacherService,
+              private formBuilder: FormBuilder) {
+  }
 
 
-  ngOnInit(){
+  ngOnInit() {
+    this.subjectForm = this.formBuilder.group({
+      subjectName: ["", Validators.compose([Validators.minLength(1), Validators.pattern("^[а-яА-ЯёЁ0-9]+$"), Validators.required])]
+    });
 
-    // this.dataService.currentTeacher.subscribe(teacher => this.teachers = teacher);
-
-    this.subjectService.getSubjects().subscribe(subjects =>{
+    this.subjectService.getSubjects().subscribe(subjects => {
       this.subjects = subjects as Subject[];
-    })
+    });
 
-    console.log(this.subjects);
-
-    this.teacherService.getAllTeachers().subscribe(teachers =>{
+    this.teacherService.getAllTeachers().subscribe(teachers => {
       this.teachers = teachers as Teacher [];
-    })
-  }
-
-  constructor(private subjectService:
-                SubjectService,
-              private teacherService: TeacherService){}
-
-  public createSubject():void{
-    let newSubject: Subject = new Subject();
-    if(this.findDuplicates(this.inputString)){
-      this.show_alert_add = true;
-    }else{
-      this.show_alert_add = false
-      newSubject.name = this.inputString;
-      console.log(newSubject);
-      this.subjectService.createSubject(newSubject).subscribe(()=>{
-        this.updateListSubjects();
-      })
-    }
-  }
-
-  closeAlert():void{
-    this.show_alert_add = false;
-    this.show_alert_del = false;
-  }
-
-
-  private findDuplicates(name:string):boolean{
-    for(let i = 0; i < this.subjects.length; i++){
-      if(this.subjects[i].name == name)
-        return true;
-    }
-    return false;
-  }
-
-  public deleteSubject(idsubject:number):void{
-    if(this.validateDelete(idsubject)){
-     alert("Предмет нельзя удалить! Есть преподаватель с таким предметом!");
-    }else{
-      this.show_alert_del = false;
-      this.subjectService.deleteSubject(idsubject).subscribe(()=>{
-        this.updateListSubjects();
-      })
-    }
-
-    // this.subjectService.deleteSubject(idsubject).subscribe(()=>{
-    //   this.updateListSubjects();
-    // })
-
-
-  }
-
-  private validateDelete(idsubjects:number):boolean{
-    for(let i = 0 ; i < this.teachers.length; i++){
-      for(let j=0; j < this.teachers[i].subjects.length; j++){
-        if(this.teachers[i].subjects[j].idsubjects==idsubjects){
-          return true;
-        }
-      }
-    }
-    return false;
-  }
-
-  private updateListSubjects(){
-    this.subjectService.getSubjects().subscribe(subjects =>{
-      this.subjects = subjects as Subject[];
     });
   }
 
-  public updateComponent():void{
-    this.teacherService.getAllTeachers().subscribe(teachers =>{
-      this.teachers = teachers as Teacher [];
-    })
+
+  public createSubject(): void {
+    if (this.subjectForm.valid) {
+      let subject: Subject = new Subject();
+      subject.name = this.subjectForm.value.subjectName
+      if (this.findDuplicates(subject)) {
+        this.show_alert_add = true;
+      } else {
+        this.show_alert_add = false;
+        this.subjectService.createSubject(subject).subscribe(() => {
+          this.updateListSubjects();
+        })
+      }
+    }
+
+  }
+
+
+  private findDuplicates(subject: any): any {
+    return this.subjects.find(sub => subject.name.toLowerCase() === sub.name.toLowerCase() ? true : false);
+  }
+
+  closeAlert(): void {
+    this.show_alert_add = false;
+    this.show_alert_del = false;
+    this.show_alert_suc = false;
+  }
+
+
+  public deleteSubject(subject: Subject): void {
+    debugger;
+    if (this.validateDelete(subject)) {
+      this.show_alert_del = true;
+    } else {
+      this.show_alert_suc = true;
+      this.subjectService.deleteSubject(subject.idsubject).subscribe(() => {
+        this.updateListSubjects();
+      })
+    }
+  }
+
+  private validateDelete(subject: Subject): any {
+    return this.teachers.some((teacher) => {
+      return teacher.subjects.some(teacher_subject => this.equalSubject(teacher_subject, subject))
+    });
+  }
+
+  equalSubject(subject1, subject2): boolean {
+    return subject1.name.toLowerCase() === subject2.name.toLowerCase();
+  }
+
+
+  private updateListSubjects() {
+    this.subjectService.getSubjects().subscribe(subjects => {
+      this.subjects = subjects as Subject[];
+    });
   }
 }

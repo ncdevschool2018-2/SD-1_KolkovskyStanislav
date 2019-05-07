@@ -17,7 +17,7 @@ import {TeacherPageComponent} from "./teacher-page/teacher-page.component";
 import {RouterModule} from "@angular/router";
 import {UsersComponent} from "./users/users.component";
 import {CommonModule} from "@angular/common";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AlertModule, ButtonsModule, ModalModule, TabsModule} from "ngx-bootstrap";
 import {Ng4LoadingSpinnerModule, Ng4LoadingSpinnerService} from "ng4-loading-spinner";
 import {HttpClientModule} from "@angular/common/http";
@@ -69,6 +69,7 @@ import { StudentProfileComponent } from './student-profile/student-profile.compo
       ]),
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     AlertModule.forRoot(),
     TabsModule.forRoot(),
     ButtonsModule.forRoot(),

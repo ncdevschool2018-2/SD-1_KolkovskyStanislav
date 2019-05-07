@@ -13,23 +13,23 @@ export class SubjectService{
   constructor(private http: HttpClient){}
 
   createSubject(subject: Subject):Observable<Subject>{
-    return this.http.post<Subject>("/api/sb/createsb", subject);
+    return this.http.post<Subject>("/api/subject/createsb", subject);
   }
 
   getSubjects():Observable<Subject[]>{
-    return this.http.get<Subject[]>('/api/sb/getsb');
+    return this.http.get<Subject[]>('/api/subject/getsb');
   }
 
   getSubjectsByGroupId(idgroup:number):Observable<Subject[]>{
-    return this.http.get<Subject[]>('/api/sb/get/'+idgroup);
+    return this.http.get<Subject[]>('/api/subject/get/'+idgroup);
   }
 
   getSubjectsNotAttachedByGroup(idgroup:number):Observable<Subject[]>{
-    return this.http.get<Subject[]>('/api/sb/get/not_attached/'+idgroup);
+    return this.http.get<Subject[]>('/api/subject/get/not_attached/'+idgroup);
   }
 
   deleteSubject(idsubject:number):Observable<void>{
-    return this.http.delete<void>('/api/sb/delete/'+idsubject);
+    return this.http.delete<void>('/api/subject/delete/'+idsubject);
   }
 
 }
