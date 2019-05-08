@@ -79,7 +79,7 @@ export class TimetableComponent implements OnInit {
     this.choose_time = this.times[task.time];
 
     this.getListSubject();
-    this.teacherService.getTeacherByIdSubject(task.subject.idsubjects).subscribe( teachers =>{
+    this.teacherService.getTeacherByIdSubject(task.subject.idsubject).subscribe( teachers =>{
       this.teachers = teachers as Teacher[];
       console.log("Yes Subject!");
     })
@@ -129,7 +129,7 @@ export class TimetableComponent implements OnInit {
     for(let i = 0; i < this.subjects.length; i++){
       if(this.subjects[i].name == this.choose_subject){
         this.task.subject = this.subjects[i];
-        this.teacherService.getTeacherByIdSubject(this.subjects[i].idsubjects).subscribe( teachers =>{
+        this.teacherService.getTeacherByIdSubject(this.subjects[i].idsubject).subscribe( teachers =>{
           this.teachers = teachers as Teacher[];
           console.log("Yes Subject!");
           if(this.teachers.length == 0){

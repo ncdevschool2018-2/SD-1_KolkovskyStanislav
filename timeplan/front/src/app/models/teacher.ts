@@ -7,7 +7,6 @@ export class Teacher{
   email:string;
   password:string;
   level:string;
-  string:string;
   subjects: Subject[]=[];
 
   constructor(){}
@@ -28,14 +27,5 @@ export class Teacher{
   getInfo():string{
     return this.fname + " " + this.lname
   }
-
-  toString():string{
-    let str:string = "";
-    for(let i = 0 ; i < this.subjects.length ; i++){
-        str = str + this.subjects[i].name + " ";
-    }
-    return str;
-  }
-
 }
 

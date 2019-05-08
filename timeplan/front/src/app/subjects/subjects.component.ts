@@ -59,7 +59,6 @@ export class SubjectsComponent implements OnInit {
         })
       }
     }
-
   }
 
 
@@ -75,7 +74,6 @@ export class SubjectsComponent implements OnInit {
 
 
   public deleteSubject(subject: Subject): void {
-    debugger;
     if (this.validateDelete(subject)) {
       this.show_alert_del = true;
     } else {

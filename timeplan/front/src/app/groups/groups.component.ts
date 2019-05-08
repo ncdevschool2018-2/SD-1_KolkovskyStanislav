@@ -171,7 +171,6 @@ export class GroupsComponent implements OnInit{
   public addSubjectsInGroup(subject:Subject){
     console.log(subject);
     let indexSubject = this.subject_not_group.indexOf(subject);
-    console.log(" index: " + indexSubject + " id:" + subject.idsubjects);
     this.subject_not_group[indexSubject].choosen = true;
     this.count_choose_subject++;
   }
