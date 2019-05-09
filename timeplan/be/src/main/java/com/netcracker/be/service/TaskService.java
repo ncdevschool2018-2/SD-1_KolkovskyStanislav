@@ -12,39 +12,36 @@ import java.util.Optional;
 
 @Service
 public class TaskService {
-
     private TaskRepository taskRepository;
     private GroupRepository groupRepository;
 
     @Autowired
-    public TaskService(TaskRepository repository, GroupRepository groupRepository){
+    public TaskService(TaskRepository repository, GroupRepository groupRepository) {
         this.taskRepository = repository;
         this.groupRepository = groupRepository;
     }
 
-    public Task addTask(Task task){
+    public Task addTask(Task task) {
         return taskRepository.save(task);
     }
 
-    public Iterable<Task> getTaskByIdGroup(Long idgroup){
-       // Optional<Group> groupOptional = groupRepository.findById(idgroup);
-        Iterable<Task> taskIterable = taskRepository.findAllByGroupId(idgroup);
-        return  taskIterable;
+    public Iterable<Task> getTaskByIdGroup(Long idgroup) {
+        return taskRepository.findAllByGroupId(idgroup);
     }
 
 
-    public Optional<Task> getTask(Long id){
+    public Optional<Task> getTask(Long id) {
         return taskRepository.findById(id);
     }
 
-    public Iterable<Task> getTaskByIdTeacher(Long idteacher){
-        return taskRepository.findAllByTeacherIdteachers(idteacher);
+    public Iterable<Task> getTaskByIdTeacher(Long idteacher) {
+        return taskRepository.findAllByTeacherIdteacher(idteacher);
     }
 
 
-    public void deleteTaskById(Long id){
-         taskRepository.deleteById(id);
+    public void deleteTaskById(Long id) {
+        taskRepository.deleteById(id);
     }
 
 
- }
+}

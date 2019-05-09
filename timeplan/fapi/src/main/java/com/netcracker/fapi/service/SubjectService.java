@@ -14,33 +14,33 @@ public class SubjectService {
     @Value("${backend.server.url}")
     private String backendServerUrl;
 
-    public List<Subject> getSubjects(){
+    public List<Subject> getSubjects() {
         RestTemplate restTemplate = new RestTemplate();
-        Subject[] subjects = restTemplate.getForObject(backendServerUrl + "/api/subject", Subject[].class );
+        Subject[] subjects = restTemplate.getForObject(backendServerUrl + "/api/subject", Subject[].class);
         return Arrays.asList(subjects);
     }
 
-    public Subject createSubject(Subject subject){
+    public Subject createSubject(Subject subject) {
         RestTemplate restTemplate = new RestTemplate();
-        return  restTemplate.postForEntity(backendServerUrl + "/api/subject", subject, Subject.class).getBody();
+        return restTemplate.postForEntity(backendServerUrl + "/api/subject", subject, Subject.class).getBody();
     }
 
 
-    public List<Subject> getSubjectIdGroup(Long id){
+    public List<Subject> getSubjectIdGroup(Long id) {
         RestTemplate restTemplate = new RestTemplate();
-        Subject [] subjects = restTemplate.getForObject(backendServerUrl + "/api/subject/get/"+id,Subject[].class);
-        return  Arrays.asList(subjects);
+        Subject[] subjects = restTemplate.getForObject(backendServerUrl + "/api/subject/get/" + id, Subject[].class);
+        return Arrays.asList(subjects);
     }
 
-    public void deleteSubject(Long id){
+    public void deleteSubject(Long id) {
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.delete(backendServerUrl + "/api/subject/"+ id);
+        restTemplate.delete(backendServerUrl + "/api/subject/" + id);
     }
 
 
-    public List<Subject> getSubjectsNotAttachedByGroup(Long id){
+    public List<Subject> getSubjectsNotAttachedByGroup(Long id) {
         RestTemplate restTemplate = new RestTemplate();
-        Subject[] subjects = restTemplate.getForObject(backendServerUrl + "/api/subject/get/not_attached/"+id,Subject[].class);
-        return  Arrays.asList(subjects);
+        Subject[] subjects = restTemplate.getForObject(backendServerUrl + "/api/subject/get/not_attached/" + id, Subject[].class);
+        return Arrays.asList(subjects);
     }
 }

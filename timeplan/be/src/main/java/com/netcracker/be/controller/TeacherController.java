@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/teacher")
@@ -86,7 +85,7 @@ public class TeacherController {
 
 
         for(int i = 0; i < teacherList.size(); i++){
-            if(teacherList.get(i).getIdteachers().equals(id)){
+            if(teacherList.get(i).getIdteacher().equals(id)){
                 teacher = teacherList.get(i);
                 break;
             }

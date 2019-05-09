@@ -8,10 +8,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "timetable")
-//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Task {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,11 +21,11 @@ public class Task {
     private Group group;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idsubjects")
+    @JoinColumn(name = "idsubject")
     private Subject subject;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idteachers")
+    @JoinColumn(name = "idteacher")
     private Teacher teacher;
 
 

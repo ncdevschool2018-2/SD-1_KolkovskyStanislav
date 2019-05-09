@@ -1,7 +1,7 @@
 import {Subject} from "./subject";
 
 export class Teacher{
-  idteachers:number;
+  idteacher:number;
   fname:string;
   lname:string;
   email:string;
@@ -14,7 +14,7 @@ export class Teacher{
 
   static cloneStudent(teacher: Teacher):Teacher{
     let copyTeacher = new Teacher();
-   copyTeacher.idteachers = teacher.idteachers;
+   copyTeacher.idteacher = teacher.idteacher;
    copyTeacher.fname = teacher.fname;
    copyTeacher.lname = teacher.lname;
    copyTeacher.level = teacher.level;

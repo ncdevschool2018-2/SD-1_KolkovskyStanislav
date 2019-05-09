@@ -18,16 +18,13 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 export class UsersComponent implements OnInit {
 
   public teacherForm: FormGroup;
+  public studentForm: FormGroup;
   public students: Student[];
   public teachers: Teacher[];
   public subjects: Subject[];
   public modalRef: BsModalRef;
   public create_student: Student = new Student();
   public create_teacher: Teacher = new Teacher();
-
-  showAll: boolean = true;
-  showStundets: boolean = false;
-  showTeacher: boolean = true;
 
   subject_teacher: Subject[] = [];
 
@@ -59,7 +56,6 @@ export class UsersComponent implements OnInit {
               private formBuilder: FormBuilder) {
   }
 
-
   ngOnInit() {
 
     this.teacherForm = this.formBuilder.group({
@@ -71,6 +67,12 @@ export class UsersComponent implements OnInit {
       subjects: ["", Validators.compose([Validators.minLength(1), Validators.required])]
     });
 
+    this.studentForm = this.formBuilder.group({
+      fname: ["", Validators.compose([Validators.minLength(1), Validators.required])],
+      lname: ["", Validators.compose([Validators.minLength(1), Validators.required])],
+      email: ["", Validators.compose([Validators.minLength(1), Validators.required])],
+      password: ["", Validators.compose([Validators.minLength(1), Validators.required])]
+    });
 
     this.loadingService.show();
     this.getPagesSt();
@@ -107,7 +109,6 @@ export class UsersComponent implements OnInit {
   public getPagesSt() {
     this.studentService.getPages().subscribe(pages => {
       this.countpage = pages as number;
-      console.log("gg1");
       this.pages = new Array<number>();
       for (let i = 0; i < this.countpage; i++) {
         this.pages.push(i);
@@ -119,7 +120,6 @@ export class UsersComponent implements OnInit {
     this.teacherService.getPages().subscribe(pages => {
       this.countpage1 = pages as number;
       this.pages1 = new Array<number>();
-      console.log("gg1");
       for (let i = 0; i < this.countpage1; i++) {
         this.pages1.push(i);
       }
@@ -130,37 +130,22 @@ export class UsersComponent implements OnInit {
     this.teacherService.getTeachers(this.page1).subscribe(
       teachers => {
         this.teachers = teachers as Teacher[];
-        console.log(this.teachers);
       }
-    )
+    );
   }
 
   public getStudentPage() {
     this.studentService.getStudents(this.page).subscribe(
-      hash => {
-        this.students = hash as Student[];
+      students => {
+        this.students = students as Student[];
       }
-    )
+    );
   }
 
-  openModalSubjectTeacher(template: TemplateRef<any>, teacher: Teacher) {
-    this.subject_teacher = [];
-    this.modalRef = this.modalService.show(template);
-    for (let i = 0; i < teacher.subjects.length; i++) {
-      this.subject_teacher.push(teacher.subjects[i]);
-    }
-  }
 
   openModal(template: TemplateRef<any>) {
-    console.log(this.create_teacher);
     this.modalRef = this.modalService.show(template);
   }
-
-  public updateStudent(template: TemplateRef<any>, student: Student): void {
-    this.create_student = Student.cloneStudent(student);
-    this.modalRef = this.modalService.show(template);
-  }
-
 
   public closeModal(): void {
     this.modalRef.hide();
@@ -168,18 +153,18 @@ export class UsersComponent implements OnInit {
     this.create_teacher = new Teacher();
   }
 
-
   closeAlert(): void {
     this.show_alert_del = false;
     this.show_alert_suc = false;
   }
 
-  public addStudent(student_account?: Student): void {
+  public addStudent(): void {
     this.create_student.group = null;
-    if (this.create_student.email == null || this.create_student.password == null || this.create_student.fname == null || this.create_student.lname == null) {
-      alert("Заполните все поля");
+    if (this.studentForm.invalid) {
+      this.show_alert_del = true;
     } else {
       this.studentService.addStudent(this.create_student).subscribe(() => {
+        this.show_alert_suc = true;
         this.getStudentPage();
         this.getPagesSt();
         this.loadingService.hide();
@@ -187,31 +172,6 @@ export class UsersComponent implements OnInit {
       })
       this.modalRef.hide();
     }
-
-
-  }
-
-  public editStudent(): void {
-    this.studentService.addStudent(this.create_student).subscribe(() => {
-      console.log(this.create_student);
-      this.getStudentPage();
-      this.getPagesSt();
-      this.loadingService.hide();
-      this.create_student = new Student();
-    })
-
-    this.modalRef.hide();
-  }
-
-  public editTeacher(): void {
-    this.loadingService.show();
-    this.teacherService.addTeacher(this.create_teacher).subscribe(() => {
-      this.getPageTr();
-      this.getTeacherPage();
-      this.loadingService.hide();
-      this.create_teacher = new Teacher();
-    })
-    this.modalRef.hide();
   }
 
   public deleteStudent(id_student: number): void {
@@ -220,7 +180,6 @@ export class UsersComponent implements OnInit {
       this.getPagesSt();
     })
   }
-
 
   public addTeacher(): void {
     if (this.teacherForm.invalid) {
@@ -237,7 +196,6 @@ export class UsersComponent implements OnInit {
       this.modalRef.hide();
     }
   }
-
 
   public deleteTeacher(id_teacher: number) {
     this.teacherService.deleteTeacher(id_teacher).subscribe(() => {

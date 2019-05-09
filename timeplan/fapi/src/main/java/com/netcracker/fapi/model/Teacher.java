@@ -6,7 +6,7 @@ import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Teacher {
-    private Long idteachers;
+    private Long idteacher;
     private String fname;
     private String lname;
     private String email;
@@ -27,12 +27,12 @@ public class Teacher {
         this.role = role;
     }
 
-    public Long getIdteachers() {
-        return idteachers;
+    public Long getIdteacher() {
+        return idteacher;
     }
 
-    public void setIdteachers(Long idteachers) {
-        this.idteachers = idteachers;
+    public void setIdteacher(Long idteacher) {
+        this.idteacher = idteacher;
     }
 
     public String getFname() {

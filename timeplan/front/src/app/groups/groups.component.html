@@ -1,84 +1,111 @@
-<ng4-loading-spinner> </ng4-loading-spinner>
+<ng4-loading-spinner></ng4-loading-spinner>
 
 <div class="container pt-2">
-  <div class="row">
-      <button class="btn btn-primary ml-2" type="button"  (click)="openModalCreate(create)" #create>Создать группу</button>
+  <ng-container *ngIf="student_list.length == 0">
+    <div class="row">
+      <div class="col">
+        <h1 class="display-4">Вы не можете создать групп(у)ы, т.к в системе нет студентов!</h1>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="student_list.length > 0">
+    <div class="row">
+      <div class="col">
+        <button class="btn btn-primary ml-2" type="button" (click)="openModalCreate(create)">Создать группу</button>
+      </div>
+    </div>
+    <div class="row pt-3">
+      <div class="col-12" *ngIf="group_list.length == 0 ">
+        <h1 class="display-4">Пока нет существующих групп!</h1>
+      </div>
+      <div class="col-12" *ngIf="group_list.length > 0">
+        <table class="table table-hover ">
+          <thead class="thead-dark">
+          <tr>
+            <th>Id</th>
+            <th scope="col">Имя</th>
+            <th scope="col">Студенты</th>
+            <th scope="col">Предметы</th>
+            <th scope="col">Удалить</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let group of group_list">
+            <td>{{group.id}}</td>
+            <td>{{group.name}}</td>
+            <td>
+              <div class="btn-group">
+                <label btnRadio="A" class="btn btn-dark" tabindex="0" role="button"
+                       (click)="openStudentModal(template,group.id,group.name)">Показать Студентов</label>
+                <label btnRadio="B" class="btn btn-info" tabindex="0" role="button"
+                       (click)="openAddingStudentModal(ADD_STUDENTS,group.id,group.name)">+Добавить Студентов</label>
+              </div>
+            </td>
+            <td>
+              <div class="btn-group">
+                <label btnRadio="ShowSubjects" class="btn btn-dark" tabindex="0" role="button"
+                       (click)="openSubjectModal(subjects,group.id,group.name)">Показать Предметы</label>
+                <label btnRadio="AddSubjects" class="btn btn-info" tabindex="0" role="buton"
+                       (click)="openAddingSubjectModal(ADD_SUBJECTS,group.id)">+Добавить Предметы</label>
+              </div>
+            </td>
+            <td>
+              <button class="btn btn-danger" (click)="deleteGroup(group.id)">Удалить</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </ng-container>
+
+</div>
+
+<ng-template #create>
+  <div class="modal-header">
+    <h4 id="dialog-sizes-name1" class="modal-title pull-left">Создание группы</h4>
+    <button type="button" class="close pull-right" (click)="modalRef.hide()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
-  <!--Group table-->
-  <div class="row pt-3">
-    <table class="table table-hover ">
-      <thead class="thead-dark">
+  <div class="modal-body">
+    <form [formGroup]="formGroup">
+      <div class="form-group">
+        <input class="form-control" formControlName="name" [(ngModel)]="selectedGroup"
+               placeholder="Введите название группы">
+      </div>
+    </form>
+
+    <table class="table table-hover pt-3">
+      <thead class="thead">
       <tr>
         <th>Id</th>
         <th scope="col" class="fns">Имя</th>
-        <th scope="col">Студенты</th>
-        <th scope="col">Предметы</th>
-        <th scope="col">Удалить</th>
+        <th scope="col" class="lns">Фамилия</th>
+        <th scope="col">Почта</th>
+        <th>Отменить</th>
+        <th>Добавить</th>
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let group of group_list">
-        <td>{{group.id}}</td>
-        <td>{{group.name}}</td>
-
+      <tr *ngFor="let student of student_not_group">
+        <td>{{student.idstudent}}</td>
+        <td scope="col">{{student.fname}}</td>
+        <td scope="col">{{student.lname}}</td>
+        <td scope="col">{{student.email}}</td>
         <td>
-          <div class="btn-group">
-            <label btnRadio="A" class="btn btn-dark" tabindex="0" role="button" (click)="openStudentModal(template,group.id,group.name)">Показать Студентов</label>
-            <label btnRadio="B" class="btn btn-info" tabindex="0" role="button" (click)="openAddingStudentModal(ADD_STUDENTS,group.id,group.name)">+Добавить Студентов</label>
-          </div>
+          <button class="btn btn-danger" (click)="removeStudent(student)" [disabled]="!student.choosen">Убрать</button>
         </td>
         <td>
-          <div class="btn-group">
-            <label btnRadio="ShowSubjects" class="btn btn-dark" tabindex="0" role="button" (click)="openSubjectModal(subjects,group.id,group.name)">Показать Предметы</label>
-            <label btnRadio="AddSubjects" class="btn btn-info" tabindex="0" role="buton" (click)="openAddingSubjectModal(ADD_SUBJECTS,group.id)">+Добавить Предметы</label>
-          </div>
+          <button class="btn btn-primary" (click)="addStudent(student)" [disabled]="student.choosen">Добавить</button>
         </td>
-        <td><button class="btn btn-danger" (click)="deleteGroup(group.id)">Удалить</button></td>
       </tr>
       </tbody>
     </table>
   </div>
-</div>
-
-<ng-template #create>
-    <div class="modal-header">
-      <h4 id="dialog-sizes-name1" class="modal-title pull-left">Создание группы</h4>
-      <button type="button" class="close pull-right" (click)="modalRef.hide()" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <div class="form-group">
-        <input class="form-control" [(ngModel)]="selectedGroup" name="name_group" #name_group="ngModel" required placeholder="Введите название группы">
-      </div>
-
-      <table class="table table-hover pt-3">
-        <thead class="thead">
-        <tr>
-          <th>Id</th>
-          <th scope="col" class="fns">Имя</th>
-          <th scope="col" class="lns">Фамилия</th>
-          <th scope="col">Почта</th>
-          <th>Отменить</th>
-          <th>Добавить</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let student of student_not_group">
-          <td>{{student.idstudent}}</td>
-          <td scope="col">{{student.fname}}</td>
-          <td scope="col">{{student.lname}}</td>
-          <td scope="col">{{student.email}}</td>
-          <!--<td scope="col">{{student.password}}</td>-->
-          <td><button class="btn btn-danger"(click)="removeStudent(student)" [disabled]="!student.choosen" >Убрать</button></td>
-          <td><button class="btn btn-primary" (click)="addStudent(student)" [disabled]="student.choosen" >Добавить</button></td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-default" (click)="create_group()">Создать группу</button>
-    </div>
+  <div class="modal-footer">
+    <button class="btn btn-default" (click)="create_group()">Создать группу</button>
+  </div>
 </ng-template>
 <!--Student in group-->
 <ng-template #template>
@@ -89,10 +116,8 @@
     </button>
   </div>
   <div class="modal-body">
-
     <h3 *ngIf="student_in_group.length == 0">Группая пустая</h3>
-
-    <table class="table table-hover pt-3" *ngIf=" student_in_group.length != 0" >
+    <table class="table table-hover pt-3" *ngIf=" student_in_group.length != 0">
       <thead class="thead">
       <tr>
         <th>Id</th>
@@ -106,7 +131,9 @@
         <td>{{student.idstudent}}</td>
         <td scope="col">{{student.fname}}</td>
         <td scope="col">{{student.lname}}</td>
-        <td><button class="btn btn-danger" (click)="removeStudentFromGroup(student.idstudent)">Убрать</button></td>
+        <td>
+          <button class="btn btn-danger" (click)="removeStudentFromGroup(student.idstudent)">Убрать</button>
+        </td>
       </tr>
       </tbody>
     </table>
@@ -133,9 +160,13 @@
       </thead>
       <tbody>
       <tr *ngFor="let subject of subject_in_group">
-        <td>{{subject.idsubjects}}</td>
+        <td>{{subject.idsubject}}</td>
         <td scope="col">{{subject.name}}</td>
-        <td><button class="btn btn-danger" [disabled]="remove.uncheckable" #remove (click)="removeSubjectFromGroup(subject.idsubjects)">Убрать</button></td>
+        <td>
+          <button class="btn btn-danger" [disabled]="remove.uncheckable" #remove
+                  (click)="removeSubjectFromGroup(subject.idsubject)">Убрать
+          </button>
+        </td>
       </tr>
       </tbody>
     </table>
@@ -145,7 +176,7 @@
 <!--Student adding in group  -->
 <ng-template #template2>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Modal</h4>
+    <h4 class="modal-title pull-left">Список студентов</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -166,8 +197,12 @@
         <td>{{student.idstudent}}</td>
         <td scope="col">{{student.fname}}</td>
         <td scope="col">{{student.lname}}</td>
-        <td><button class="btn btn-danger"(click)="removeStudent(student)" [disabled]="!student.choosen" >Убрать</button></td>
-        <td><button class="btn btn-primary" (click)="addStudent(student)" [disabled]="student.choosen" >Добавить</button></td>
+        <td>
+          <button class="btn btn-danger" (click)="removeStudent(student)" [disabled]="!student.choosen">Убрать</button>
+        </td>
+        <td>
+          <button class="btn btn-primary" (click)="addStudent(student)" [disabled]="student.choosen">Добавить</button>
+        </td>
       </tr>
       </tbody>
     </table>
@@ -180,7 +215,7 @@
 <!--Adding Subjects-->
 <ng-template #ADD_SUBJECTS>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Adding Subjects</h4>
+    <h4 class="modal-title pull-left">Добавление предметов</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -198,23 +233,32 @@
       </thead>
       <tbody>
       <tr *ngFor="let subject of subject_not_group">
-        <td>{{subject.idsubjects}}</td>
+        <td>{{subject.idsubject}}</td>
         <td scope="col">{{subject.name}}</td>
-        <td><button class="btn btn-danger" [disabled]="!subject.choosen" (click)="removeSubjectsInGroup(subject)">-Remove</button></td>
-        <td><button class="btn btn-primary"  [disabled]="subject.choosen" (click)="addSubjectsInGroup(subject)" >+Add</button></td>
+        <td>
+          <button class="btn btn-danger" [disabled]="!subject.choosen" (click)="removeSubjectsInGroup(subject)">
+            -Убрать
+          </button>
+        </td>
+        <td>
+          <button class="btn btn-primary" [disabled]="subject.choosen" (click)="addSubjectsInGroup(subject)">+Добавить
+          </button>
+        </td>
       </tr>
       </tbody>
     </table>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" (click)="attachedSubjectByGroup()" [disabled]="subject_not_group.length == 0">Добавить выбранные предметы</button>
+    <button class="btn btn-primary" (click)="attachedSubjectByGroup()" [disabled]="subject_not_group.length == 0">
+      Добавить выбранные предметы
+    </button>
   </div>
 </ng-template>
 
 <!--Adding Student-->
 <ng-template #ADD_STUDENTS>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Adding Students {{choosen_name_group}}</h4>
+    <h4 class="modal-title pull-left">Добавить студентов {{choosen_name_group}}</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -238,14 +282,20 @@
         <td scope="col">{{student.fname}}</td>
         <td scope="col">{{student.lname}}</td>
         <td scope="col">{{student.email}}</td>
-        <td><button class="btn btn-danger"(click)="removeStudent(student)" [disabled]="!student.choosen" >-Remove</button></td>
-        <td><button class="btn btn-primary" (click)="addStudent(student)" [disabled]="student.choosen" >+Add</button></td>
+        <td>
+          <button class="btn btn-danger" (click)="removeStudent(student)" [disabled]="!student.choosen">-Убрать</button>
+        </td>
+        <td>
+          <button class="btn btn-primary" (click)="addStudent(student)" [disabled]="student.choosen">+Добавить</button>
+        </td>
       </tr>
       </tbody>
     </table>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" (click)="addStudentsInGroup()" [disabled]="student_not_group.length == 0">Добавить выбранных студентов</button>
+    <button class="btn btn-primary" (click)="addStudentsInGroup()" [disabled]="student_not_group.length == 0">Добавить
+      выбранных студентов
+    </button>
   </div>
 </ng-template>
 

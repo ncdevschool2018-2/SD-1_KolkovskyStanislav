@@ -1,7 +1,6 @@
 import {Group} from "./group";
 
 export class Student{
-
   choosen:boolean = false;
   idstudent:number;
   fname: string;

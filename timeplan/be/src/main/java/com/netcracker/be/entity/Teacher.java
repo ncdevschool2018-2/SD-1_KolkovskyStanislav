@@ -4,16 +4,14 @@ package com.netcracker.be.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "teachers")
 public class Teacher extends User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idteachers;
+    private Long idteacher;
     private String fname;
     private String lname;
     private String email;
@@ -22,8 +20,8 @@ public class Teacher extends User {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "teachers_subjects",
-                joinColumns = {@JoinColumn(name="teacher_id")},
-                inverseJoinColumns = {@JoinColumn(name = "subject_id")})
+            joinColumns = {@JoinColumn(name = "teacher_id")},
+            inverseJoinColumns = {@JoinColumn(name = "subject_id")})
     private List<Subject> subjects;
 
 
@@ -42,12 +40,12 @@ public class Teacher extends User {
         this.role = role;
     }
 
-    public Long getIdteachers() {
-        return idteachers;
+    public Long getIdteacher() {
+        return idteacher;
     }
 
-    public void setIdteachers(Long idteachers) {
-        this.idteachers = idteachers;
+    public void setIdteacher(Long idteacher) {
+        this.idteacher = idteacher;
     }
 
     public String getFname() {
@@ -98,13 +96,9 @@ public class Teacher extends User {
         this.subjects = subjects;
     }
 
-    public void addSubject(Subject subject){
+    public void addSubject(Subject subject) {
         this.subjects.add(subject);
     }
-
-//    public void addSubjects(Collection<Subject> subject){
-//        this.subjects.addAll(subject);
-//    }
 
     public List<Task> getTaskList() {
         return taskList;

@@ -24,7 +24,7 @@ export class TeacherProfileComponent implements OnInit {
   ngOnInit() {
     this.teacherService.getTeacherByEmail(this.tokenStorage.getUsername()).subscribe(teacher =>{
       this.teacher =teacher;
-      this.taskService.getTaskByTeacherId(this.teacher.idteachers).subscribe( task =>{
+      this.taskService.getTaskByTeacherId(this.teacher.idteacher).subscribe(task =>{
         this.timetable = task as Task[];
       })
     })

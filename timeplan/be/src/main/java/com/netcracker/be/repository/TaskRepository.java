@@ -11,10 +11,7 @@ import java.util.Optional;
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
     List<Task> findAllByGroup(Group group);
-    List<Task> findAllByTeacherIdteachers(Long id);
+    List<Task> findAllByTeacherIdteacher(Long id);
     Optional<Task> findById(Long id);
     List<Task> findAllByGroupId(Long id);
-
-
-
 }
