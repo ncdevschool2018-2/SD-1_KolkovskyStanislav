@@ -10,6 +10,7 @@ import {SubjectService} from "../services/subject.service";
 import {Teacher} from "../models/teacher";
 import {Task} from "../models/task";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {NgModel} from "@angular/forms";
 
 @Component({
   selector: "timetable",
@@ -87,6 +88,10 @@ export class TimetableComponent implements OnInit {
     this.modalRef.hide();
   }
 
+  public setTeacher(teacher){
+    this.task.teacher = teacher;
+  }
+
   public showGroup(): void {
     this.display_show = true;
     this.display_show1 = false;
@@ -134,12 +139,12 @@ export class TimetableComponent implements OnInit {
   }
 
   public addTask(template: TemplateRef<any>): void {
-      let fnameTeacher: string = this.choose_teacher.split(" ")[0];
-      let lnameTeacher: string = this.choose_teacher.split(" ")[1];
-
-      this.task.teacher = this.teachers.find(teacher =>
-        teacher.fname.toLowerCase() === fnameTeacher.toLowerCase()
-        && teacher.lname.toLowerCase() === lnameTeacher.toLowerCase());
+      // let fnameTeacher: string = this.choose_teacher.split(" ")[0];
+      // let lnameTeacher: string = this.choose_teacher.split(" ")[1];
+      //
+      // this.task.teacher = this.teachers.find(teacher =>
+      //   teacher.fname.toLowerCase() === fnameTeacher.toLowerCase()
+      //   && teacher.lname.toLowerCase() === lnameTeacher.toLowerCase());
 
       this.task.day = this.days.indexOf(this.choose_day);
       this.task.time = this.times.indexOf(this.choose_time);

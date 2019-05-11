@@ -57,7 +57,6 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.teacherForm = this.formBuilder.group({
       fname: ["", Validators.compose([Validators.minLength(1), Validators.required])],
       lname: ["", Validators.compose([Validators.minLength(1), Validators.required])],
@@ -83,7 +82,7 @@ export class UsersComponent implements OnInit {
     this.subjectService.getSubjects().subscribe(subjects => {
       this.subjects = subjects as Subject[];
       this.loadingService.hide();
-    })
+    });
   }
 
   public displayTeacherSubjects(teacher: Teacher): string {
@@ -143,7 +142,11 @@ export class UsersComponent implements OnInit {
   }
 
 
-  openModal(template: TemplateRef<any>) {
+  openStudentModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
+  }
+
+  openTeacherModal(template: TemplateRef<any>){
     this.modalRef = this.modalService.show(template);
   }
 
